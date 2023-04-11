@@ -10,6 +10,8 @@ app.get("/", (req, res) => {
   res.send("Klosanow 🚀🚀🚀");
 });
 
+app.use("/api/users", require("./routers/api/user"));
+
 app.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`);
 });
