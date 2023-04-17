@@ -1,4 +1,7 @@
 const User = require("../models/User");
+const { OTP, AuthToken } = require("../models/Auth");
+
+const { otpGenerator, authTokenGenerator } = require("../helpers/generators");
 
 require("dotenv").config();
 
@@ -22,11 +25,25 @@ const signUp = async (req, res) => {
       });
       await newUser.save();
 
-      // OTP is sent here
+      const newOtp = new OTP({
+        user: newUser.id,
+        otp: await otpGenerator(),
+      });
+      await newOtp.save();
+
+      const newAuthToken = new AuthToken({
+        user: newUser.id,
+        token: await authTokenGenerator(),
+      });
+      await newAuthToken.save();
+
+      // Send the otp here
+      // console.log(newOtp.otp);
 
       return res.status(201).json({
         status: "success",
-        message: "Unverified user created successfully",
+        message: "OTP sent successfully",
+        data: { "auth token": newAuthToken.token },
       });
     }
   } catch (error) {
@@ -68,4 +85,48 @@ const signIn = async (req, res) => {
   }
 };
 
-module.exports = { signUp, signIn };
+const verifyUser = async (req, res) => {
+  try {
+    const otp = req.body.otp;
+    const otpExists = await OTP.findOne({ otp });
+    if (!otpExists) {
+      return res.status(401).json({
+        status: "error",
+        message: "Invalid one-time password",
+      });
+    } else {
+      const authTokenExists = await AuthToken.findOne({
+        token: req.params.authToken,
+      });
+      if (!authTokenExists) {
+        return res.status(401).json({
+          status: "error",
+          // message: "Invalid authentication token",
+          message: "Authentication failed",
+        });
+      } else if (authTokenExists.user.equals(otpExists.user)) {
+        // check if the user encoded in the
+        // auth token is the same with the otp
+
+        await User.findOneAndUpdate({ id: otpExists }, { isVerified: true }); // update user verification status
+
+        return res.status(200).json({
+          status: "success",
+          data: { "JWT token": "JWT is implemented here" },
+        });
+      } else {
+        return res.status(401).json({
+          status: "error",
+          message: "Authentication failed",
+        });
+      }
+    }
+  } catch (error) {
+    return res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};
+
+module.exports = { signUp, signIn, verifyUser };
