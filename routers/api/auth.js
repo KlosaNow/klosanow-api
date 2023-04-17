@@ -8,8 +8,8 @@ const {
 const router = express.Router();
 
 router
-  .route("/signUp")
+  .route("/sign-up")
   .post(requiredFieldsValidator, emailValidator, phoneNumberValidator, signUp);
-router.route("/signIn").post(signIn);
+router.route("/sign-in").post(signIn);
 
 module.exports = router;
