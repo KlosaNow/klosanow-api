@@ -19,10 +19,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  isVerified: {
-    type: Boolean,
-    default: false,
-  },
   notifications: [
     {
       type: String,
@@ -31,6 +27,17 @@ const userSchema = new mongoose.Schema({
   isTutor: {
     type: Boolean,
     default: false,
+  },
+  createdlessons: {
+    type: Array,
+  },
+  savedLessons: {
+    type: Array,
+  },
+  subscriptionId: {
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: "Subscription",
+    type: String,
   },
 });
 

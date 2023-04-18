@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-const { OTP, AuthToken } = require("../models/Auth");
+const { OTP, AuthToken } = require("../models");
 
 const otpGenerator = async () => {
   const otp = crypto.randomInt(1000, 10000); // geneate a number a four digit number

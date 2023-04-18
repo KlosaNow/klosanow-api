@@ -1,10 +1,10 @@
 const express = require("express");
-const { signUp, signIn, verifyUser } = require("../../controllers/auth");
+const { signUp, signIn, verifyUser } = require("./controllers");
 const {
   requiredFieldsValidator,
   emailValidator,
   phoneNumberValidator,
-} = require("../../helpers/validators");
+} = require("./helpers");
 const router = express.Router();
 
 router
