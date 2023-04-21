@@ -1,15 +1,16 @@
 const express = require("express");
-const { signUp, signIn } = require("../../controllers/auth");
+const { signUp, signIn, verifyUser } = require("./controllers");
 const {
   requiredFieldsValidator,
   emailValidator,
   phoneNumberValidator,
-} = require("../../helpers/validators");
+} = require("./helpers");
 const router = express.Router();
 
 router
-  .route("/signUp")
+  .route("/sign-up")
   .post(requiredFieldsValidator, emailValidator, phoneNumberValidator, signUp);
-router.route("/signIn").post(signIn);
+router.route("/sign-in").post(signIn);
+router.route("/verify-user/:authToken").post(verifyUser);
 
 module.exports = router;

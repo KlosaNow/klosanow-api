@@ -12,7 +12,7 @@ const requiredFieldsValidator = (req, res, next) => {
   for (const field in REQUIRED_FIELDS) {
     if (field === "password") {
       REQUIRED_FIELDS[field].data = req.body[field];
-    } else {
+    } else if (req.body[field]) {
       REQUIRED_FIELDS[field].data = req.body[field].trim();
     }
   }
