@@ -1,15 +1,17 @@
-const { OTP, AuthToken } = require("./models");
+import { Request, Response } from "express";
 
-const {
+import { OTP, AuthToken } from "./models";
+
+import {
   otpGenerator,
   authTokenGenerator,
   createUserRequest,
   getUserByEmailRequest,
-} = require("./helpers");
+} from "./helpers";
 
 require("dotenv").config();
 
-const signUp = async (req, res) => {
+export const signUp = async (req: Request, res: Response) => {
   try {
     const emailAlreadyExists = await getUserByEmailRequest(
       req.body.emailAddress
@@ -41,7 +43,7 @@ const signUp = async (req, res) => {
         data: { "auth token": newAuthToken.token },
       });
     }
-  } catch (error) {
+  } catch (error: any) {
     return res.status(500).json({
       status: "error",
       message: error.message,
@@ -49,22 +51,23 @@ const signUp = async (req, res) => {
   }
 };
 
-const signIn = async (req, res) => {
+export const signIn = async (req: Request, res: Response) => {
   try {
     const user = await getUserByEmailRequest(req.body.emailAddress);
     if (!user) {
       return res.status(401).json({
         status: "error",
-        message: "Invalid email or password",
+        message: "Invalid email address",
       });
     } else {
       // Send OTP or JWT
+
       return res.status(200).json({
         status: "success",
         data: "**jwt** or **auth token**",
       });
     }
-  } catch (error) {
+  } catch (error: any) {
     return res.status(500).json({
       status: "error",
       message: error.message,
@@ -72,7 +75,7 @@ const signIn = async (req, res) => {
   }
 };
 
-const verifyUser = async (req, res) => {
+export const verifyUser = async (req: Request, res: Response) => {
   try {
     const otp = req.body.otp;
     const otpExists = await OTP.findOne({ otp });
@@ -103,12 +106,10 @@ const verifyUser = async (req, res) => {
         });
       }
     }
-  } catch (error) {
+  } catch (error: any) {
     return res.status(500).json({
       status: "error",
       message: error.message,
     });
   }
 };
-
-module.exports = { signUp, signIn, verifyUser };

@@ -1,7 +1,7 @@
-const crypto = require("crypto");
-const { OTP, AuthToken } = require("../models");
+import crypto from "crypto";
+import { OTP, AuthToken } from "../models";
 
-const otpGenerator = async () => {
+export const otpGenerator = async (): Promise<number> => {
   const otp = crypto.randomInt(1000, 10000); // geneate a number a four digit number
   if (await OTP.findOne({ otp })) {
     // generate a new otp if the generated otp has been used
@@ -11,7 +11,7 @@ const otpGenerator = async () => {
   }
 };
 
-const authTokenGenerator = async () => {
+export const authTokenGenerator = async (): Promise<string> => {
   const LENGTH_OF_TOKEN = 32;
   const CHARACTERS =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -26,5 +26,3 @@ const authTokenGenerator = async () => {
     return token;
   }
 };
-
-module.exports = { otpGenerator, authTokenGenerator };

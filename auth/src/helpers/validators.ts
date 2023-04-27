@@ -1,20 +1,23 @@
-const requiredFieldsValidator = (req, res, next) => {
-  const REQUIRED_FIELDS = {
+import { Request, Response, NextFunction, response } from "express";
+
+export const requiredFieldsValidator = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const REQUIRED_FIELDS: {
+    [key: string]: { verboseName: string; data?: string };
+  } = {
     username: { verboseName: "Username" },
     emailAddress: { verboseName: "Email address" },
     phoneNumber: { verboseName: "Phone number" },
-    password: { verboseName: "Password" },
   };
 
   // Loop through the key of the required fields array
   // and store the data passed to each field from the request
   // Trim off whitespace from the data except the password
   for (const field in REQUIRED_FIELDS) {
-    if (field === "password") {
-      REQUIRED_FIELDS[field].data = req.body[field];
-    } else if (req.body[field]) {
-      REQUIRED_FIELDS[field].data = req.body[field].trim();
-    }
+    REQUIRED_FIELDS[field].data = req.body[field].trim();
   }
 
   // Loop through the required fields object and
@@ -31,7 +34,11 @@ const requiredFieldsValidator = (req, res, next) => {
   next();
 };
 
-const emailValidator = (req, res, next) => {
+export const emailValidator = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const email = req.body.emailAddress.trim();
 
   const splitForAt = email.split("@"); // Splits the "nelson@klosanow.com" into "nelson" and "klosanow.com"
@@ -65,7 +72,11 @@ const emailValidator = (req, res, next) => {
   }
 };
 
-const phoneNumberValidator = (req, res, next) => {
+export const phoneNumberValidator = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const phoneNumber = req.body.phoneNumber.trim();
 
   // Remove dashes and spaces from the phone number
@@ -88,10 +99,4 @@ const phoneNumberValidator = (req, res, next) => {
   } else {
     next();
   }
-};
-
-module.exports = {
-  requiredFieldsValidator,
-  emailValidator,
-  phoneNumberValidator,
 };
