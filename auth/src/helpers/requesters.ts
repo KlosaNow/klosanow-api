@@ -1,7 +1,9 @@
-const axios = require("axios");
-require("dotenv").config();
+import axios from "axios";
+import dotenv from "dotenv";
 
-const getUserByEmailRequest = async (userEmail) => {
+dotenv.config();
+
+export const getUserByEmailRequest = async (userEmail: string) => {
   try {
     const response = await axios.get(
       `${process.env.GATEWAY_URL}${process.env.USER_SERVICE_PATH}/${userEmail}`
@@ -12,7 +14,7 @@ const getUserByEmailRequest = async (userEmail) => {
   }
 };
 
-const createUserRequest = async (userData) => {
+export const createUserRequest = async (userData: Object) => {
   try {
     const response = await axios.post(
       `${process.env.GATEWAY_URL}${process.env.USER_SERVICE_PATH}`,
@@ -23,5 +25,3 @@ const createUserRequest = async (userData) => {
     return error;
   }
 };
-
-module.exports = { getUserByEmailRequest, createUserRequest };

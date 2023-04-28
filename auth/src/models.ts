@@ -1,6 +1,18 @@
-const mongoose = require("mongoose");
+import mongoose, { Types } from "mongoose";
 
-const authTokenSchema = new mongoose.Schema({
+interface IAuthToken {
+  user: Types.ObjectId;
+  token: string;
+  createdAt: Date;
+}
+
+interface IOTP {
+  user: Types.ObjectId;
+  otp: number;
+  createdAt: Date;
+}
+
+const authTokenSchema = new mongoose.Schema<IAuthToken>({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -17,7 +29,7 @@ const authTokenSchema = new mongoose.Schema({
   },
 });
 
-const otpSchema = new mongoose.Schema({
+const otpSchema = new mongoose.Schema<IOTP>({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -34,7 +46,5 @@ const otpSchema = new mongoose.Schema({
   },
 });
 
-const AuthToken = mongoose.model("AuthToken", authTokenSchema);
-const OTP = mongoose.model("OTP", otpSchema);
-
-module.exports = { OTP, AuthToken };
+export const AuthToken = mongoose.model("AuthToken", authTokenSchema);
+export const OTP = mongoose.model("OTP", otpSchema);

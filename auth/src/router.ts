@@ -1,11 +1,12 @@
-const express = require("express");
-const { signUp, signIn, verifyUser } = require("./controllers");
-const {
+import express, { Router } from "express";
+import { signUp, signIn, verifyUser } from "./controllers";
+import {
   requiredFieldsValidator,
   emailValidator,
   phoneNumberValidator,
-} = require("./helpers");
-const router = express.Router();
+} from "./helpers";
+
+const router: Router = express.Router();
 
 router
   .route("/sign-up")
@@ -13,4 +14,4 @@ router
 router.route("/sign-in").post(signIn);
 router.route("/verify-user/:authToken").post(verifyUser);
 
-module.exports = router;
+export default router;
