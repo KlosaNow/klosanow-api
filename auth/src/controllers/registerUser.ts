@@ -6,7 +6,6 @@ import Token from '../models/Token';
 import { attachCookiesToResponse } from '../utils/jwt';
 import { StatusCodes } from 'http-status-codes';
 import sendOtpService from '../services/otpService';
-import crypto from 'crypto'
 
 const registerUser = async (req: Request, res: Response) => {
   const { email, name, phoneNumber } = req.body;
