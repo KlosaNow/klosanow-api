@@ -1,5 +1,5 @@
-import crypto from "crypto";
-import { OTP, AuthToken } from "../models";
+import crypto from 'crypto';
+import { OTP, AuthToken } from '../models/models';
 
 export const otpGenerator = async (): Promise<number> => {
   const otp = crypto.randomInt(1000, 10000); // geneate a number a four digit number
@@ -14,8 +14,8 @@ export const otpGenerator = async (): Promise<number> => {
 export const authTokenGenerator = async (): Promise<string> => {
   const LENGTH_OF_TOKEN = 32;
   const CHARACTERS =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let token = "";
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let token = '';
   for (let i = 0; i < LENGTH_OF_TOKEN; i++) {
     token += CHARACTERS.charAt(crypto.randomInt(0, 62));
   }

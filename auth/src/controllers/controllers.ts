@@ -1,15 +1,15 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-import { OTP, AuthToken } from "./models";
+import { OTP, AuthToken } from '../models/models';
 
 import {
   otpGenerator,
   authTokenGenerator,
   createUserRequest,
   getUserByEmailRequest,
-} from "./helpers";
+} from '../helpers';
 
-require("dotenv").config();
+require('dotenv').config();
 
 export const signUp = async (req: Request, res: Response) => {
   try {
@@ -18,8 +18,8 @@ export const signUp = async (req: Request, res: Response) => {
     );
     if (emailAlreadyExists) {
       return res.status(400).json({
-        status: "error",
-        message: "User with that email already exists",
+        status: 'error',
+        message: 'User with that email already exists',
       });
     } else {
       const newUser = await createUserRequest(req.body);
@@ -39,13 +39,13 @@ export const signUp = async (req: Request, res: Response) => {
       // Send the otp here
 
       return res.status(201).json({
-        status: "success",
-        data: { "auth token": newAuthToken.token },
+        status: 'success',
+        data: { 'auth token': newAuthToken.token },
       });
     }
   } catch (error: any) {
     return res.status(500).json({
-      status: "error",
+      status: 'error',
       message: error.message,
     });
   }
@@ -56,20 +56,20 @@ export const signIn = async (req: Request, res: Response) => {
     const user = await getUserByEmailRequest(req.body.emailAddress);
     if (!user) {
       return res.status(401).json({
-        status: "error",
-        message: "Invalid email address",
+        status: 'error',
+        message: 'Invalid email address',
       });
     } else {
       // Send OTP or JWT
 
       return res.status(200).json({
-        status: "success",
-        data: "**jwt** or **auth token**",
+        status: 'success',
+        data: '**jwt** or **auth token**',
       });
     }
   } catch (error: any) {
     return res.status(500).json({
-      status: "error",
+      status: 'error',
       message: error.message,
     });
   }
@@ -81,8 +81,8 @@ export const verifyUser = async (req: Request, res: Response) => {
     const otpExists = await OTP.findOne({ otp });
     if (!otpExists) {
       return res.status(401).json({
-        status: "error",
-        message: "Invalid one-time password",
+        status: 'error',
+        message: 'Invalid one-time password',
       });
     } else {
       const authTokenExists = await AuthToken.findOne({
@@ -90,25 +90,25 @@ export const verifyUser = async (req: Request, res: Response) => {
       });
       if (!authTokenExists) {
         return res.status(401).json({
-          status: "error",
+          status: 'error',
           // message: "Invalid authentication token",
-          message: "Authentication failed",
+          message: 'Authentication failed',
         });
       } else if (authTokenExists.user.equals(otpExists.user)) {
         return res.status(200).json({
-          status: "success",
-          data: { token: "JWT is implemented here" },
+          status: 'success',
+          data: { token: 'JWT is implemented here' },
         });
       } else {
         return res.status(401).json({
-          status: "error",
-          message: "Authentication failed",
+          status: 'error',
+          message: 'Authentication failed',
         });
       }
     }
   } catch (error: any) {
     return res.status(500).json({
-      status: "error",
+      status: 'error',
       message: error.message,
     });
   }
