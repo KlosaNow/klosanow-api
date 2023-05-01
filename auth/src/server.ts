@@ -12,6 +12,7 @@ import loggerOptions from './middleware/winstonConfig';
 
 import router from './router';
 import errorHandlerMiddleware from './middleware/errorHandler';
+import notFoundMiddleWare from './middleware/notFound';
 
 dotenv.config();
 
@@ -47,6 +48,7 @@ app.get('/', (req, res) => {
 });
 app.use('/', router);
 
+app.use(notFoundMiddleWare)
 app.use(errorHandlerMiddleware);
 
 const connectDB = async (url: string) => {
