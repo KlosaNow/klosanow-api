@@ -1,16 +1,17 @@
-import jwt from 'jsonwebtoken';
-import { JWTPayload, UserType } from './types';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { JWTPayload, UserTypes } from './types';
 import { Response } from 'express';
+import { createTokenUser } from '../helpers/generators';
 
 // create the JWT Token
-export const createJWT = ({ payload }: JWTPayload | { payload: UserType }) => {
+export const createJWT = (payload: JWTPayload) => {
   const secret = process.env.JWT_SECRET!;
   const token = jwt.sign(payload, secret);
   return token;
 };
 
 // verify the JWT Token
-export const verifyJWT = (token: string) =>
+export const verifyJWT = (token: string): any =>
   jwt.verify(token, process.env.JWT_SECRET!);
 
 // attach the JWT Token to the response
@@ -20,11 +21,12 @@ export const attachCookiesToResponse = ({
   refreshToken,
 }: {
   res: Response;
-  user: UserType;
+  user: UserTypes;
   refreshToken: string;
 }) => {
-  const accessJWTToken = createJWT({ payload: user });
-  const refreshJWTToken = createJWT({ payload: { user, refreshToken } });
+  // const userObj = createTokenUser(user)
+  const accessJWTToken = createJWT({ user });
+  const refreshJWTToken = createJWT({ user, refreshToken });
 
   const oneDay = 1000 * 60 * 60 * 24;
   const oneHour = 1000 * 60 * 60;

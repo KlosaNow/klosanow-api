@@ -6,7 +6,8 @@ import debug from 'debug';
 import * as expressWinston from 'express-winston';
 import helmet from 'helmet';
 import rateLimiter from 'express-rate-limit';
-import xss from 'xss-clean';
+import 'express-async-errors';
+import cookieParser from 'cookie-parser';
 
 import loggerOptions from './middleware/winstonConfig';
 
@@ -16,7 +17,7 @@ import notFoundMiddleWare from './middleware/notFound';
 
 dotenv.config();
 
-const PORT: string | number = process.env.PORT || 3001;
+const PORT: string | number = process.env.PORT || 5000;
 const DATABASE_URI: string = process.env.DATABASE_URI || 'undefined';
 
 const app = express();
@@ -32,9 +33,9 @@ app.use(
 );
 app.use(helmet());
 app.use(cors());
-app.use(xss());
 
 app.use(express.json());
+app.use(cookieParser(process.env.JWT_SECRET));
 app.use(express.urlencoded({ extended: true }));
 
 if (!process.env.DEBUG) {
@@ -46,7 +47,7 @@ app.use(expressWinston.logger(loggerOptions));
 app.get('/', (req, res) => {
   res.send('Auth service: Running');
 });
-app.use('/', router);
+app.use('/api/v1/', router);
 
 app.use(notFoundMiddleWare)
 app.use(errorHandlerMiddleware);

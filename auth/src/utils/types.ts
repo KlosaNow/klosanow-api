@@ -1,7 +1,9 @@
 import { Types } from 'mongoose';
+import { Request } from 'express';
 
 export interface UserTypes {
-  username: string;
+  _id: string;
+  name: string;
   email: {
     validate: {
       validator: (arg0: string) => boolean;
@@ -28,20 +30,22 @@ export interface TokenType {
   refreshToken: string;
   userAgent: string;
   ip: string;
-  isValid: boolean;
+  otpVerified: boolean;
   user: Types.ObjectId;
 }
 
 export interface UserType {
-  _id: Types.ObjectId;
+  _id: string;
   email: string;
   phoneNumber: string;
   role: string;
 }
 
 export interface JWTPayload {
-  payload: {
-    user: UserType;
+    user: UserTypes;
     refreshToken?: string;
-  };
+}
+
+export interface CustomRequest extends Request {
+    user?: any;
 }

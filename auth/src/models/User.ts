@@ -4,7 +4,7 @@ import validator from 'validator';
 import { UserTypes } from '../utils/types';
 
 const UserSchema = new mongoose.Schema<UserTypes>({
-  username: {
+  name: {
     type: String,
     required: [true, 'Please provide a username'],
   },

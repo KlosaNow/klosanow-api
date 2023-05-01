@@ -16,9 +16,9 @@ const TokenSchema = new mongoose.Schema<TokenType>(
       type: String,
       required: true,
     },
-    isValid: {
+    otpVerified: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
