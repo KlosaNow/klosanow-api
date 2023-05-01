@@ -31,20 +31,6 @@ const UserSchema = new mongoose.Schema<UserTypes>({
     enum: ['admin', 'user'],
     default: 'user',
   },
-  verificationToken: {
-    type: String
-  },
-  isVerified: {
-    type: Boolean,
-    default: false
-  },
-  verified: Date,
-  passwordToken: {
-    type: String
-  },
-  passwordTokenExpiration: {
-    type: Date
-  }
 }, { timestamps: true });
 
 const User = mongoose.model('User', UserSchema)

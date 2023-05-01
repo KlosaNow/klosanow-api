@@ -36,8 +36,6 @@ export const signUp = async (req: Request, res: Response) => {
       });
       await newAuthToken.save();
 
-      // Send the otp here
-
       return res.status(201).json({
         status: 'success',
         data: { 'auth token': newAuthToken.token },

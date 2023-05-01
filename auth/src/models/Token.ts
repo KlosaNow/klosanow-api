@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 
-const TokenSchema = new mongoose.Schema(
+import { TokenType } from '../utils/types';
+
+const TokenSchema = new mongoose.Schema<TokenType>(
   {
     refreshToken: {
       type: String,
