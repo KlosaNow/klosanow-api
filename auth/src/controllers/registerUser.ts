@@ -1,7 +1,7 @@
 import { badRequestError } from '../utils/CustomError';
 import User from '../models/User';
 import { Request, Response } from 'express';
-import { authTokenGenerator } from '../helpers';
+import { tokenGenerator } from '../helpers';
 import Token from '../models/Token';
 import { attachCookiesToResponse } from '../utils/jwt';
 import { StatusCodes } from 'http-status-codes';
@@ -24,7 +24,7 @@ const registerUser = async (req: Request, res: Response) => {
   const newUser = await User.create({ email, name, phoneNumber });
   
   // create and save auth token
-  const refreshToken = authTokenGenerator(32);
+  const refreshToken = tokenGenerator(32);
   const ip = req.ip;
   const userAgent = req.headers['user-agent'];
 

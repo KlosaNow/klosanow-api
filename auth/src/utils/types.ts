@@ -34,6 +34,11 @@ export interface TokenType {
   user: Types.ObjectId;
 }
 
+export interface OTPType {
+  otp: number;
+  user: Types.ObjectId;
+}
+
 export interface UserType {
   _id: string;
   email: string;

@@ -22,8 +22,8 @@ const authenticateUser = async (
     user: payload.user.userId,
   });
 
-  if (!existingToken || !existingToken.otpVerified) {
-    throw unAuthorizedError('Authentication failed. Please sign in again.');
+  if (!existingToken) {
+    throw unAuthorizedError('Authentication failed. Please try again.');
   }
 
   attachCookiesToResponse({
@@ -32,6 +32,7 @@ const authenticateUser = async (
     refreshToken: existingToken.refreshToken,
   });
 
+  
   req.user = payload.user;
   next();
 };

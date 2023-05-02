@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
+import { OTPType } from '../utils/types';
 
-const OTPSchema = new mongoose.Schema({
+const OTPSchema = new mongoose.Schema<OTPType>({
   otp: {
     type: Number,
     required: true,

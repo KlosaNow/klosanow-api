@@ -22,15 +22,23 @@ export const attachCookiesToResponse = ({
 }: {
   res: Response;
   user: UserTypes;
-  refreshToken: string;
+  refreshToken?: string;
 }) => {
   // const userObj = createTokenUser(user)
   const accessJWTToken = createJWT({ user });
-  const refreshJWTToken = createJWT({ user, refreshToken });
-
   const oneDay = 1000 * 60 * 60 * 24;
   const oneHour = 1000 * 60 * 60;
 
+  if(!refreshToken) {
+    res.cookie('accessToken', accessJWTToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      signed: true,
+      maxAge: oneHour,
+    });
+  }
+
+  const refreshJWTToken = createJWT({ user, refreshToken });
   res.cookie('accessToken', accessJWTToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',

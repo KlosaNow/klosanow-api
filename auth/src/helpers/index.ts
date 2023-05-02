@@ -1,5 +1,5 @@
 import { getUserByEmailRequest, createUserRequest } from "./requesters";
-import { otpGenerator, authTokenGenerator } from "./generators";
+import { otpGenerator, tokenGenerator } from "./generators";
 import {
   emailValidator,
   requiredFieldsValidator,
@@ -13,7 +13,7 @@ export {
 
   // Generators
   otpGenerator,
-  authTokenGenerator,
+  tokenGenerator,
 
   // Validators
   requiredFieldsValidator,

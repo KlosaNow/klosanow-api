@@ -14,15 +14,13 @@ import loggerOptions from './middleware/winstonConfig';
 import router from './router';
 import errorHandlerMiddleware from './middleware/errorHandler';
 import notFoundMiddleWare from './middleware/notFound';
+import { DATABASE_URI, PORT } from './utils/config';
 
 dotenv.config();
 
-const PORT: string | number = process.env.PORT || 5000;
-const DATABASE_URI: string = process.env.DATABASE_URI || 'undefined';
-
 const app = express();
 
-const debugLog: debug.IDebugger = debug('app');
+export const debugLog: debug.IDebugger = debug('app');
 
 app.set('trust proxy', 1);
 app.use(
@@ -58,7 +56,7 @@ const connectDB = async (url: string) => {
 
 const start = async () => {
   try {
-    await connectDB(process.env.DATABASE_URI!);
+    await connectDB(DATABASE_URI!);
     console.log(`Auth service: Connected to database`);
     app.listen(PORT, () => {
       debugLog(`Auth service: Running on port ${PORT}`);
