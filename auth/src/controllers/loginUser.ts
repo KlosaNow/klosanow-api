@@ -22,19 +22,19 @@ const loginUser = async (req: Request, res: Response) => {
   }
 
   const existingToken = await Token.findOne({ user: user._id });
-  
+
   if (existingToken) {
     const { refreshToken } = existingToken;
     existingToken.otpVerified = false;
     await existingToken.save();
-    const otp = await sendOtpService(user._id, '+23407013703549');
+    const otp = await sendOtpService(user._id, phoneNumber);
 
     attachCookiesToResponse({ res, user, refreshToken });
 
     return res.status(StatusCodes.OK).json(successRes('OTP sent successfully'));
   }
 
-  const otp = await sendOtpService(user._id, '+23407013703549');
+  const otp = await sendOtpService(user._id, phoneNumber);
 
   attachCookiesToResponse({ res, user });
 

@@ -1,12 +1,12 @@
-import { getUserByEmailRequest, createUserRequest } from "./requesters";
-import { otpGenerator, tokenGenerator } from "./generators";
+import { getUserByEmailRequest, createUserRequest } from './requesters';
+import { otpGenerator, tokenGenerator } from './generators';
 import {
   emailValidator,
   requiredFieldsValidator,
   phoneNumberValidator,
-} from "./validators";
+} from './validators';
 
-import { successRes, errorRes} from "./response";
+import { successRes, errorRes } from './response';
 
 export {
   // Requesters
@@ -21,7 +21,6 @@ export {
   requiredFieldsValidator,
   emailValidator,
   phoneNumberValidator,
-
   successRes,
   errorRes,
 };

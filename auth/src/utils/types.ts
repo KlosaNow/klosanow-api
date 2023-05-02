@@ -47,10 +47,10 @@ export interface UserType {
 }
 
 export interface JWTPayload {
-    user: UserTypes;
-    refreshToken?: string;
+  user: UserTypes;
+  refreshToken?: string;
 }
 
 export interface CustomRequest extends Request {
-    user?: any;
+  user?: any;
 }

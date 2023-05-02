@@ -11,8 +11,6 @@ const authenticateUser = async (
 ) => {
   const { accessToken, refreshToken } = req.signedCookies;
 
-  console.log(accessToken, refreshToken)
-
   if (accessToken) {
     const payload = verifyJWT(accessToken);
     req.user = payload.user;
@@ -34,7 +32,6 @@ const authenticateUser = async (
     refreshToken: existingToken.refreshToken,
   });
 
-  
   req.user = payload.user;
   next();
 };

@@ -14,7 +14,7 @@ import loggerOptions from './middleware/winstonConfig';
 import router from './router';
 import errorHandlerMiddleware from './middleware/errorHandler';
 import notFoundMiddleWare from './middleware/notFound';
-import { DATABASE_URI, PORT } from './utils/config';
+import { DATABASE_URI, PORT, JWT_SECRET, DEBUG } from './utils/config';
 
 dotenv.config();
 
@@ -33,10 +33,10 @@ app.use(helmet());
 app.use(cors());
 
 app.use(express.json());
-app.use(cookieParser(process.env.JWT_SECRET));
+app.use(cookieParser(JWT_SECRET));
 app.use(express.urlencoded({ extended: true }));
 
-if (!process.env.DEBUG) {
+if (!DEBUG) {
   loggerOptions.meta = false;
 }
 
@@ -47,7 +47,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api/v1/', router);
 
-app.use(notFoundMiddleWare)
+app.use(notFoundMiddleWare);
 app.use(errorHandlerMiddleware);
 
 const connectDB = async (url: string) => {
@@ -57,10 +57,9 @@ const connectDB = async (url: string) => {
 const start = async () => {
   try {
     await connectDB(DATABASE_URI!);
-    console.log(`Auth service: Connected to database`);
+    debugLog(`Auth service: Connected to database`);
     app.listen(PORT, () => {
       debugLog(`Auth service: Running on port ${PORT}`);
-      // console.log(`Auth service: Running on port ${PORT}`);
     });
   } catch (err) {
     debugLog(err);

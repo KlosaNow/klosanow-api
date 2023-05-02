@@ -23,11 +23,13 @@ const registerUser = async (req: Request, res: Response) => {
 
   const newUser = await User.create({ email, name, phoneNumber });
 
-  await sendOtpService(newUser._id, '+23407013703549');
+  await sendOtpService(newUser._id, phoneNumber);
 
   attachCookiesToResponse({ res, user: newUser });
-  
-  res.status(StatusCodes.OK).json(successRes('User created successfully. OTP sent'));
+
+  res
+    .status(StatusCodes.OK)
+    .json(successRes('User created successfully. OTP sent'));
 };
 
 export default registerUser;

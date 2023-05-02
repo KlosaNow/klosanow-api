@@ -29,7 +29,7 @@ export const attachCookiesToResponse = ({
   const oneDay = 1000 * 60 * 60 * 24;
   const oneHour = 1000 * 60 * 60;
 
-  if(!refreshToken) {
+  if (!refreshToken) {
     res.cookie('accessToken', accessJWTToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -44,7 +44,7 @@ export const attachCookiesToResponse = ({
       signed: true,
       maxAge: oneHour,
     });
-  
+
     res.cookie('refreshToken', refreshJWTToken, {
       httpOnly: true,
       expires: new Date(Date.now() + oneDay),
@@ -52,5 +52,4 @@ export const attachCookiesToResponse = ({
       signed: true,
     });
   }
-
 };
