@@ -1,8 +1,8 @@
 import { badRequestError } from '../utils/CustomError';
 import User from '../models/User';
 import { Request, Response } from 'express';
-import { tokenGenerator } from '../helpers';
-import Token from '../models/Token';
+import { successRes, tokenGenerator } from '../helpers';
+
 import { attachCookiesToResponse } from '../utils/jwt';
 import { StatusCodes } from 'http-status-codes';
 import sendOtpService from '../services/otpService';
@@ -22,19 +22,12 @@ const registerUser = async (req: Request, res: Response) => {
   }
 
   const newUser = await User.create({ email, name, phoneNumber });
+
+  await sendOtpService(newUser._id, '+23407013703549');
+
+  attachCookiesToResponse({ res, user: newUser });
   
-  // create and save auth token
-  const refreshToken = tokenGenerator(32);
-  const ip = req.ip;
-  const userAgent = req.headers['user-agent'];
-
-  const token = await Token.create({ refreshToken, ip, userAgent, user: newUser._id });
-
-  const otp = await sendOtpService(newUser._id);
-
-  attachCookiesToResponse({ res, user: newUser, refreshToken });
-  
-  res.status(StatusCodes.OK).json({ status: 'User created successfully', token, otp });
+  res.status(StatusCodes.OK).json(successRes('User created successfully. OTP sent'));
 };
 
 export default registerUser;

@@ -2,7 +2,8 @@ const { StatusCodes } = require('http-status-codes');
 
 class CustomError extends Error {
     public statusCode: number = StatusCodes.INTERNAL_SERVER_ERROR;
-
+    public status = 'error';
+    
     constructor(message: string) {
         super(message);
     }

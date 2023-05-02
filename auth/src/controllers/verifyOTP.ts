@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { StatusCodes } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes';
 import { CustomRequest } from '../utils';
 import { debugLog } from '../server';
 import OTP from '../models/OTP';
@@ -17,8 +17,8 @@ const verifyOTP = async (req: CustomRequest, res: Response) => {
   if (!otpExists?.otp) {
     throw badRequestError('Invalid OTP');
   }
-    otpExists.otp = 0;
-    await otpExists.save();
+  otpExists.otp = 0;
+  await otpExists.save();
 
   const refreshToken = tokenGenerator(32);
   const ip = req.ip;
@@ -35,7 +35,9 @@ const verifyOTP = async (req: CustomRequest, res: Response) => {
   attachCookiesToResponse({ res, user, refreshToken: token.refreshToken });
 
   debugLog({ otpExists, user, token });
-  res.status(StatusCodes.OK).json({ status: 'OTP Verified Successfully', token })
+  res
+    .status(StatusCodes.OK)
+    .json({ status: 'OTP Verified Successfully', token });
 };
 
 export default verifyOTP;

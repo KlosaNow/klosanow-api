@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import Token from '../models/Token';
 import { attachCookiesToResponse } from '../utils/jwt';
-import { tokenGenerator } from '../helpers';
+import { successRes } from '../helpers';
 
 const loginUser = async (req: Request, res: Response) => {
   const { email, phoneNumber } = req.body;
@@ -22,25 +22,23 @@ const loginUser = async (req: Request, res: Response) => {
   }
 
   const existingToken = await Token.findOne({ user: user._id });
+  
   if (existingToken) {
     const { refreshToken } = existingToken;
     existingToken.otpVerified = false;
     await existingToken.save();
-    const otp = await sendOtpService(user._id);
+    const otp = await sendOtpService(user._id, '+23407013703549');
 
     attachCookiesToResponse({ res, user, refreshToken });
 
-    return res
-      .status(StatusCodes.OK)
-      .json({ status: 'Logged in successfully', existingToken, otp });
+    return res.status(StatusCodes.OK).json(successRes('OTP sent successfully'));
   }
 
-
-  const otp = await sendOtpService(user._id);
+  const otp = await sendOtpService(user._id, '+23407013703549');
 
   attachCookiesToResponse({ res, user });
 
-  res.status(StatusCodes.OK).json({ status: 'OTP sent successfully', otp });
+  res.status(StatusCodes.OK).json(successRes('OTP sent successfully'));
 };
 
 export default loginUser;

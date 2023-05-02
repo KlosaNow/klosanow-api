@@ -36,20 +36,21 @@ export const attachCookiesToResponse = ({
       signed: true,
       maxAge: oneHour,
     });
+  } else {
+    const refreshJWTToken = createJWT({ user, refreshToken });
+    res.cookie('accessToken', accessJWTToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      signed: true,
+      maxAge: oneHour,
+    });
+  
+    res.cookie('refreshToken', refreshJWTToken, {
+      httpOnly: true,
+      expires: new Date(Date.now() + oneDay),
+      secure: process.env.NODE_ENV === 'production',
+      signed: true,
+    });
   }
 
-  const refreshJWTToken = createJWT({ user, refreshToken });
-  res.cookie('accessToken', accessJWTToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    signed: true,
-    maxAge: oneHour,
-  });
-
-  res.cookie('refreshToken', refreshJWTToken, {
-    httpOnly: true,
-    expires: new Date(Date.now() + oneDay),
-    secure: process.env.NODE_ENV === 'production',
-    signed: true,
-  });
 };

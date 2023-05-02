@@ -6,6 +6,8 @@ import {
   phoneNumberValidator,
 } from "./validators";
 
+import { successRes, errorRes} from "./response";
+
 export {
   // Requesters
   getUserByEmailRequest,
@@ -19,4 +21,7 @@ export {
   requiredFieldsValidator,
   emailValidator,
   phoneNumberValidator,
+
+  successRes,
+  errorRes,
 };
