@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
+import lessonsRoutes from './routes/lessonRoutes'
 
 dotenv.config()
 
@@ -29,6 +30,8 @@ app.use(morgan('dev'))
 app.get("/", (request, response) => {
     response.json({message: "Welcome to the lessons microservice!"})
 })
+
+app.use('/lessons', lessonsRoutes)
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);

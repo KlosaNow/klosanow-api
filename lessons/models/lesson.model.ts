@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const lessonSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true
+        // required: true,
     },
     note: {
         type: String,
@@ -11,7 +11,7 @@ const lessonSchema = new mongoose.Schema({
     contentUrl: {
         type: String,
     },
-    private: {
+    isPrivate: {
         type: Boolean
     },
     size: {
