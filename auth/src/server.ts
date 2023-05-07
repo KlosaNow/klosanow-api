@@ -1,31 +1,69 @@
-import express, { Application } from "express";
-import mongoose from "mongoose";
-import cors from "cors";
-import dotenv from "dotenv";
+import express, { Application } from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import debug from 'debug';
+import * as expressWinston from 'express-winston';
+import helmet from 'helmet';
+import rateLimiter from 'express-rate-limit';
+import 'express-async-errors';
+import cookieParser from 'cookie-parser';
 
-import router from "./router";
+import loggerOptions from './middleware/winstonConfig';
+
+import router from './router';
+import errorHandlerMiddleware from './middleware/errorHandler';
+import notFoundMiddleWare from './middleware/notFound';
+import { DATABASE_URI, PORT, JWT_SECRET, DEBUG } from './utils/config';
 
 dotenv.config();
 
-const PORT: string | number = process.env.PORT || 3001;
-const DATABASE_URI: string | string = process.env.DATABASE_URI || "undefined";
+const app = express();
 
-const app: Application = express();
+export const debugLog: debug.IDebugger = debug('app');
 
+app.set('trust proxy', 1);
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 60,
+  })
+);
+app.use(helmet());
 app.use(cors());
+
 app.use(express.json());
+app.use(cookieParser(JWT_SECRET));
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/", router);
+if (!DEBUG) {
+  loggerOptions.meta = false;
+}
 
-mongoose
-  .connect(DATABASE_URI)
-  .then(() => {
-    console.log("Auth service: Connected to database");
+app.use(expressWinston.logger(loggerOptions));
+
+app.get('/', (req, res) => {
+  res.send('Auth service: Running');
+});
+app.use('/api/v1/', router);
+
+app.use(notFoundMiddleWare);
+app.use(errorHandlerMiddleware);
+
+const connectDB = async (url: string) => {
+  await mongoose.connect(url);
+};
+
+const start = async () => {
+  try {
+    await connectDB(DATABASE_URI!);
+    debugLog(`Auth service: Connected to database`);
     app.listen(PORT, () => {
-      console.log(`Auth service: Running on port ${PORT}`);
+      debugLog(`Auth service: Running on port ${PORT}`);
     });
-  })
-  .catch((error: Error) => {
-    console.error(error.message);
-  });
+  } catch (err) {
+    debugLog(err);
+  }
+};
+
+start();

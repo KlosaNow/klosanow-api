@@ -1,17 +1,12 @@
-import express, { Router } from "express";
-import { signUp, signIn, verifyUser } from "./controllers";
-import {
-  requiredFieldsValidator,
-  emailValidator,
-  phoneNumberValidator,
-} from "./helpers";
+import express, { Router } from 'express';
+import { registerUser, loginUser, verifyOTP, logout } from './controllers';
+import authenticateUser from './middleware/authenticateUser';
 
 const router: Router = express.Router();
 
-router
-  .route("/sign-up")
-  .post(requiredFieldsValidator, emailValidator, phoneNumberValidator, signUp);
-router.route("/sign-in").post(signIn);
-router.route("/verify-user/:authToken").post(verifyUser);
+router.route('/sign-up').post(registerUser);
+router.route('/sign-in').post(loginUser);
+router.route('/verify-otp').post(authenticateUser, verifyOTP);
+router.route('/logout').post(authenticateUser, logout);
 
 export default router;

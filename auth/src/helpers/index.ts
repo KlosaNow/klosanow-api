@@ -1,10 +1,12 @@
-import { getUserByEmailRequest, createUserRequest } from "./requesters";
-import { otpGenerator, authTokenGenerator } from "./generators";
+import { getUserByEmailRequest, createUserRequest } from './requesters';
+import { otpGenerator, tokenGenerator } from './generators';
 import {
   emailValidator,
   requiredFieldsValidator,
   phoneNumberValidator,
-} from "./validators";
+} from './validators';
+
+import { successRes, errorRes } from './response';
 
 export {
   // Requesters
@@ -13,10 +15,12 @@ export {
 
   // Generators
   otpGenerator,
-  authTokenGenerator,
+  tokenGenerator,
 
   // Validators
   requiredFieldsValidator,
   emailValidator,
   phoneNumberValidator,
+  successRes,
+  errorRes,
 };
