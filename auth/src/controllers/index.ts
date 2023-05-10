@@ -4,5 +4,6 @@ import verifyOTP from './auth/verifyOTP';
 import logout from './auth/logout';
 import getAllUsers from './user/getAllUsers';
 import getUserById from './user/getUserById';
+import getUserByEmail from './user/getUserByEmail';
 
-export { registerUser, loginUser, verifyOTP, logout, getAllUsers, getUserById };
+export { registerUser, loginUser, verifyOTP, logout, getAllUsers, getUserById, getUserByEmail };
