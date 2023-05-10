@@ -11,7 +11,8 @@ import cookieParser from 'cookie-parser';
 
 import loggerOptions from './middleware/winstonConfig';
 
-import router from './router';
+import authRouter from './routes/auth';
+import userRouter from './routes/user';
 import errorHandlerMiddleware from './middleware/errorHandler';
 import notFoundMiddleWare from './middleware/notFound';
 import { DATABASE_URI, PORT, JWT_SECRET, DEBUG } from './utils/config';
@@ -45,7 +46,8 @@ app.use(expressWinston.logger(loggerOptions));
 app.get('/', (req, res) => {
   res.send('Auth service: Running');
 });
-app.use('/api/v1/', router);
+app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/user', userRouter);
 
 app.use(notFoundMiddleWare);
 app.use(errorHandlerMiddleware);

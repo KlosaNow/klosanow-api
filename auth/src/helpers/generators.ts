@@ -22,3 +22,10 @@ export const tokenGenerator = (length: number) => {
 export const createTokenUser = (user: UserTypes) => {
   return { name: user.name, userId: user._id, role: user.role };
 };
+
+export const transformPhone = (phone: string, code='+234') => {
+  phone.replace(/\s/g, '');
+  const lastTen = phone.substring(phone.length - 10);
+  const fullNumber = `${code}${lastTen}`;
+  return fullNumber;
+}

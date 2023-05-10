@@ -1,11 +1,11 @@
-import sendOtpService from '../services/otpService';
-import User from '../models/User';
-import { badRequestError } from '../utils/CustomError';
+import sendOtpService from '../../services/otpService';
+import User from '../../models/User';
+import { badRequestError } from '../../utils/CustomError';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import Token from '../models/Token';
-import { attachCookiesToResponse } from '../utils/jwt';
-import { successRes } from '../helpers';
+import Token from '../../models/Token';
+import { attachCookiesToResponse } from '../../utils/jwt';
+import { successRes } from '../../helpers';
 
 const loginUser = async (req: Request, res: Response) => {
   const { email, phoneNumber } = req.body;

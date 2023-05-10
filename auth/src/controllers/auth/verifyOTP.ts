@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { CustomRequest } from '../utils';
-import { debugLog } from '../server';
-import OTP from '../models/OTP';
-import Token from '../models/Token';
-import { badRequestError } from '../utils/CustomError';
-import { tokenGenerator } from '../helpers';
-import { attachCookiesToResponse } from '../utils/jwt';
+import { CustomRequest } from '../../utils';
+import { debugLog } from '../../server';
+import OTP from '../../models/OTP';
+import Token from '../../models/Token';
+import { badRequestError } from '../../utils/CustomError';
+import { tokenGenerator } from '../../helpers';
+import { attachCookiesToResponse } from '../../utils/jwt';
 
 const verifyOTP = async (req: CustomRequest, res: Response) => {
   const { otp } = req.body;
