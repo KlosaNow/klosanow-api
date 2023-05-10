@@ -13,9 +13,15 @@ import loggerOptions from './middleware/winstonConfig';
 
 import authRouter from './routes/auth';
 import userRouter from './routes/user';
-import errorHandlerMiddleware from './middleware/errorHandler';
-import notFoundMiddleWare from './middleware/notFound';
+
 import { DATABASE_URI, PORT, JWT_SECRET, DEBUG } from './utils/config';
+
+import {
+  errorHandlerMiddleware,
+  notFoundMiddleWare,
+  authenticateUser,
+  authenticateAdminUser,
+} from './middleware';
 
 dotenv.config();
 
@@ -47,7 +53,7 @@ app.get('/', (req, res) => {
   res.send('Auth service: Running');
 });
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/user', userRouter);
+app.use('/api/v1/user', authenticateUser, authenticateAdminUser, userRouter);
 
 app.use(notFoundMiddleWare);
 app.use(errorHandlerMiddleware);

@@ -45,7 +45,23 @@ export interface UserType {
 }
 
 export interface JWTPayload {
-  user: UserTypes;
+  user: {
+    _id: string;
+    name?: string;
+    email: {
+      validate: {
+        validator: (arg0: string) => boolean;
+        message: string;
+      };
+    };
+    phoneNumber: {
+      validate: {
+        validator: (arg0: string) => boolean;
+        message: string;
+      };
+    };
+    role: string;
+  };
   refreshToken?: string;
 }
 

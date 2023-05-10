@@ -1,7 +1,6 @@
 import { badRequestError } from '../../utils/CustomError';
 import User from '../../models/User';
 import { Request, Response } from 'express';
-import mongoose from 'mongoose';
 import { successRes, transformPhone } from '../../helpers';
 
 import { attachCookiesToResponse } from '../../utils/jwt';
@@ -9,7 +8,7 @@ import { StatusCodes } from 'http-status-codes';
 import sendOtpService from '../../services/otpService';
 
 const registerUser = async (req: Request, res: Response) => {
-  const { email, name, phoneNumber } = req.body;
+  const { email, name, phoneNumber, role } = req.body;
 
   if (!email || !name || !phoneNumber) {
     throw badRequestError('Please provide all required fields');
@@ -24,8 +23,8 @@ const registerUser = async (req: Request, res: Response) => {
     );
   }
 
-    const newUser = new User({ email, name, phone });
-    await sendOtpService(newUser._id, phone);
+    const newUser = new User({ email, name, phoneNumber: phone, role });
+    // await sendOtpService(newUser._id, phone);
     await newUser.save()
     attachCookiesToResponse({ res, user: newUser });
 

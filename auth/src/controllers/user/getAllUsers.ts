@@ -1,12 +1,11 @@
 import { CustomRequest } from '../../utils';
 import User from '../../models/User';
 import { Request, Response } from 'express';
+import { successRes } from '../../helpers';
 
-const getAllUsers = (req: CustomRequest, res: Response) => {
-    const { user } = req;
-
-    console.log(user)
-    res.send(user)
-}
+const getAllUsers = async (req: CustomRequest, res: Response) => {
+  const users = await User.find({});
+  res.status(200).json(successRes('Users returned successfully', users));
+};
 
 export default getAllUsers;
