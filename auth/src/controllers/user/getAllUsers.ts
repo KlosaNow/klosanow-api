@@ -1,6 +1,6 @@
 import { CustomRequest } from '../../utils';
 import User from '../../models/User';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { successRes } from '../../helpers';
 
 const getAllUsers = async (req: CustomRequest, res: Response) => {
