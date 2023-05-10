@@ -32,6 +32,17 @@ const UserSchema = new mongoose.Schema<UserTypes>(
       enum: ['tutor', 'student'],
       default: 'student',
     },
+    createdLessons: {
+      type: Array,
+    },
+    savedLessons: {
+      type: Array,
+    },
+    notifications: [
+      {
+        type: String,
+      },
+    ]
   },
   { timestamps: true }
 );

@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { Types, SchemaDefinitionProperty } from 'mongoose';
 import { Request } from 'express';
 
 export interface UserTypes {
@@ -17,11 +17,9 @@ export interface UserTypes {
     };
   };
   role: string;
-  verificationToken: string;
-  isVerified: boolean;
-  verified: Date;
-  passwordToken: string;
-  passwordTokenExpiration: Date;
+  createdLessons: SchemaDefinitionProperty<[]>;
+  savedLessons: SchemaDefinitionProperty<[]>;
+  notifications: string[];
   createdAt: Date;
   updatedAt: Date;
 }

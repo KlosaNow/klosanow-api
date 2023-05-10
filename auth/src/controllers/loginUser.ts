@@ -27,14 +27,14 @@ const loginUser = async (req: Request, res: Response) => {
     const { refreshToken } = existingToken;
     existingToken.otpVerified = false;
     await existingToken.save();
-    const otp = await sendOtpService(user._id, phoneNumber);
+    const otp = await sendOtpService(user._id, '+234 701 370 3549');
 
     attachCookiesToResponse({ res, user, refreshToken });
 
     return res.status(StatusCodes.OK).json(successRes('OTP sent successfully'));
   }
 
-  const otp = await sendOtpService(user._id, phoneNumber);
+  const otp = await sendOtpService(user._id, '+2347013703549');
 
   attachCookiesToResponse({ res, user });
 

@@ -62,7 +62,9 @@ const start = async () => {
       debugLog(`Auth service: Running on port ${PORT}`);
     });
   } catch (err) {
+    const retrySeconds = 5;
     debugLog(err);
+    setTimeout(start, retrySeconds * 1000);
   }
 };
 
