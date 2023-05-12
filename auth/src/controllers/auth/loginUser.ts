@@ -1,11 +1,11 @@
-import sendOtpService from '../services/otpService';
-import User from '../models/User';
-import { badRequestError } from '../utils/CustomError';
+import sendOtpService from '../../services/otpService';
+import User from '../../models/User';
+import { badRequestError } from '../../utils/CustomError';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import Token from '../models/Token';
-import { attachCookiesToResponse } from '../utils/jwt';
-import { successRes } from '../helpers';
+import Token from '../../models/Token';
+import { attachCookiesToResponse } from '../../utils/jwt';
+import { successRes } from '../../helpers';
 
 const loginUser = async (req: Request, res: Response) => {
   const { email, phoneNumber } = req.body;
@@ -27,14 +27,14 @@ const loginUser = async (req: Request, res: Response) => {
     const { refreshToken } = existingToken;
     existingToken.otpVerified = false;
     await existingToken.save();
-    const otp = await sendOtpService(user._id, phoneNumber);
+    const otp = await sendOtpService(user._id, '+234 701 370 3549');
 
     attachCookiesToResponse({ res, user, refreshToken });
 
     return res.status(StatusCodes.OK).json(successRes('OTP sent successfully'));
   }
 
-  const otp = await sendOtpService(user._id, phoneNumber);
+  const otp = await sendOtpService(user._id, '+2347013703549');
 
   attachCookiesToResponse({ res, user });
 

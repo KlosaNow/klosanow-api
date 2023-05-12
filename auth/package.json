@@ -9,7 +9,8 @@
     "start": "node --unhandled-rejections=strict dist/server.js",
     "debug": "SET DEBUG=* && npm run start",
     "predev": "npm run build",
-    "dev": "SET DEBUG=* && nodemon dist/server.js"
+    "dev": "SET DEBUG=* && nodemon dist/server.js",
+    "profile": "npm run build && node --prof --no-logfile-per-isolate --log --logfile=example.log dist/server.js"
   },
   "repository": {
     "type": "git",

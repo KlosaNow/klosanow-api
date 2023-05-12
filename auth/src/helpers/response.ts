@@ -1,7 +1,8 @@
-export const successRes = (message: string) => {
+export const successRes = (message: string, data?: any) => {
   return {
     status: 'success',
     message,
+    data
   };
 };
 

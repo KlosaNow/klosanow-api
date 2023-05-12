@@ -24,8 +24,8 @@ export const attachCookiesToResponse = ({
   user: UserTypes;
   refreshToken?: string;
 }) => {
-  // const userObj = createTokenUser(user)
-  const accessJWTToken = createJWT({ user });
+  const { _id, email, phoneNumber, role } = user
+  const accessJWTToken = createJWT({ user: { _id, email, phoneNumber, role  }});
   const oneDay = 1000 * 60 * 60 * 24;
   const oneHour = 1000 * 60 * 60;
 
@@ -37,7 +37,7 @@ export const attachCookiesToResponse = ({
       maxAge: oneHour,
     });
   } else {
-    const refreshJWTToken = createJWT({ user, refreshToken });
+    const refreshJWTToken = createJWT({ user: { _id, email, phoneNumber, role  }, refreshToken });
     res.cookie('accessToken', accessJWTToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

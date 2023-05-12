@@ -1,9 +1,9 @@
 import { Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { CustomRequest } from '../utils';
-import Token from '../models/Token';
-import OTP from '../models/OTP';
-import { successRes } from '../helpers';
+import { CustomRequest } from '../../utils';
+import Token from '../../models/Token';
+import OTP from '../../models/OTP';
+import { successRes } from '../../helpers';
 
 const logout = async (req: CustomRequest, res: Response) => {
   const { user } = req;

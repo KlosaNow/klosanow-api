@@ -29,9 +29,20 @@ const UserSchema = new mongoose.Schema<UserTypes>(
     },
     role: {
       type: String,
-      enum: ['tutor', 'student'],
+      enum: ['tutor', 'student', 'admin'],
       default: 'student',
     },
+    createdLessons: {
+      type: Array,
+    },
+    savedLessons: {
+      type: Array,
+    },
+    notifications: [
+      {
+        type: String,
+      },
+    ]
   },
   { timestamps: true }
 );

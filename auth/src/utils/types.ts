@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { Types, SchemaDefinitionProperty } from 'mongoose';
 import { Request } from 'express';
 
 export interface UserTypes {
@@ -17,11 +17,9 @@ export interface UserTypes {
     };
   };
   role: string;
-  verificationToken: string;
-  isVerified: boolean;
-  verified: Date;
-  passwordToken: string;
-  passwordTokenExpiration: Date;
+  createdLessons: SchemaDefinitionProperty<[]>;
+  savedLessons: SchemaDefinitionProperty<[]>;
+  notifications: string[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -47,7 +45,23 @@ export interface UserType {
 }
 
 export interface JWTPayload {
-  user: UserTypes;
+  user: {
+    _id: string;
+    name?: string;
+    email: {
+      validate: {
+        validator: (arg0: string) => boolean;
+        message: string;
+      };
+    };
+    phoneNumber: {
+      validate: {
+        validator: (arg0: string) => boolean;
+        message: string;
+      };
+    };
+    role: string;
+  };
   refreshToken?: string;
 }
 
