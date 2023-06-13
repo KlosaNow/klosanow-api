@@ -18,6 +18,8 @@
   "author": "Klosanow team",
   "license": "ISC",
   "dependencies": {
+    "@infobip-api/sdk": "^0.2.0",
+    "africastalking": "^0.6.2",
     "axios": "^1.3.5",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
