@@ -8,8 +8,7 @@
     "prestart": "npm run build",
     "start": "node --unhandled-rejections=strict dist/server.js",
     "debug": "SET DEBUG=* && npm run start",
-    "predev": "npm run build",
-    "dev": "SET DEBUG=* && nodemon dist/server.js",
+    "dev": "SET DEBUG=* && ts-node-dev src/server.ts",
     "profile": "npm run build && node --prof --no-logfile-per-isolate --log --logfile=example.log dist/server.js"
   },
   "repository": {
@@ -35,6 +34,7 @@
     "mongoose": "^7.0.3",
     "nodemailer": "^6.9.1",
     "rimraf": "^5.0.0",
+    "ts-node-dev": "^2.0.0",
     "twilio": "^4.10.0",
     "validator": "^13.9.0",
     "winston": "^3.8.2",

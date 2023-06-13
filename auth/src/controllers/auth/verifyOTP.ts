@@ -14,7 +14,7 @@ const verifyOTP = async (req: CustomRequest, res: Response) => {
 
   const otpExists = await OTP.findOne({ user: user._id, otp });
 
-  if (!otpExists?.otp) {
+  if (!otpExists || !otpExists?.otp) {
     throw badRequestError('Invalid OTP');
   }
   otpExists.otp = 0;
@@ -23,6 +23,8 @@ const verifyOTP = async (req: CustomRequest, res: Response) => {
   const refreshToken = tokenGenerator(32);
   const ip = req.ip;
   const userAgent = req.headers['user-agent'];
+  
+  await Token.deleteMany({ user: user._id });
 
   const token = await Token.create({
     refreshToken,
@@ -33,6 +35,7 @@ const verifyOTP = async (req: CustomRequest, res: Response) => {
   });
 
   attachCookiesToResponse({ res, user, refreshToken: token.refreshToken });
+  await OTP.deleteMany({ user: user._id });
 
   debugLog({ otpExists, user, token });
   res

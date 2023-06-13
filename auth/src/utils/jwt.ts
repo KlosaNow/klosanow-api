@@ -38,7 +38,7 @@ export const attachCookiesToResponse = ({
     });
   } else {
     const refreshJWTToken = createJWT({ user: { _id, email, phoneNumber, role  }, refreshToken });
-    res.cookie('accessToken', accessJWTToken, {
+    res.cookie('accessToken', accessJWTToken, { 
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       signed: true,

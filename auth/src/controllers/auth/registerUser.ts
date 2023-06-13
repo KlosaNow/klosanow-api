@@ -24,7 +24,7 @@ const registerUser = async (req: Request, res: Response) => {
   }
 
     const newUser = new User({ email, name, phoneNumber: phone, role });
-    // await sendOtpService(newUser._id, phone);
+    await sendOtpService(newUser._id, phone);
     await newUser.save()
     attachCookiesToResponse({ res, user: newUser });
 
