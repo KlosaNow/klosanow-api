@@ -29,7 +29,7 @@ const registerUser = async (req: Request, res: Response) => {
     attachCookiesToResponse({ res, user: newUser });
 
   res
-    .status(StatusCodes.OK)
+    .status(StatusCodes.CREATED)
     .json(successRes('User created successfully. OTP sent'));
 };
 

@@ -68,3 +68,18 @@ export interface JWTPayload {
 export interface CustomRequest extends Request {
   user?: any;
 }
+
+export interface LessonTypes {
+  _id: string;
+  title: string;
+  about: string;
+  content: string;
+  videoUrl: string;
+  thumbnailUrl: string;
+  tag: string;
+  isPrivate: boolean;
+  videoSize: string;
+  user: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+}
