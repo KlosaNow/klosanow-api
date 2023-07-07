@@ -29,10 +29,22 @@ export const uploadFileToS3 = async (file: any) => {
   return { url: result.Location, size: fileSize };
 };
 
-export const deleteFileFromS3 = async (key: string) => {
-  const params = {
-    Bucket: `${process.env.AWS_BUCKET_NAME}`,
-    Key: key,
-  };
-  await s3.deleteObject(params).promise();
+export const deleteMultipleFileFromS3 = async (files: string[]): Promise<void> => {
+    const params = {
+        Bucket: `${process.env.AWS_BUCKET_NAME}`,
+        Delete: {
+            Objects: files.map((file) => ({ Key: file })),
+        }
+    }
+
+    await s3.deleteObjects(params).promise();
 };
+
+export const deleteFileFromS3 = async (key: string) => {
+    const params = {
+        Bucket: `${process.env.AWS_BUCKET_NAME}`,
+        Key: key
+    }
+
+    await s3.deleteObject(params).promise();
+}
