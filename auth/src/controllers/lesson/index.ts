@@ -1,7 +1,7 @@
-import deleteLesson from './deleteLesson'
-// import editLesson from './editLesson'
+import deleteLesson from './deleteLesson';
+import updateLesson from './updateLesson';
 // import getLesson from './getLesson'
 // import getAllLessons from './getAllLessons'
-import createLesson from './createLesson'
+import createLesson from './createLesson';
 
-export { createLesson, deleteLesson };
+export { createLesson, deleteLesson, updateLesson };

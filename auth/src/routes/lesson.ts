@@ -1,13 +1,13 @@
 import express, { Router } from 'express';
 import authenticateUser from '../middleware/authenticateUser';
-import { createLesson, deleteLesson } from '../controllers/lesson';
+import { createLesson, deleteLesson, updateLesson } from '../controllers/lesson';
 
 const router: Router = express.Router();
 
-router.post('/create', authenticateUser, createLesson);
-router.put('/update', authenticateUser);
-router.delete('/delete', authenticateUser, deleteLesson);
-router.get('/', authenticateUser);
-router.get('/lessons', authenticateUser);
+router.post('/create', createLesson);
+router.put('/update', updateLesson);
+router.delete('/delete', deleteLesson);
+router.get('/');
+router.get('/lessons');
 
 export default router;
