@@ -14,6 +14,7 @@ import loggerOptions from './middleware/winstonConfig';
 import authRouter from './routes/auth';
 import userRouter from './routes/user';
 import lessonRouter from './routes/lesson';
+import uploadRouter from './routes/upload';
 
 import { DATABASE_URI, PORT, JWT_SECRET, DEBUG } from './utils/config';
 
@@ -56,6 +57,7 @@ app.get('/', (req, res) => {
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/user', authenticateUser, authenticateAdminUser, userRouter);
 app.use('/api/v1/lesson', authenticateUser, lessonRouter)
+app.use('/api/v1/uploads', authenticateUser, uploadRouter)
 
 app.use(notFoundMiddleWare);
 app.use(errorHandlerMiddleware);

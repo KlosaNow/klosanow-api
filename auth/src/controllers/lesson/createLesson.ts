@@ -7,7 +7,7 @@ import Lesson from '../../models/Lesson';
 import { successRes } from '../../helpers';
 
 const createLesson = async (req: CustomRequest, res: Response) => {
-  const { title, about, content, videoUrl, thumbnailUrl, tag, isPrivate } =
+  const { title, about, content, videoUrl, thumbnailUrl, tag, isPrivate, videoSize } =
     req.body;
     const { user } = req
 
@@ -23,6 +23,7 @@ const createLesson = async (req: CustomRequest, res: Response) => {
         thumbnailUrl,
         tag,
         isPrivate,
+        videoSize,
         user: user.userId
     })
 

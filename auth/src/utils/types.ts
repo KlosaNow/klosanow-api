@@ -67,6 +67,7 @@ export interface JWTPayload {
 
 export interface CustomRequest extends Request {
   user?: any;
+  file?: any
 }
 
 export interface LessonTypes {
