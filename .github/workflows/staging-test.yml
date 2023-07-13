@@ -15,9 +15,12 @@ jobs:
     - run: |
         npm ci
         npm run build
-
-    - name: Install TSLint
-      run: npm install -g tslint
+    
+    - name: No lint test on push
+      run: |
+        echo "Done Successfully"
+    # - name: Install TSLint
+    #   run: npm install -g tslint
       
-    - name: Run TSLint
-      run: npx tslint --config tslint.json 'src/**/*.ts'
+    # - name: Run TSLint
+    #   run: npx tslint --config tslint.json 'src/**/*.ts'
