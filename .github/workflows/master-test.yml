@@ -1,0 +1,23 @@
+name: test every push and all pull_request
+
+on:
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    - run: |
+        npm ci
+        npm run build
+
+    - name: Install TSLint
+      run: npm install -g tslint
+      
+    - name: Run TSLint
+      run: npx tslint --config tslint.json 'src/**/*.ts'
