@@ -1,7 +1,7 @@
 name: test every push and all pull_request
 
 on:
-  pull_request:
+  push:
     branches: [ "staging" ]
 
 jobs:
