@@ -18,9 +18,18 @@ jobs:
     
     - name: No lint test on push
       run: |
-        echo "Done Successfully"
-    # - name: Install TSLint
-    #   run: npm install -g tslint
-      
-    # - name: Run TSLint
-    #   run: npx tslint --config tslint.json 'src/**/*.ts'
+        echo "Don't run lint test"
+    - name: Install SSH Key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        known_hosts: 'temporary'
+    - name: Adding Known Hosts
+      run: ssh-keyscan -H ${{ secrets.HOST_IP }} >> ~/.ssh/known_hosts
+    # - name: Deploy with rsync
+    #   run: rsync -avz * ${{ secrets.USER_ID }}@${{ secrets.HOST_IP }}:/home/ubuntu/api/
+    - name: Compress and deploy to remote a server
+      run: |
+        tar -czvf klosanow.tar.gz * >/dev/null
+        scp klosanow.tar.gz ${{ secrets.USER_ID }}@${{ secrets.HOST_IP }}:~/api/ && ssh ${{ secrets.USER_ID }}@${{ secrets.HOST_IP }} "tar -xf ~/api/klosanow.tar.gz -C ~/test/klosanow-api/"
+        ssh ${{ secrets.USER_ID }}@${{ secrets.HOST_IP }} 'sudo systemctl restart expressjs.service'
