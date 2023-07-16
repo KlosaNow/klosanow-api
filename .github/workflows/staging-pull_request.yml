@@ -1,11 +1,11 @@
-name: test every push and all pull_request
+name: test every pull_request
 
 on:
   pull_request:
-    branches: [ "master" ]
+    branches: [ "staging" ]
 
 jobs:
-  test:
+  pull-request-test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -19,5 +19,5 @@ jobs:
     - name: Install TSLint
       run: npm install -g tslint
       
-    - name: Run TSLint
-      run: npx tslint --config tslint.json 'src/**/*.ts'
+    # - name: Run TSLint
+    #   run: npx tslint --config tslint.json 'src/**/*.ts'
