@@ -33,6 +33,7 @@ const sendOtpService = async (userId: string, to: string, email: string) => {
   const smsRes = await sendSMS(phone, otp)
   const emailRes = await sendEmail(email, otp)
   debugLog(smsRes, emailRes);
+  return otp;
 };
 
 export default sendOtpService;

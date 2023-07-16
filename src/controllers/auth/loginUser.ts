@@ -34,11 +34,11 @@ const loginUser = async (req: Request, res: Response) => {
     return res.status(StatusCodes.OK).json(successRes('OTP sent successfully'));
   }
 
-  await sendOtpService(user._id, phoneNumber, email);
+  const otp = await sendOtpService(user._id, phoneNumber, email);
 
   attachCookiesToResponse({ res, user });
 
-  res.status(StatusCodes.OK).json(successRes('OTP sent successfully'));
+  res.status(StatusCodes.OK).json(successRes('OTP sent successfully', { otp }));
 };
 
 export default loginUser;
