@@ -84,3 +84,11 @@ export interface LessonTypes {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface NotificationTypes {
+  general: boolean;
+  channels: boolean;
+  studyChats: boolean;
+  subscription: boolean;
+  user: Types.ObjectId;
+}
