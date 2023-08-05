@@ -1,5 +1,5 @@
 import { Types, SchemaDefinitionProperty } from 'mongoose';
-import { Request } from 'express';
+import { Request } from 'express'
 
 export interface UserTypes {
   _id: string;

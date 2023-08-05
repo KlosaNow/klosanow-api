@@ -21,7 +21,7 @@ const LessonSchema = new mongoose.Schema<LessonTypes>(
     },
     thumbnailUrl: {
       type: String,
-      required: [true, 'Please include a thumbnail url'],
+      required: [false, 'Please include a thumbnail url'],
     },
     tag: {
       type: String,
@@ -36,7 +36,7 @@ const LessonSchema = new mongoose.Schema<LessonTypes>(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: [true, 'Please provide user'],
+      required: [false, 'Please provide user'],
     },
   },
   { timestamps: true }

@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, { Application } from 'express'
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -22,14 +22,21 @@ import {
   errorHandlerMiddleware,
   notFoundMiddleWare,
   authenticateUser,
+  authenticateUser2,
   authenticateAdminUser,
 } from './middleware';
+import { getUser } from './middleware/getUser';
 
 dotenv.config();
 
 const app = express();
 
 export const debugLog: debug.IDebugger = debug('app');
+
+const corsOptions = {
+  origin: 'http://localhost:5173',
+  credentials: true,
+};
 
 app.set('trust proxy', 1);
 app.use(
@@ -39,7 +46,7 @@ app.use(
   })
 );
 app.use(helmet());
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(cookieParser(JWT_SECRET));
@@ -56,7 +63,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/user', authenticateUser, authenticateAdminUser, userRouter);
-app.use('/api/v1/lesson', authenticateUser, lessonRouter)
+app.use('/api/v1/lesson', authenticateUser2, lessonRouter)
 app.use('/api/v1/uploads', authenticateUser, uploadRouter)
 
 app.use(notFoundMiddleWare);

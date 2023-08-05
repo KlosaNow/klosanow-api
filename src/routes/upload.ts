@@ -1,7 +1,7 @@
 import express, { Router } from 'express';
 import multer from 'multer'
 
-import authenticateUser from '../middleware/authenticateUser';
+import {authenticateUser} from '../middleware/authenticateUser';
 import uploadFileHandler from '../controllers/uploads/uploadFile';
 
 const router: Router = express.Router();
