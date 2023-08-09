@@ -84,3 +84,9 @@ export interface LessonTypes {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface Subscription {
+  _id: string;
+  subscriptionType: string;
+  user: Types.ObjectId
+}

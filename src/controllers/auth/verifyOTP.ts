@@ -33,7 +33,7 @@ const verifyOTP = async (req: CustomRequest, res: Response) => {
     user: user._id,
     otpVerified: true,
   });
-
+  await token.save()
   attachCookiesToResponse({ res, user, refreshToken: token.refreshToken });
   await OTP.deleteMany({ user: user._id });
 

@@ -15,6 +15,7 @@ import authRouter from './routes/auth';
 import userRouter from './routes/user';
 import lessonRouter from './routes/lesson';
 import uploadRouter from './routes/upload';
+import subscriptionRouter from './routes/subscription'
 
 import { DATABASE_URI, PORT, JWT_SECRET, DEBUG } from './utils/config';
 
@@ -65,6 +66,7 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/user', authenticateUser, authenticateAdminUser, userRouter);
 app.use('/api/v1/lesson', authenticateUser2, lessonRouter)
 app.use('/api/v1/uploads', authenticateUser, uploadRouter)
+app.use('/api/v1/sub', authenticateUser, subscriptionRouter)
 
 app.use(notFoundMiddleWare);
 app.use(errorHandlerMiddleware);
