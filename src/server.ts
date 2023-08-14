@@ -66,7 +66,7 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/user', authenticateUser, authenticateAdminUser, userRouter);
 app.use('/api/v1/lesson', authenticateUser2, lessonRouter)
 app.use('/api/v1/uploads', authenticateUser, uploadRouter)
-app.use('/api/v1/sub', authenticateUser, subscriptionRouter)
+app.use('/api/v1/subscription', authenticateUser, subscriptionRouter)
 
 app.use(notFoundMiddleWare);
 app.use(errorHandlerMiddleware);

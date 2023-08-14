@@ -10,10 +10,17 @@ const createPremuimSubscription = async(req: CustomRequest, res: Response) => {
     let amount = 10000
     const user = req.user
 
-    if (subType == 'premium plan'){
+    const startDate = new Date();
+    const endDate = new Date(startDate);
+    endDate.setMonth(startDate.getMonth() + 1);
+
+    if (subType == 'premium'){
         const sub = new subscription({
             subscriptionType: subType,
-            user: user._id
+            user: user._id,
+            isActive: true,
+            startDate: startDate,
+            endDate: endDate
         })
         await sub.save()
         const pay = makePayment(amount, user.email, user.name).then((data) => {

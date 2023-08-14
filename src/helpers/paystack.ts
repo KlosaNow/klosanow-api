@@ -6,9 +6,11 @@ import { errorRes } from './response'
 const p = paystack.default(`${process.env.PAYSTACK_SECRET_KEY}`)
 
 const makePayment = async(amount: number, email: string, name: string) => {
-    try {
+    try {        
         const key = process.env.PAYSTACK_SECRET_KEY
-        const ref = randToken.generate(16)
+        const pre = 'KLSN'
+        const random = randToken.generate(7)
+        const ref = pre + random
         const init = await p.transaction.initialize({
             key: key,
             amount: amount * 100,

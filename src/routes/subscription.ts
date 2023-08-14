@@ -4,7 +4,7 @@ import {createBasicSubscription, createPremiumSubscription} from '../controllers
 
 const router: Router = express.Router()
 
-router.route('/make-basic-sub').post(createBasicSubscription)
-router.route('/make-premium-sub').post(createPremiumSubscription)
+router.route('/plan/basic').post(createBasicSubscription)
+router.route('/plan/premium').post(createPremiumSubscription)
 
 export default router

@@ -88,5 +88,8 @@ export interface LessonTypes {
 export interface Subscription {
   _id: string;
   subscriptionType: string;
-  user: Types.ObjectId
+  user: Types.ObjectId;
+  startDate: Date,
+  endDate: Date;
+  isActive: boolean,
 }
