@@ -7,7 +7,7 @@ import { StatusCodes } from 'http-status-codes';
 import { successRes } from '../../helpers';
 
 const updateLesson = async (req: CustomRequest, res: Response) => {
-  const { lessonId } = req.params;
+  const { lessonId } = req.query;
   const {
     title,
     about,
@@ -34,8 +34,7 @@ const updateLesson = async (req: CustomRequest, res: Response) => {
     await deleteFileFromS3(thumbnailKey!);
   }
 
-  const updatedLesson = await Lesson.findByIdAndUpdate(
-    { _id: lessonId },
+  const updatedLesson = await lesson.updateOne(
     {
       title: title || lesson.title,
       about: about || lesson.about,
@@ -46,9 +45,8 @@ const updateLesson = async (req: CustomRequest, res: Response) => {
       isPrivate: isPrivate || lesson.isPrivate,
       videoSize: videoSize || lesson.videoSize,
     },
-    { new: true, runValidators: true }
+    { $new: true, runValidators: true }
   );
-
   res
     .status(StatusCodes.OK)
     .json(successRes('Lesson updated successfully', updatedLesson));

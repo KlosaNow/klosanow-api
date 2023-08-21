@@ -4,9 +4,9 @@ import { Response } from 'express';
 import { createTokenUser } from '../helpers/generators';
 
 // create the JWT Token
-export const createJWT = (payload: JWTPayload) => {
+export const createJWT = async (payload: JWTPayload) => {
   const secret = process.env.JWT_SECRET!;
-  const token = jwt.sign(payload, secret);
+  const token = await jwt.sign(payload, secret);
   return token;
 };
 
@@ -35,7 +35,7 @@ export const attachCookiesToResponse = ({
       secure: process.env.NODE_ENV === 'production',
       signed: true,
       maxAge: oneHour,
-    });
+    })
   } else {
     const refreshJWTToken = createJWT({ user: { _id, email, phoneNumber, role  }, refreshToken });
     res.cookie('accessToken', accessJWTToken, { 
@@ -43,7 +43,7 @@ export const attachCookiesToResponse = ({
       secure: process.env.NODE_ENV === 'production',
       signed: true,
       maxAge: oneHour,
-    });
+    })
 
     res.cookie('refreshToken', refreshJWTToken, {
       httpOnly: true,

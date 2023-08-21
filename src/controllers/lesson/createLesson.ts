@@ -4,12 +4,13 @@ import {uploadFileToS3} from '../../services/awsService'
 import { CustomRequest } from '../../utils';
 import { badRequestError } from '../../utils/CustomError';
 import Lesson from '../../models/Lesson';
-import { successRes } from '../../helpers';
+import { successRes } from '../../helpers';0
 
 const createLesson = async (req: CustomRequest, res: Response) => {
   const { title, about, content, tag, isPrivate } =
     req.body;
-    const {user}  = req.user
+    const user  = req.user
+    
 
     if (!title || !about || !content) {
         throw badRequestError('Please provide all required fields');
@@ -26,7 +27,7 @@ const createLesson = async (req: CustomRequest, res: Response) => {
         tag,
         isPrivate,
         videoSize,
-        user: user._id
+        user: user.id
     })
 
     await lesson.save()

@@ -4,8 +4,9 @@ import { badRequestError } from '../../utils/CustomError';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import Token from '../../models/Token';
-import { attachCookiesToResponse } from '../../utils/jwt';
+import { attachCookiesToResponse, createJWT } from '../../utils/jwt';
 import { successRes } from '../../helpers';
+
 
 const loginUser = async (req: Request, res: Response) => {
   const { email, phoneNumber } = req.body;
@@ -21,6 +22,8 @@ const loginUser = async (req: Request, res: Response) => {
     );
   }
 
+  const token = await createJWT({user})
+
   const existingToken = await Token.findOne({ user: user._id });
 
   if (existingToken) {
@@ -31,14 +34,14 @@ const loginUser = async (req: Request, res: Response) => {
 
     attachCookiesToResponse({ res, user, refreshToken });
 
-    return res.status(StatusCodes.OK).json(successRes('OTP sent successfully'));
+    return res.status(StatusCodes.OK).json(successRes('OTP sent successfully', {token: token}));
   }
 
   const otp = await sendOtpService(user._id, phoneNumber, email);
 
   attachCookiesToResponse({ res, user });
 
-  res.status(StatusCodes.OK).json(successRes('OTP sent successfully', { otp }));
+  res.status(StatusCodes.OK).json(successRes('OTP sent successfully', { otp, token }));
 };
 
 export default loginUser;
