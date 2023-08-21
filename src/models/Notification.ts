@@ -1,29 +1,19 @@
 import mongoose from "mongoose";
-import { NotificationTypes } from "../utils/types";
+import { NotificationTypes, NotificationType } from "../utils/types";
 
 const NotificationSchema = new mongoose.Schema<NotificationTypes>(
   {
-    general: {
-      type: Boolean,
-      default: false,
-    },
-    channels: {
-      type: Boolean,
-      default: false,
-    },
-    studyChats: {
-      type: Boolean,
-      default: false,
-    },
-    subscription: {
-      type: Boolean,
-      default: false,
-    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
+    type: {
+      type: String,
+      enum: Object.values(NotificationType),
+      required: true,
+    },
+    content: { type: String, required: true },
   },
   { timestamps: true }
 );

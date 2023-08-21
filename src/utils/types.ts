@@ -1,5 +1,5 @@
-import { Types, SchemaDefinitionProperty } from 'mongoose';
-import { Request } from 'express';
+import { Types, SchemaDefinitionProperty } from "mongoose";
+import { Request } from "express";
 
 export interface UserTypes {
   _id: string;
@@ -67,7 +67,7 @@ export interface JWTPayload {
 
 export interface CustomRequest extends Request {
   user?: any;
-  file?: any
+  file?: any;
 }
 
 export interface LessonTypes {
@@ -85,10 +85,16 @@ export interface LessonTypes {
   updatedAt: Date;
 }
 
+export enum NotificationType {
+  general = "general",
+  channels = "channels",
+  studyChats = "studyChats",
+  subscription = "subscription",
+}
+
 export interface NotificationTypes {
-  general: boolean;
-  channels: boolean;
-  studyChats: boolean;
-  subscription: boolean;
   user: Types.ObjectId;
+  type: NotificationType;
+  content: string;
+  //   read: boolean; this is meant to indicate if a notification has been read or not
 }
