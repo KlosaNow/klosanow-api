@@ -1,6 +1,6 @@
 import {CustomRequest} from '../../utils'
 import User from '../../models/User';
-import subscription from '../../models/subscription';
+import Subscription from '../../models/Subscription';
 import { Response } from 'express';
 import { successRes } from '../../helpers'
 import makePayment from '../../helpers/paystack'
@@ -15,7 +15,7 @@ const createPremuimSubscription = async(req: CustomRequest, res: Response) => {
     endDate.setMonth(startDate.getMonth() + 1);
 
     if (subType == 'premium'){
-        const sub = new subscription({
+        const sub = new Subscription({
             subscriptionType: subType,
             user: user._id,
             isActive: true,
