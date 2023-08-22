@@ -91,10 +91,3 @@ export enum NotificationType {
   studyChats = "studyChats",
   subscription = "subscription",
 }
-
-export interface NotificationTypes {
-  user: Types.ObjectId;
-  type: NotificationType;
-  content: string;
-  //   read: boolean; this is meant to indicate if a notification has been read or not
-}

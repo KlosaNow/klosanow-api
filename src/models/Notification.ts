@@ -1,7 +1,15 @@
-import mongoose from "mongoose";
-import { NotificationTypes, NotificationType } from "../utils/types";
+import mongoose, { Schema, Document } from "mongoose";
+import { NotificationType } from "../utils/types";
 
-const NotificationSchema = new mongoose.Schema<NotificationTypes>(
+interface INotification extends Document {
+  user: mongoose.Types.ObjectId;
+  type: NotificationType;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const NotificationSchema = new Schema<INotification>(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -13,11 +21,17 @@ const NotificationSchema = new mongoose.Schema<NotificationTypes>(
       enum: Object.values(NotificationType),
       required: true,
     },
-    content: { type: String, required: true },
+    content: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
 
-const Notification = mongoose.model("Notification", NotificationSchema);
+const Notification = mongoose.model<INotification>(
+  "Notification",
+  NotificationSchema
+);
 
 export default Notification;
