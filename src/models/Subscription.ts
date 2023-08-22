@@ -28,6 +28,6 @@ const SubscriptionSchema = new mongoose.Schema<Subscription>({
     }
 }, {timestamps: true})
 
-const subscription = mongoose.model('Subscription', SubscriptionSchema);
+const Subscription = mongoose.model('Subscription', SubscriptionSchema);
 
-export default subscription;
+export default Subscription;
