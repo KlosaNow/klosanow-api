@@ -93,3 +93,12 @@ export interface Subscription {
   endDate: Date;
   isActive: boolean,
 }
+
+export interface Transaction {
+  _id: string;
+  ref: string;
+  user: Types.ObjectId;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
