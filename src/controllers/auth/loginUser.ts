@@ -4,7 +4,7 @@ import { badRequestError } from '../../utils/CustomError';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import Token from '../../models/Token';
-import { attachCookiesToResponse, createJWT } from '../../utils/jwt';
+import { createJWT, generateRefreshToken } from '../../utils/jwt';
 import { successRes } from '../../helpers';
 
 
@@ -26,20 +26,27 @@ const loginUser = async (req: Request, res: Response) => {
 
   const existingToken = await Token.findOne({ user: user._id });
 
+  const refreshToken = generateRefreshToken({user})
+  res.cookie('refreshToken', refreshToken, {
+    httpOnly: true,
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+    secure: true, // Set to true if using HTTPS
+});
+
   if (existingToken) {
-    const { refreshToken } = existingToken;
+    const refreshToken1 = existingToken;
     existingToken.otpVerified = false;
     await existingToken.save();
     const otp = await sendOtpService(user._id, phoneNumber, email);
 
-    attachCookiesToResponse({ res, user, refreshToken });
+    // attachCookiesToResponse({ res, user, refreshToken });
 
     return res.status(StatusCodes.OK).json(successRes('OTP sent successfully', {token: token}));
   }
 
   const otp = await sendOtpService(user._id, phoneNumber, email);
 
-  attachCookiesToResponse({ res, user });
+  // attachCookiesToResponse({ res, user });
 
   res.status(StatusCodes.OK).json(successRes('OTP sent successfully', { otp, token }));
 };

@@ -6,7 +6,8 @@ import OTP from '../../models/OTP';
 import Token from '../../models/Token';
 import { badRequestError } from '../../utils/CustomError';
 import { tokenGenerator } from '../../helpers';
-import { attachCookiesToResponse } from '../../utils/jwt';
+import { generateRefreshToken } from '../../utils/jwt';
+// import { attachCookiesToResponse } from '../../utils/jwt';
 
 const verifyOTP = async (req: CustomRequest, res: Response) => {
   const { otp } = req.body;
@@ -20,7 +21,12 @@ const verifyOTP = async (req: CustomRequest, res: Response) => {
   otpExists.otp = 0;
   await otpExists.save();
 
-  const refreshToken = tokenGenerator(32);
+  const refreshToken = generateRefreshToken(user)
+  res.cookie('refreshToken', refreshToken, {
+    httpOnly: true,
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+    secure: true, // Set to true if using HTTPS
+  });
   const ip = req.ip;
   const userAgent = req.headers['user-agent'];
   
@@ -34,7 +40,7 @@ const verifyOTP = async (req: CustomRequest, res: Response) => {
     otpVerified: true,
   });
   await token.save()
-  attachCookiesToResponse({ res, user, refreshToken: token.refreshToken });
+  // attachCookiesToResponse({ res, user, refreshToken: token.refreshToken });
   await OTP.deleteMany({ user: user._id });
 
   debugLog({ otpExists, user, token });
