@@ -2,8 +2,8 @@ import {CustomRequest} from '../../utils'
 import User from '../../models/User';
 import Subscription from '../../models/Subscription';
 import { Response } from 'express';
-import { successRes } from '../../helpers'
-import makePayment from '../../helpers/paystack'
+import { successRes, payWithPaystack } from '../../helpers'
+
 
 const createPremuimSubscription = async(req: CustomRequest, res: Response) => {
     const {subType} = req.body
@@ -23,7 +23,7 @@ const createPremuimSubscription = async(req: CustomRequest, res: Response) => {
             endDate: endDate
         })
         await sub.save()
-        const pay = makePayment(amount, user.email, user.name).then((data) => {
+        const pay = payWithPaystack(amount, user.email, user.name).then((data) => {
             return res.status(200).json(successRes("Payment made successfully", data))})
     }
 
