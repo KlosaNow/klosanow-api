@@ -7,6 +7,7 @@ import {
 } from './validators';
 
 import { successRes, errorRes } from './response';
+import { payWithPaystack } from './payment'
 
 export {
   // Requesters
@@ -25,4 +26,7 @@ export {
   phoneNumberValidator,
   successRes,
   errorRes,
+
+  // Payment
+  payWithPaystack,
 };
