@@ -7,6 +7,7 @@ import { successRes } from '../../helpers';
 
 const logout = async (req: CustomRequest, res: Response) => {
   const { user } = req;
+  console.log('user', req.user)
 
   await Token.findOneAndDelete({ user: user._id });
   await OTP.findOneAndDelete({ user: user._id });

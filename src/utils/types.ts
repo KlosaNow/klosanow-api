@@ -84,3 +84,23 @@ export interface LessonTypes {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface Subscription {
+  _id: string;
+  subscriptionType: string;
+  user: Types.ObjectId;
+  startDate: Date,
+  endDate: Date;
+  isActive: boolean,
+}
+
+export interface Transaction {
+  _id: string;
+  ref: string;
+  user: Types.ObjectId;
+  method: string;
+  gateway: string;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

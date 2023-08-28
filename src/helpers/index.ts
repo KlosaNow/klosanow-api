@@ -1,5 +1,5 @@
 import { getUserByEmailRequest, createUserRequest } from './requesters';
-import { otpGenerator, tokenGenerator, transformPhone } from './generators';
+import { otpGenerator, tokenGenerator, refGenerator, transformPhone } from './generators';
 import {
   emailValidator,
   requiredFieldsValidator,
@@ -7,6 +7,7 @@ import {
 } from './validators';
 
 import { successRes, errorRes } from './response';
+import { payWithPaystack } from './payment'
 
 export {
   // Requesters
@@ -16,6 +17,7 @@ export {
   // Generators
   otpGenerator,
   tokenGenerator,
+  refGenerator,
   transformPhone,
 
   // Validators
@@ -24,4 +26,7 @@ export {
   phoneNumberValidator,
   successRes,
   errorRes,
+
+  // Payment
+  payWithPaystack,
 };

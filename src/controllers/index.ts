@@ -5,5 +5,8 @@ import logout from './auth/logout';
 import getAllUsers from './user/getAllUsers';
 import getUserById from './user/getUserById';
 import getUserByEmail from './user/getUserByEmail';
+import createBasicSubscription from './subscription/createBasicSubscription';
+import createPremiumSubscription from './subscription/createPremiumSubscription';
 
-export { registerUser, loginUser, verifyOTP, logout, getAllUsers, getUserById, getUserByEmail };
+export { registerUser, loginUser, verifyOTP, logout, getAllUsers, getUserById, getUserByEmail, createBasicSubscription, 
+    createPremiumSubscription };
