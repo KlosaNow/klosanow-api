@@ -11,13 +11,16 @@ const SubscriptionSchema = new mongoose.Schema<Subscription>({
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required: true
     },
     startDate: {
-        type: Date
+        type: Date,
+        required: true
     },
     endDate: {
-        type: Date
+        type: Date,
+        required: true
     },
     isActive: {
         type: Boolean,
@@ -25,6 +28,6 @@ const SubscriptionSchema = new mongoose.Schema<Subscription>({
     }
 }, {timestamps: true})
 
-const subscription = mongoose.model('Subscription', SubscriptionSchema);
+const Subscription = mongoose.model('Subscription', SubscriptionSchema);
 
-export default subscription;
+export default Subscription;
