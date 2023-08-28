@@ -6,8 +6,9 @@ import { errorRes } from "./response";
 import dotenv from "dotenv";
 dotenv.config();
 
-const p = paystack.default(`${process.env.PAYSTACK_SECRET_KEY}`);
+const PAYMENT_GATEWAY = "Paystack"
 
+const p = paystack.default(`${process.env.PAYSTACK_SECRET_KEY}`);
 const makePayment = async (amount: number, email: string, name: string) => {
     try {
         const key = process.env.PAYSTACK_SECRET_KEY;
@@ -17,6 +18,7 @@ const makePayment = async (amount: number, email: string, name: string) => {
         const newTransaction = new Transaction({
             user: user,
             ref: ref,
+            gateway: PAYMENT_GATEWAY,
         });
 
         const init = await p.transaction.initialize({
@@ -29,6 +31,7 @@ const makePayment = async (amount: number, email: string, name: string) => {
 
         // if there is a way to get the transaction status from paystack,
         // then, newTransaction.status should updated here
+        
         await newTransaction.save();
         return init;
     } catch (err: any) {

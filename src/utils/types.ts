@@ -98,6 +98,8 @@ export interface Transaction {
   _id: string;
   ref: string;
   user: Types.ObjectId;
+  method: string;
+  gateway: string;
   status: string;
   createdAt: Date;
   updatedAt: Date;

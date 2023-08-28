@@ -13,6 +13,14 @@ const TransactionSchema = new mongoose.Schema<Transaction>({
         type: String,
         required: true
     },
+    method: {    // card, transfer etc.
+        type: String, 
+        // required: true
+    },
+    gateway: {   // paystack, flutterwave, stripe etc.
+        type: String,
+        required: true,
+    },  
     status: {
         type: String,
         enum: ['successful', 'unsuccessful', 'pending', 'cancelled'],
