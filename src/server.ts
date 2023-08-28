@@ -1,4 +1,4 @@
-import express, { Application } from 'express'
+import express from 'express'
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -26,7 +26,6 @@ import {
   authenticateUser2,
   authenticateAdminUser,
 } from './middleware';
-import { getUser } from './middleware/getUser';
 
 dotenv.config();
 

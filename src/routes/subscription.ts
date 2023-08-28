@@ -1,5 +1,4 @@
 import express, { Router } from 'express';
-import {authenticateUser} from '../middleware/authenticateUser';
 import {createBasicSubscription, createPremiumSubscription} from '../controllers/'
 
 const router: Router = express.Router()

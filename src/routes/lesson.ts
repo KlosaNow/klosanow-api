@@ -1,6 +1,5 @@
 import express, { Router } from 'express';
 import multer from 'multer'
-import {authenticateUser} from '../middleware/authenticateUser'
 import { createLesson, deleteLesson, updateLesson, getLesson, getAllLessons } from '../controllers/lesson';
 
 const router: Router = express.Router();

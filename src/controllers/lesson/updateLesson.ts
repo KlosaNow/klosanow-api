@@ -1,6 +1,6 @@
 import { CustomRequest } from '../../utils';
 import Lesson from '../../models/Lesson';
-import { badRequestError, notFoundError } from '../../utils/CustomError';
+import { notFoundError } from '../../utils/CustomError';
 import { deleteFileFromS3 } from '../../services/awsService';
 import { Response } from 'express';
 import { StatusCodes } from 'http-status-codes';

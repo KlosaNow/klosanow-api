@@ -1,7 +1,6 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { JWTPayload, UserTypes } from './types';
 import { Response } from 'express';
-import { createTokenUser } from '../helpers/generators';
 
 // create the JWT Token
 export const createJWT = (payload: JWTPayload) => {

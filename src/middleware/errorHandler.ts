@@ -1,9 +1,4 @@
-import express, {
-  Request,
-  Response,
-  NextFunction,
-  ErrorRequestHandler,
-} from 'express';
+import { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
 const errorHandlerMiddleware: ErrorRequestHandler = (

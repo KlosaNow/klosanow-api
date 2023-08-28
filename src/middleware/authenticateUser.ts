@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import { verifyJWT, CustomRequest } from '../utils';
 import Token from '../models/Token';
 import { unAuthorizedError } from '../utils/CustomError';

@@ -1,7 +1,7 @@
 import { notFoundError } from "../../utils/CustomError";
 import Lesson from "../../models/Lesson";
 import { CustomRequest } from "../../utils";
-import { deleteFileFromS3, deleteMultipleFileFromS3 } from "../../services/awsService";
+import { deleteMultipleFileFromS3 } from "../../services/awsService";
 import { StatusCodes } from "http-status-codes";
 import { Response } from "express";
 import { successRes } from "../../helpers";
