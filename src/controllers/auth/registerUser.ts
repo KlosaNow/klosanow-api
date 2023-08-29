@@ -3,7 +3,7 @@ import User from '../../models/User';
 import { Request, Response } from 'express';
 import { successRes, transformPhone } from '../../helpers';
 
-import { attachCookiesToResponse } from '../../utils/jwt';
+// import { attachCookiesToResponse } from '../../utils/jwt';
 import { StatusCodes } from 'http-status-codes';
 import sendOtpService from '../../services/otpService';
 
@@ -26,7 +26,7 @@ const registerUser = async (req: Request, res: Response) => {
     const newUser = new User({ email, name, phoneNumber: phone, role });
     const otp = await sendOtpService(newUser._id, phone, email);
     await newUser.save()
-    attachCookiesToResponse({ res, user: newUser });
+    // attachCookiesToResponse({ res, user: newUser });
 
   res
     .status(StatusCodes.CREATED)
