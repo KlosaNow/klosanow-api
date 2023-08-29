@@ -1,5 +1,5 @@
 import { badRequestError } from '../../utils/CustomError';
-import User from '../../models/User';
+import { User } from '../../models';
 import { Request, Response } from 'express';
 import { successRes, transformPhone } from '../../helpers';
 

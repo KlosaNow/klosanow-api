@@ -1,9 +1,8 @@
 import sendOtpService from '../../services/otpService';
-import User from '../../models/User';
+import { Token, User } from '../../models';
 import { badRequestError } from '../../utils/CustomError';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import Token from '../../models/Token';
 import { attachCookiesToResponse } from '../../utils/jwt';
 import { successRes } from '../../helpers';
 

@@ -1,7 +1,7 @@
 import { CustomRequest, verifyJWT } from '../utils';
 import { Response, NextFunction } from 'express';
 
-import User from '../models/User'
+import { User } from '../models'
 
 export const getUser = async (req: CustomRequest,res: Response,next: NextFunction)=>{
     try {

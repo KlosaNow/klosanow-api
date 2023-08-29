@@ -1,5 +1,5 @@
 import { CustomRequest } from '../../utils';
-import User from '../../models/User';
+import { User } from '../../models';
 import { Response } from 'express';
 import { successRes } from '../../helpers';
 import { notFoundError } from '../../utils/CustomError';

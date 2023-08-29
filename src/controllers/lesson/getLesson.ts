@@ -1,6 +1,6 @@
 import { Response } from "express"
 import { CustomRequest } from "../../utils"
-import Lesson from "../../models/Lesson";
+import { Lesson } from "../../models";
 import { notFoundError } from "../../utils/CustomError";
 import { StatusCodes } from "http-status-codes";
 import { successRes } from "../../helpers";

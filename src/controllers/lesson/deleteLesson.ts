@@ -1,5 +1,5 @@
 import { notFoundError } from "../../utils/CustomError";
-import Lesson from "../../models/Lesson";
+import { Lesson } from "../../models";
 import { CustomRequest } from "../../utils";
 import { deleteMultipleFileFromS3 } from "../../services/awsService";
 import { StatusCodes } from "http-status-codes";

@@ -1,5 +1,5 @@
 import { CustomRequest } from '../../utils';
-import Lesson from '../../models/Lesson';
+import { Lesson } from '../../models';
 import { notFoundError } from '../../utils/CustomError';
 import { deleteFileFromS3 } from '../../services/awsService';
 import { Response } from 'express';

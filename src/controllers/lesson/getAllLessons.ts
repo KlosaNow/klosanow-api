@@ -1,5 +1,5 @@
 import { Response } from "express"
-import Lesson from "../../models/Lesson"
+import { Lesson } from "../../models"
 import { successRes } from "../../helpers"
 import { CustomRequest } from "../../utils"
 

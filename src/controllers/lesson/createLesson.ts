@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import {uploadFileToS3} from '../../services/awsService'
 import { CustomRequest } from '../../utils';
 import { badRequestError } from '../../utils/CustomError';
-import Lesson from '../../models/Lesson';
+import { Lesson } from '../../models';
 import { successRes } from '../../helpers';
 
 const createLesson = async (req: CustomRequest, res: Response) => {

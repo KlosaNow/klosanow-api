@@ -1,6 +1,5 @@
 import * as paystack from "paystack";
-import User from "../models/User";
-import Transaction from "../models/Transaction";
+import { Transaction, User } from "../models";
 import { refGenerator } from "./generators";
 import { errorRes } from "./response";
 import dotenv from "dotenv";

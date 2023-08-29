@@ -1,8 +1,7 @@
 import { Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { CustomRequest } from '../../utils';
-import Token from '../../models/Token';
-import OTP from '../../models/OTP';
+import { OTP, Token } from '../../models';
 import { successRes } from '../../helpers';
 
 const logout = async (req: CustomRequest, res: Response) => {

@@ -1,6 +1,6 @@
 import { Response, NextFunction } from 'express';
 import { verifyJWT, CustomRequest } from '../utils';
-import Token from '../models/Token';
+import { Token } from '../models';
 import { unAuthorizedError } from '../utils/CustomError';
 import { attachCookiesToResponse } from '../utils/jwt';
 

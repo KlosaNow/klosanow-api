@@ -1,5 +1,5 @@
 import { CustomRequest } from "../../utils";
-import Subscription from "../../models/Subscription";
+import { Subscription } from "../../models";
 import { Response } from "express";
 import { successRes, payWithPaystack } from "../../helpers";
 
