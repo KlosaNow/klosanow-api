@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-import { Transaction } from "../utils/types";
+import { TransactionType } from "../utils/types";
 
-const TransactionSchema = new mongoose.Schema<Transaction>(
+const TransactionSchema = new mongoose.Schema<TransactionType>(
     {
         user: {
             type: mongoose.Schema.Types.ObjectId,

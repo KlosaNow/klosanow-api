@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-import { Subscription } from "../utils/types";
+import { SubscriptionType } from "../utils/types";
 
-const SubscriptionSchema = new mongoose.Schema<Subscription>(
+const SubscriptionSchema = new mongoose.Schema<SubscriptionType>(
     {
         subscriptionType: {
             type: String,

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { LessonTypes } from "../utils/types";
+import { LessonType } from "../utils/types";
 
-const LessonSchema = new mongoose.Schema<LessonTypes>(
+const LessonSchema = new mongoose.Schema<LessonType>(
     {
         title: {
             type: String,

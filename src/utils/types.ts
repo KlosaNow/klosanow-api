@@ -70,7 +70,7 @@ export interface CustomRequest extends Request {
     file?: any;
 }
 
-export interface LessonTypes {
+export interface LessonType {
     _id: string;
     title: string;
     about: string;
@@ -85,7 +85,7 @@ export interface LessonTypes {
     updatedAt: Date;
 }
 
-export interface Subscription {
+export interface SubscriptionType {
     _id: string;
     subscriptionType: string;
     user: Types.ObjectId;
@@ -94,7 +94,7 @@ export interface Subscription {
     isActive: boolean;
 }
 
-export interface Transaction {
+export interface TransactionType {
     _id: string;
     ref: string;
     user: Types.ObjectId;
