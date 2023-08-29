@@ -1,4 +1,4 @@
-import { verifyJWT } from './jwt';
-import { CustomRequest } from './types';
+import { verifyJWT } from "./jwt";
+import { CustomRequest } from "./types";
 
 export { verifyJWT, CustomRequest };

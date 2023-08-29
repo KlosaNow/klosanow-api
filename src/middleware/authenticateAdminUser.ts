@@ -3,9 +3,9 @@ import { CustomRequest } from "../utils";
 import { unAuthorizedError } from "../utils/CustomError";
 
 const authenticateAdminUser = (
-  req: CustomRequest,
-  res: Response,
-  next: NextFunction
+    req: CustomRequest,
+    res: Response,
+    next: NextFunction
 ) => {
     const { user } = req;
     if (user.role !== "admin") {
