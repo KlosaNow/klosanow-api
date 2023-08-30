@@ -1,37 +1,26 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose from "mongoose";
 import { NotificationType } from "../utils/types";
 
-interface INotification extends Document {
-  user: mongoose.Types.ObjectId;
-  type: NotificationType;
-  content: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-const NotificationSchema = new Schema<INotification>(
-  {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+const NotificationSchema = new mongoose.Schema<NotificationType>(
+    {
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+        },
+        type: {
+            type: String,
+            enum: ["general", "channels", "studyChats", "subscription"],
+            required: [true, "please specify the type of notification"],
+        },
+        content: {
+            type: String,
+            required: true,
+        },
     },
-    type: {
-      type: String,
-      enum: Object.values(NotificationType),
-      required: true,
-    },
-    content: {
-      type: String,
-      required: true,
-    },
-  },
-  { timestamps: true }
+    { timestamps: true }
 );
 
-const Notification = mongoose.model<INotification>(
-  "Notification",
-  NotificationSchema
-);
+const Notification = mongoose.model("Notification", NotificationSchema);
 
 export default Notification;

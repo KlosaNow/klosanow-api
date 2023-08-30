@@ -1,44 +1,56 @@
-import sendOtpService from '../../services/otpService';
-import User from '../../models/User';
-import { badRequestError } from '../../utils/CustomError';
-import { Request, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
-import Token from '../../models/Token';
-import { attachCookiesToResponse } from '../../utils/jwt';
-import { successRes } from '../../helpers';
+import sendOtpService from "../../services/otpService";
+import { Token, User } from "../../models";
+import { badRequestError } from "../../utils/CustomError";
+import { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import { createJWT, generateRefreshToken } from "../../utils/jwt";
+import { successRes } from "../../helpers";
 
 const loginUser = async (req: Request, res: Response) => {
-  const { email, phoneNumber } = req.body;
+    const { email, phoneNumber } = req.body;
 
-  if (!email || !phoneNumber) {
-    throw badRequestError('Please provide all required fields');
-  }
+    if (!email || !phoneNumber) {
+        throw badRequestError("Please provide all required fields");
+    }
 
-  const user = await User.findOne({ email, phoneNumber });
-  if (!user) {
-    throw badRequestError(
-      'User with that email or phone number does not exist'
-    );
-  }
+    const user = await User.findOne({ email, phoneNumber });
+    if (!user) {
+        throw badRequestError(
+            "User with that email or phone number does not exist"
+        );
+    }
 
-  const existingToken = await Token.findOne({ user: user._id });
+    const token = await createJWT({ user });
 
-  if (existingToken) {
-    const { refreshToken } = existingToken;
-    existingToken.otpVerified = false;
-    await existingToken.save();
+    const existingToken = await Token.findOne({ user: user._id });
+
+    const refreshToken = generateRefreshToken({ user });
+    res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+        secure: true, // Set to true if using HTTPS
+    });
+
+    if (existingToken) {
+        const refreshToken1 = existingToken;
+        existingToken.otpVerified = false;
+        await existingToken.save();
+        const otp = await sendOtpService(user._id, phoneNumber, email);
+
+        // attachCookiesToResponse({ res, user, refreshToken });
+
+        return res
+            .status(StatusCodes.OK)
+            .json(successRes("OTP sent successfully", { token: token }));
+    }
+
     const otp = await sendOtpService(user._id, phoneNumber, email);
 
-    attachCookiesToResponse({ res, user, refreshToken });
+    // attachCookiesToResponse({ res, user });
 
-    return res.status(StatusCodes.OK).json(successRes('OTP sent successfully'));
-  }
-
-  const otp = await sendOtpService(user._id, phoneNumber, email);
-
-  attachCookiesToResponse({ res, user });
-
-  res.status(StatusCodes.OK).json(successRes('OTP sent successfully', { otp }));
+    res.status(StatusCodes.OK).json(
+        successRes("OTP sent successfully", { otp, token })
+    );
 };
 
 export default loginUser;
