@@ -6,7 +6,7 @@ import { StatusCodes } from "http-status-codes";
 import { successRes } from "../../helpers";
 
 const getLesson = async (req: CustomRequest, res: Response) => {
-    const { lessonId } = req.params;
+    const { lessonId } = req.query;
 
     const lesson = await Lesson.findById({ _id: lessonId });
     if (!lesson) {

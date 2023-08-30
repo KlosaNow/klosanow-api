@@ -23,7 +23,6 @@ import {
     errorHandlerMiddleware,
     notFoundMiddleWare,
     authenticateUser,
-    authenticateUser2,
     authenticateAdminUser,
 } from "./middleware";
 
@@ -63,7 +62,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", authenticateUser, authenticateAdminUser, userRouter);
-app.use("/api/v1/lesson", authenticateUser2, lessonRouter);
+app.use("/api/v1/lesson", authenticateUser, lessonRouter);
 app.use("/api/v1/uploads", authenticateUser, uploadRouter);
 app.use("/api/v1/subscription", authenticateUser, subscriptionRouter);
 
