@@ -1,45 +1,45 @@
-import mongoose from 'mongoose';
-import { LessonTypes } from '../utils/types';
+import mongoose from "mongoose";
+import { LessonType } from "../utils/types";
 
-const LessonSchema = new mongoose.Schema<LessonTypes>(
-  {
-    title: {
-      type: String,
-      required: [true, 'Please provide a lesson title'],
+const LessonSchema = new mongoose.Schema<LessonType>(
+    {
+        title: {
+            type: String,
+            required: [true, "Please provide a lesson title"],
+        },
+        about: {
+            type: String,
+            required: [true, "Please provide a lesson about"],
+        },
+        content: {
+            type: String,
+            required: [true, "Please include a lesson content"],
+        },
+        videoUrl: {
+            type: String,
+            required: [true, "Please include a video url"],
+        },
+        thumbnailUrl: {
+            type: String,
+            required: [false, "Please include a thumbnail url"],
+        },
+        tag: {
+            type: String,
+        },
+        isPrivate: {
+            type: Boolean,
+            default: false,
+        },
+        videoSize: {
+            type: String,
+        },
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: [false, "Please provide user"],
+        },
     },
-    about: {
-        type: String,
-        required: [true, 'Please provide a lesson about'],
-    },
-    content: {
-      type: String,
-      required: [true, 'Please include a lesson content'],
-    },
-    videoUrl: {
-      type: String,
-      required: [true, 'Please include a video url'],
-    },
-    thumbnailUrl: {
-      type: String,
-      required: [false, 'Please include a thumbnail url'],
-    },
-    tag: {
-      type: String,
-    },
-    isPrivate: {
-      type: Boolean,
-      default: false,
-    },
-    videoSize: {
-      type: String,
-    },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: [false, 'Please provide user'],
-    },
-  },
-  { timestamps: true }
+    { timestamps: true }
 );
 
-export default mongoose.model('Lesson', LessonSchema);
+export default mongoose.model("Lesson", LessonSchema);
