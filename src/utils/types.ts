@@ -104,3 +104,11 @@ export interface TransactionType {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export interface NotificationType {
+  user: Types.ObjectId;
+  type: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
