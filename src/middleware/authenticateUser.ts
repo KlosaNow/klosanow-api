@@ -24,10 +24,10 @@ export const authenticateUser = async (
   const payload = verifyJWT(token);
   req.user = payload.user;
 
-  const existingToken = await Token.findOne({
-    refreshToken: payload.refreshToken,
-    user: payload.user.userId,
-  });
+  // const existingToken = await Token.findOne({
+  //   refreshToken: payload.refreshToken,
+  //   user: payload.user.userId,
+  // });
 
 
   // res.json(attachCookiesToResponse({
@@ -46,9 +46,10 @@ export const authenticateUser3 = async (
   next: NextFunction
 ) => {
   const token = req.headers.authorization?.split(' ')[1];
+
   const refreshToken = req.cookies.refreshToken; // Assuming refresh token is stored in cookies
 
-  if (!token && !refreshToken) {
+  if (!token || !refreshToken) {
     throw unAuthorizedError('Authentication failed. Please try again.');
   }
 

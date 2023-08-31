@@ -21,7 +21,7 @@ const verifyOTP = async (req: CustomRequest, res: Response) => {
   otpExists.otp = 0;
   await otpExists.save();
 
-  const refreshToken = generateRefreshToken(user)
+  const refreshToken = await generateRefreshToken({user})
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
