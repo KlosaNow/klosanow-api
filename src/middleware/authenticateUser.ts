@@ -24,10 +24,10 @@ export const authenticateUser = async (
     const payload = verifyJWT(token);
     req.user = payload.user;
 
-    const existingToken = await Token.findOne({
-        refreshToken: payload.refreshToken,
-        user: payload.user.userId,
-    });
+  // const existingToken = await Token.findOne({
+  //   refreshToken: payload.refreshToken,
+  //   user: payload.user.userId,
+  // });
 
     // res.json(attachCookiesToResponse({
     //   res,

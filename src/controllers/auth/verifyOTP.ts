@@ -19,14 +19,16 @@ const verifyOTP = async (req: CustomRequest, res: Response) => {
     otpExists.otp = 0;
     await otpExists.save();
 
-    const refreshToken = generateRefreshToken(user);
-    res.cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
-        secure: true, // Set to true if using HTTPS
-    });
-    const ip = req.ip;
-    const userAgent = req.headers["user-agent"];
+  const refreshToken = await generateRefreshToken({user})
+  res.cookie('refreshToken', refreshToken, {
+    httpOnly: true,
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+    secure: true, // Set to true if using HTTPS
+  });
+  const ip = req.ip;
+  const userAgent = req.headers['user-agent'];
+  
+  await Token.deleteMany({ user: user._id });
 
     await Token.deleteMany({ user: user._id });
 

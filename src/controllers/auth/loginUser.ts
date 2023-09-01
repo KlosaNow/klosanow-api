@@ -41,7 +41,7 @@ const loginUser = async (req: Request, res: Response) => {
 
         return res
             .status(StatusCodes.OK)
-            .json(successRes("OTP sent successfully", { token: token }));
+            .json(successRes("OTP sent successfully", { token: token, otp }));
     }
 
     const otp = await sendOtpService(user._id, phoneNumber, email);
