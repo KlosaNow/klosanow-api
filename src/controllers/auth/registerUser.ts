@@ -1,7 +1,7 @@
-import { badRequestError } from '../../utils/CustomError';
-import User from '../../models/User';
-import { Request, Response } from 'express';
-import { successRes, transformPhone } from '../../helpers';
+import { badRequestError } from "../../utils/CustomError";
+import { User } from "../../models";
+import { Request, Response } from "express";
+import { successRes, transformPhone } from "../../helpers";
 
 // import { attachCookiesToResponse } from '../../utils/jwt';
 import { StatusCodes } from 'http-status-codes';
@@ -11,18 +11,18 @@ import { generateRefreshToken } from '../../utils/jwt';
 import Token from '../../models/Token';
 
 const registerUser = async (req: Request, res: Response) => {
-  const { email, name, phoneNumber, role } = req.body;
+    const { email, name, phoneNumber, role } = req.body;
 
-  if (!email || !name || !phoneNumber) {
-    throw badRequestError('Please provide all required fields');
+    if (!email || !name || !phoneNumber) {
+    throw badRequestError("Please provide all required fields");
   }
 
-  const phone = transformPhone(phoneNumber)
+  const phone = transformPhone(phoneNumber);
 
   const alreadyExists = await User.findOne({ email, phone });
   if (alreadyExists) {
     throw badRequestError(
-      'User with that email or phone number already exists'
+      "User with that email or phone number already exists"
     );
   }
 
@@ -49,4 +49,3 @@ const registerUser = async (req: Request, res: Response) => {
 };
 
 export default registerUser;
- 

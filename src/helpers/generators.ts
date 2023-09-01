@@ -1,6 +1,5 @@
 import crypto from "crypto";
-import OTP from "../models/OTP";
-import Transaction from "../models/Transaction";
+import { OTP, Transaction } from "../models";
 import { UserTypes } from "../utils/types";
 
 export const otpGenerator = async (userId: string): Promise<number> => {
