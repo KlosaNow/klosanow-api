@@ -4,7 +4,7 @@ import { badRequestError } from "../../utils/CustomError";
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { createJWT, generateRefreshToken } from "../../utils/jwt";
-import { successRes } from "../../helpers";
+import { successRes, transformPhone } from "../../helpers";
 
 const loginUser = async (req: Request, res: Response) => {
     const { email, phoneNumber } = req.body;
@@ -12,8 +12,9 @@ const loginUser = async (req: Request, res: Response) => {
     if (!email || !phoneNumber) {
         throw badRequestError("Please provide all required fields");
     }
+    const phone = transformPhone(phoneNumber);
 
-    const user = await User.findOne({ email, phoneNumber });
+    const user = await User.findOne({ email, phoneNumber: phone });
     if (!user) {
         throw badRequestError(
             "User with that email or phone number does not exist"
@@ -35,7 +36,7 @@ const loginUser = async (req: Request, res: Response) => {
         const refreshToken1 = existingToken;
         existingToken.otpVerified = false;
         await existingToken.save();
-        const otp = await sendOtpService(user._id, phoneNumber, email);
+        const otp = await sendOtpService(user._id, phone, email);
 
         // attachCookiesToResponse({ res, user, refreshToken });
 
@@ -44,7 +45,7 @@ const loginUser = async (req: Request, res: Response) => {
             .json(successRes("OTP sent successfully", { token: token, otp }));
     }
 
-    const otp = await sendOtpService(user._id, phoneNumber, email);
+    const otp = await sendOtpService(user._id, phone, email);
 
     // attachCookiesToResponse({ res, user });
 
