@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/user", userRouter);
+app.use("/api/v1", userRouter);
 
 app.get("/", (req: Request, res: Response) => {
     res.send("KlosaNow 🚀🚀🚀");
@@ -29,10 +29,10 @@ const start = async () => {
     try {
         await connectDB(DATABASE_URI!);
         app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`)
+            console.log(`Server is running on port ${PORT}`);
         });
     } catch (err: any) {
-        throw internalServerError(err.message)
+        throw internalServerError(err.message);
     }
 };
 

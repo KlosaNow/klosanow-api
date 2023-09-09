@@ -5,7 +5,6 @@ import logout from "./auth/logout";
 
 import getAllUsers from "./user/getAllUsers";
 import getUserById from "./user/getUserById";
-import getUserByEmail from "./user/getUserByEmail";
 
 export {
     // Auth
@@ -17,5 +16,4 @@ export {
     // User
     getAllUsers,
     getUserById,
-    getUserByEmail,
 };

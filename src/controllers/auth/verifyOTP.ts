@@ -24,11 +24,11 @@ const verifyOTP = async (req: CustomRequest, res: Response) => {
         // Create an access token and send it as a response
         // Create a refresh token and send it as a cookie.
         const accessToken = await createJWT({ user });
-        const refreshToken = generateRefreshToken({ user });
+        const refreshToken = await generateRefreshToken({ user });
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
             maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
-            secure: true, // Set to true if using HTTPS
+            secure: false, // Set to true if using HTTPS
         });
 
         await OTP.deleteMany({ user: user._id });
