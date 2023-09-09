@@ -1,8 +1,8 @@
-import { CustomRequest } from "../../utils";
-import { User } from "../../models";
 import { Response } from "express";
+
+import { User } from "../../models";
 import { successRes } from "../../helpers";
-import { notFoundError } from "../../utils/CustomError";
+import { CustomRequest, notFoundError } from "../../utils";
 
 const getUserByEmail = async (req: CustomRequest, res: Response) => {
     const { email } = req.query;

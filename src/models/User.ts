@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import validator from "validator";
 
-import { UserTypes } from "../utils/types";
+import { UserType } from "../utils/types";
 
-const UserSchema = new mongoose.Schema<UserTypes>(
+const UserSchema = new mongoose.Schema<UserType>(
     {
         name: {
             type: String,

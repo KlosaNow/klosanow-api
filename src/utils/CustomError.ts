@@ -1,9 +1,8 @@
-const { StatusCodes } = require("http-status-codes");
+import { StatusCodes } from "http-status-codes";
 
 class CustomError extends Error {
-    public statusCode: number = StatusCodes.INTERNAL_SERVER_ERROR;
     public status = "error";
-
+    public statusCode: number = StatusCodes.INTERNAL_SERVER_ERROR;
     constructor(message: string) {
         super(message);
     }
@@ -13,13 +12,17 @@ class CustomError extends Error {
         return this;
     };
 
-    unAuthorized = () => {
-        this.statusCode = StatusCodes.UNAUTHORIZED;
+    notFound = () => {
+        this.statusCode = StatusCodes.NOT_FOUND;
         return this;
     };
 
-    notFound = () => {
-        this.statusCode = StatusCodes.NOT_FOUND;
+    serverFailure = () => {
+        return this;
+    };
+
+    unAuthorized = () => {
+        this.statusCode = StatusCodes.UNAUTHORIZED;
         return this;
     };
 }
@@ -30,6 +33,12 @@ const createCustomError = (msg: string) => {
 
 export const badRequestError = (msg: string) =>
     createCustomError(msg).badRequest();
+
+export const internalServerError = (msg: string) =>
+    createCustomError(msg).serverFailure();
+
 export const unAuthorizedError = (msg: string) =>
     createCustomError(msg).unAuthorized();
-export const notFoundError = (msg: string) => createCustomError(msg).notFound();
+
+export const notFoundError = (msg: string) => 
+    createCustomError(msg).notFound();

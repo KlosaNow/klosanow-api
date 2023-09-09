@@ -1,5 +1,4 @@
 import { infobip } from "./otpService";
-
 import { INFOBIP_SENDER } from "../utils/config";
 
 const sendSMS = async (phone: string, otp: number) => {

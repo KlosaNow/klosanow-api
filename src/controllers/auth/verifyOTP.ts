@@ -1,51 +1,45 @@
 import { Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { CustomRequest } from "../../utils";
-import { debugLog } from "../../server";
-import { OTP, Token } from "../../models";
-import { badRequestError } from "../../utils/CustomError";
-import { generateRefreshToken } from "../../utils/jwt";
-// import { attachCookiesToResponse } from '../../utils/jwt';
+
+import { OTP } from "../../models";
+import {
+    errorRes,
+    createJWT,
+    successRes,
+    CustomRequest,
+    badRequestError,
+    generateRefreshToken,
+} from "../../utils";
 
 const verifyOTP = async (req: CustomRequest, res: Response) => {
-    const { otp } = req.body;
-    const { user } = req;
+    try {
+        const { otp } = req.body;
+        const { user } = req;
 
-    const otpExists = await OTP.findOne({ user: user._id, otp });
+        const otpExists = await OTP.findOne({ user: user._id, otp });
+        if (!otpExists) {
+            throw badRequestError("Invalid OTP");
+        }
 
-    if (!otpExists || !otpExists?.otp) {
-        throw badRequestError("Invalid OTP");
+        // Create an access token and send it as a response
+        // Create a refresh token and send it as a cookie.
+        const accessToken = await createJWT({ user });
+        const refreshToken = generateRefreshToken({ user });
+        res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+            secure: true, // Set to true if using HTTPS
+        });
+
+        await OTP.deleteMany({ user: user._id });
+        res.status(StatusCodes.OK).json(
+            successRes("OTP Verified Successfully", { token: accessToken })
+        );
+    } catch (err: any) {
+        res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(
+            errorRes(err.message)
+        );
     }
-    otpExists.otp = 0;
-    await otpExists.save();
-
-    const refreshToken = generateRefreshToken(user);
-    res.cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
-        secure: true, // Set to true if using HTTPS
-    });
-    const ip = req.ip;
-    const userAgent = req.headers["user-agent"];
-
-    await Token.deleteMany({ user: user._id });
-
-    const token = await Token.create({
-        refreshToken,
-        ip,
-        userAgent,
-        user: user._id,
-        otpVerified: true,
-    });
-    await token.save();
-    // attachCookiesToResponse({ res, user, refreshToken: token.refreshToken });
-    await OTP.deleteMany({ user: user._id });
-
-    debugLog({ otpExists, user, token });
-    res.status(StatusCodes.OK).json({
-        status: "OTP Verified Successfully",
-        token,
-    });
 };
 
 export default verifyOTP;

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 import { OTPType } from "../utils/types";
 
 const OTPSchema = new mongoose.Schema<OTPType>(
