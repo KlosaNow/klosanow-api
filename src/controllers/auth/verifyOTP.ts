@@ -33,7 +33,7 @@ const verifyOTP = async (req: CustomRequest, res: Response) => {
 
         await OTP.deleteMany({ user: user._id });
         res.status(StatusCodes.OK).json(
-            successRes("OTP Verified Successfully", { token: accessToken })
+            successRes("OTP Verified Successfully", { user, token: accessToken })
         );
     } catch (err: any) {
         res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(
