@@ -1,4 +1,4 @@
-# About
+# Documentation
 
 This is a simple documentation of the API routes, how to make requests to them and how they respond. The API routes are categorized by services. The following services have been implemented:
 
@@ -155,12 +155,16 @@ headers:
     "set-cookie": "refreshToken=eyJhbGciOJIUzi1NilsInR5cC161kpXVCJ9.eyJ1c2Vylip7119pZCI6IjY0ZmQ0YWEwYjCONDkzM2YODAYYmUzYSIsIm5hbWUiOiJOZWxzb24gRWxheWUILCJlbWFpbC161m5lbHNvbmVsYXlODcyQGdtYWlsLmNvbSisinBob25lTnVtYmVyljoiKz1zNDkwNzkwNzEzODcilCJyb2xlljoic3R1ZGVudClaimNyZWFOZWRMZXNzb25zljpbXSwic2F2ZWRMZXNzb25zljpbXSwibm90aWZpY2F0aW9ucy16W10slmNyZWF0ZWRBdC161IIwMjMIMDMTBUMDQ6NDg6MzluOTQ2WilsinVwZGF0ZWRBdCI6IjIwMIMIMDKIMTBUMDQ6NDg6MzluOTQ2Wilsl19fdil6MH0sImihdC16MTY5NDM1NjM30H0.ZK5ppxbtBNXsqKLFBqrjfw716L1PrWkA0Auk40HOqw8; Max-Age=604800; Path=/; Expires=Sun, 17 Sep 2023 14:32:58 GMT; HttpsOnly"
 }
 
-
 json:
 {
   "status": "success",
   "message": "OTP Verified Successfully",
   "data": {
+.    "user": {
+        "_id": "645b9453c723ba28c5cbd686",
+        "email": "johndoe@localhost.com",
+        "phoneNumber": "+2347013703549"
+     },
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0ZmQ0YWEwYjc0NDkzM2IyODAyYmUzYSIsIm5hbWUiOiJOZWxzb24gRWxheWUiLCJlbWFpbCI6Im5lbHNvbmVsYXllODcyQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiKzIzNDkwNzkwNzEzODciLCJyb2xlIjoic3R1ZGVudCIsImNyZWF0ZWRMZXNzb25zIjpbXSwic2F2ZWRMZXNzb25zIjpbXSwibm90aWZpY2F0aW9ucyI6W10sImNyZWF0ZWRBdCI6IjIwMjMtMDktMTBUMDQ6NDg6MzIuOTQ2WiIsInVwZGF0ZWRBdCI6IjIwMjMtMDktMTBUMDQ6NDg6MzIuOTQ2WiIsIl9fdiI6MH0sImlhdCI6MTY5NDM1NjM3OH0.ZK5ppxbtBNXsqKLF8qrjfw7i6LtPrWkA0Auk40HOqw8"
   }
 }
