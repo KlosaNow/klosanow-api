@@ -15,7 +15,7 @@ import {
 const loginUser = async (req: Request, res: Response) => {
     try {
         const { email, phoneNumber } = req.body;
-        if (!email.trim() || !phoneNumber.trim()) {
+        if (!email?.trim() || !phoneNumber?.trim()) {
             throw badRequestError("Please provide all required fields");
         }
         const phone = transformPhone(phoneNumber);
