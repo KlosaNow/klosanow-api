@@ -35,7 +35,7 @@ const loginUser = async (req: Request, res: Response) => {
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
             maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
-            secure: false, // Set to true if using HTTPS
+            secure: true, // Set to true if using HTTPS
         });
         const otp = await sendOtpService(user._id, email, phone);
 
