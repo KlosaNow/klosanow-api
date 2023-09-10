@@ -31,9 +31,9 @@ export interface OTPType {
 
 export interface JWTPayloadType {
     user: { 
-        _id: string,
-        email: string,
-        phoneNumber: string 
+        _id: string;
+        email: string;
+        phoneNumber: string;
     };
     refreshToken?: string;
 }
