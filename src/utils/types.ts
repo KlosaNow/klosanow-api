@@ -30,10 +30,20 @@ export interface OTPType {
 }
 
 export interface JWTPayloadType {
-    user: { 
+    user: {
         _id: string;
-        email: string;
-        phoneNumber: string;
+        email: {
+            validate: {
+                validator: (arg0: string) => boolean;
+                message: string;
+            };
+        };
+        phoneNumber: {
+            validate: {
+                validator: (arg0: string) => boolean;
+                message: string;
+            };
+        };
     };
     refreshToken?: string;
 }
