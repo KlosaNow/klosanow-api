@@ -40,5 +40,4 @@ export const internalServerError = (msg: string) =>
 export const unAuthorizedError = (msg: string) =>
     createCustomError(msg).unAuthorized();
 
-export const notFoundError = (msg: string) => 
-    createCustomError(msg).notFound();
+export const notFoundError = (msg: string) => createCustomError(msg).notFound();

@@ -1,6 +1,7 @@
 import { Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 
+import { getCookies } from "../helpers";
 import {
     errorRes,
     createJWT,
@@ -36,35 +37,40 @@ export const authenticateUser = async (
     next: NextFunction
 ) => {
     try {
-        let authkey: string | undefined;
+        let authKey: string | undefined;
         let token: string | undefined;
         const authHeader = req.headers.authorization;
-        console.log(authHeader);
-        if (authHeader) {
-            [authkey, token] = authHeader.split(" ");
-            if (authkey !== AUTH_KEY) {
-                throw badRequestError("Invalid authorization token.");
+        try {
+            if (authHeader) {
+                [authKey, token] = authHeader.split(" ");
+                if (authKey === AUTH_KEY) {
+                    if (token) {
+                        const payload = verifyJWT(token);
+                        req.user = payload.user;
+                        return next();
+                    }
+                }
             }
-            if (token) {
-                const payload = verifyJWT(token);
-                console.log(payload);
-                req.user = payload.user;
-                return next();
+            // If the authKey is invalid or there is no access token or it is invalid or expired, throw an error
+            throw badRequestError("Invalid authorization token.");
+        } catch (jwtError) {
+            // Catch the error from the access token and check for a refresh token
+            const cookies = req.headers.cookie;
+            if (cookies) {
+                const { refreshToken } = getCookies(cookies); 
+                if (refreshToken) {
+                    const payload = verifyJWT(refreshToken); // Assuming payload contains user info or user ID
+                    req.user = payload.user;
+
+                    // Create and send a new access token
+                    const newAccessToken = await createJWT(payload.user);
+                    res.cookie("accessToken", newAccessToken);
+                    return next();
+                }
             }
+            // If the refresh token is also invalid, return an error
+            throw unAuthorizedError("Authentication failed. Please try again.");
         }
-        // If there is no access token or it is invalid or expired, check for a refresh token
-        console.log(req)
-        const refreshToken = req.cookies.refreshToken; // Assuming refresh token is stored in cookies
-        if (refreshToken) {
-            const payload = verifyJWT(refreshToken);
-            // Assuming payload contains user info or user ID
-            const newAccessToken = createJWT(payload.user);
-            req.user = payload.user;
-            res.cookie("accessToken", newAccessToken); // Send the new access token
-            return next();
-        }
-        // If no authheader, access token or refresh token was provided, return an error
-        throw unAuthorizedError("Authentication failed. Please try again.");
     } catch (err: any) {
         res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(
             errorRes(err.message)
