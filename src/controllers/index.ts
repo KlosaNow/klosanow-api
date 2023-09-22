@@ -5,6 +5,7 @@ import logout from "./auth/logout";
 
 import getAllUsers from "./user/getAllUsers";
 import getUserById from "./user/getUserById";
+import updateUserData from "./user/updateUserData";
 
 export {
     // Auth
@@ -16,4 +17,5 @@ export {
     // User
     getAllUsers,
     getUserById,
+    updateUserData,
 };
