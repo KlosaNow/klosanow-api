@@ -28,22 +28,3 @@ export interface OTPType {
     otp: number;
     user: Types.ObjectId;
 }
-
-export interface JWTPayloadType {
-    user: {
-        _id: string;
-        email: {
-            validate: {
-                validator: (arg0: string) => boolean;
-                message: string;
-            };
-        };
-        phoneNumber: {
-            validate: {
-                validator: (arg0: string) => boolean;
-                message: string;
-            };
-        };
-    };
-    refreshToken?: string;
-}
