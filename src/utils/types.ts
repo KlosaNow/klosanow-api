@@ -28,3 +28,7 @@ export interface OTPType {
     otp: number;
     user: Types.ObjectId;
 }
+
+export interface JWTPayloadType {
+    user: {};
+}
