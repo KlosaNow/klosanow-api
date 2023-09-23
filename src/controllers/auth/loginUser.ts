@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
-import { transformPhone } from "../../helpers";
+import { tokenGenerator, transformPhone } from "../../helpers";
 import { User } from "../../models";
 import { sendOtpService } from "../../services";
 import {
@@ -28,19 +28,11 @@ const loginUser = async (req: Request, res: Response) => {
             );
         }
 
-        // Create an access token and send it as a response
-        // Create a refresh token and send it as a cookie.
-        const accessToken = await createJWT({ user });
-        const refreshToken = await generateRefreshToken({ user });
-        res.cookie("refreshToken", refreshToken, {
-            httpOnly: true,
-            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
-            secure: true, // Set to true if using HTTPS
-        });
         const otp = await sendOtpService(user._id, email, phone);
+        const token = await tokenGenerator(user._id);
 
         res.status(StatusCodes.OK).json(
-            successRes("OTP sent successfully", { otp, token: accessToken })
+            successRes("OTP sent successfully", { otp, token })
         );
     } catch (err: any) {
         res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(

@@ -29,6 +29,11 @@ export interface OTPType {
     user: Types.ObjectId;
 }
 
+export interface TokenType {
+    token: string;
+    user: Types.ObjectId;
+}
+
 export interface JWTPayloadType {
     user: {};
 }
