@@ -9,8 +9,8 @@ This is a simple documentation of the API endpoints, how to make requests to the
 
 **base url:** `api/v1/auth`
 
-
 The Auth service has the following endpoints:
+
 1. /sign-up
 2. /sign-in
 3. /verify-otp/:token
@@ -19,9 +19,10 @@ The Auth service has the following endpoints:
 ### 1. /sign-up
 
 The `sign-up` endpoint requires an email address, a phone number and a name. This endpoint accepts an optional role property.
-This endpoint creates a new user object with the credentials passed in the request body. 
+This endpoint creates a new user object with the credentials passed in the request body.
 
 To create a new user, make a `POST` request to the `sign-up` endpoint with the following request body type:
+
 ```yaml
 {
     "email": { 
@@ -43,8 +44,8 @@ To create a new user, make a `POST` request to the `sign-up` endpoint with the f
 }
 ```
 
-
 A sample request looks like:
+
 ```yaml
 body:
 {
@@ -54,8 +55,8 @@ body:
 }
 ```
 
-
 A sample response looks like:
+
 ```yaml
 201
 
@@ -65,12 +66,12 @@ A sample response looks like:
 }
 ```
 
-
 ### 2. /sign-in
 
 The `sign-in` endpoint requires an email address and a phone number passed to the request body. A user is identified by the email address and password sent with the request. This endpoint generates a token which is to be appended to the `verify-otp` url. The `login` endpoint also generates and sends an otp to the passed email address and phone number. This endpoint returns the generated token and the otp.
 
 To login a user, make a `POST` request to the `sign-in` endpoint with the following request body type:
+
 ```yaml
 {
     "email": { 
@@ -85,6 +86,7 @@ To login a user, make a `POST` request to the `sign-in` endpoint with the follow
 ```
 
 A sample request looks like:
+
 ```yaml
 {
     "email": "john@doe.com",
@@ -92,8 +94,8 @@ A sample request looks like:
 }
 ```
 
-
 A sample response looks like:
+
 ```yaml
 200
 
@@ -111,9 +113,10 @@ json:
 
 ### 3. /verify-otp/:token
 
-`token` is a 32-character hexadecimal string returned from the `login` endpoint. The `verify-otp` endpoint requires an otp passed to request body. This endpoint verifies the otp passed with the request 
+`token` is a 32-character hexadecimal string returned from the `login` endpoint. The `verify-otp` endpoint requires an otp passed to request body. This endpoint verifies the otp passed with the request
 
 To verify an otp, make a `POST` request to the `verify-otp` endpoint with the following request type:
+
 ```yaml
 params: 
 {
@@ -129,8 +132,8 @@ body:
 }
 ```
 
-
 A sample request looks like:
+
 ```yaml
 params: 
 {
@@ -143,8 +146,8 @@ body:
 }
 ```
 
-
 A sample response looks like:
+
 ```yaml
 200
 
@@ -161,20 +164,20 @@ json:
   "data": {
 .    "user": {
         "_id": "645b9453c723ba28c5cbd686",
-        "email": "johndoe@localhost.com",
-        "phoneNumber": "+2347013703549"
+        "email": "john@doe.com",
+        "phoneNumber": "+2349012345678"
      },
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0ZmQ0YWEwYjc0NDkzM2IyODAyYmUzYSIsIm5hbWUiOiJOZWxzb24gRWxheWUiLCJlbWFpbCI6Im5lbHNvbmVsYXllODcyQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiKzIzNDkwNzkwNzEzODciLCJyb2xlIjoic3R1ZGVudCIsImNyZWF0ZWRMZXNzb25zIjpbXSwic2F2ZWRMZXNzb25zIjpbXSwibm90aWZpY2F0aW9ucyI6W10sImNyZWF0ZWRBdCI6IjIwMjMtMDktMTBUMDQ6NDg6MzIuOTQ2WiIsInVwZGF0ZWRBdCI6IjIwMjMtMDktMTBUMDQ6NDg6MzIuOTQ2WiIsIl9fdiI6MH0sImlhdCI6MTY5NDM1NjM3OH0.ZK5ppxbtBNXsqKLF8qrjfw7i6LtPrWkA0Auk40HOqw8"
   }
 }
 ```
 
-
 ### 4. /logout
 
 The `logout` endpoint requires an access token passed to the request header. A middleware generates a new access token if the passed access token is invalid or expired. However for this to happen, a valid refresh token must be passed in the request cookies. This endpoint expires the refresh token in the cookies.
 
 To log a user out, make a `POST` request to the `logout` endpoint with the following request type:
+
 ```yaml
 headers: 
 { 
@@ -184,6 +187,7 @@ headers:
 ```
 
 A sample request looks like:
+
 ```yaml
 headers: 
 { 
@@ -194,6 +198,7 @@ headers:
 ```
 
 A sample response looks like:
+
 ```yaml
 200
 
@@ -203,12 +208,11 @@ A sample response looks like:
 }
 ```
 
-
 ## User
 
 **base url:** `api/v1/users`
 
-Every endpoint in the user service requires authentication. Authentication requires an access token passed to the request header. A middleware generates a new access token if the passed access token is invalid or expired. However for this to happen, a valid refresh token must be passed in the request cookies. 
+Every endpoint in the user service requires authentication. Authentication requires an access token passed to the request header. A middleware generates a new access token if the passed access token is invalid or expired. However for this to happen, a valid refresh token must be passed in the request cookies.
 
 The user service has the following endpoint:
 
@@ -218,13 +222,15 @@ The user service has the following endpoint:
 ### 1. /
 
 The base user service endpoint accepts the following methods:
+
 1. GET  
 
-###### 1. GET 
+#### 1. GET
 
 The GET method on the base user service endpoint returns an array of all the user objects in the database. This endpoint can only be accessed by admin users. A middleware checks if the authenticated user role is "admin".
 
 To get all users, make a `GET` request to the base user service endpoint with the following request type:
+
 ```yaml
 headers: 
 { 
@@ -233,8 +239,8 @@ headers:
 }
 ```
 
-
 A sample request looks like:
+
 ```yaml
 headers: 
 { 
@@ -244,58 +250,10 @@ headers:
 ```
 
 A sample response looks like:
+
 ```yaml
 200
 
-{
-    "status": "success",
-    "message": "Logged out successfully."
-}
-```
-
-# 2. /:id
-
-The base user service endpoint accepts the following methods:
-1. GET 
-2. PUT 
-
-###### 1. GET 
-
-The GET method on the `/:id` user service endpoint returns a user object that is identified with the `id` passed in the url. 
-
-To get a user by id, make a `GET` request to the `/:id` user service endpoint with the following request type:
-```yaml
-params:
-{
-    "id": "string",
-}
-
-headers: 
-{ 
-    "Authorization": "Bearer <accessToken>",
-    "Cookie": "refreshToken=<refreshToken>"
-}
-```
-
-
-A sample request looks like:
-```yaml
-params:
-{
-    "id": "645b9453c723ba28c5cbd686",
-}
-
-headers: 
-{ 
-    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0ZmQ0YWEwYjc0NDkzM2IyODAyYmUzYSIsIm5hbWUiOiJOZWxzb24gRWxheWUiLCJlbWFpbCI6Im5lbHNvbmVsYXllODcyQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiKzIzNDkwNzkwNzEzODciLCJyb2xlIjoic3R1ZGVudCIsImNyZWF0ZWRMZXNzb25zIjpbXSwic2F2ZWRMZXNzb25zIjpbXSwibm90aWZpY2F0aW9ucyI6W10sImNyZWF0ZWRBdCI6IjIwMjMtMDktMTBUMDQ6NDg6MzIuOTQ2WiIsInVwZGF0ZWRBdCI6IjIwMjMtMDktMTBUMDQ6NDg6MzIuOTQ2WiIsIl9fdiI6MH0sImlhdCI6MTY5NDM1NjM3OH0.ZK5ppxbtBNXsqKLF8qrjfw7i6LtPrWkA0Auk40HOqw8",
-    "Cookie": "refreshToken=eyJhbGciOJIUzi1NilsInR5cC161kpXVCJ9.eyJ1c2Vylip7119pZCI6IjY0ZmQ0YWEwYjCONDkzM2YODAYYmUzYSIsIm5hbWUiOiJOZWxzb24gRWxheWUILCJlbWFpbC161m5lbHNvbmVsYXlODcyQGdtYWlsLmNvbSisinBob25lTnVtYmVyljoiKz1zNDkwNzkwNzEzODcilCJyb2xlljoic3R1ZGVudClaimNyZWFOZWRMZXNzb25zljpbXSwic2F2ZWRMZXNzb25zljpbXSwibm90aWZpY2F0aW9ucy16W10slmNyZWF0ZWRBdC161IIwMjMIMDMTBUMDQ6NDg6MzluOTQ2WilsinVwZGF0ZWRBdCI6IjIwMIMIMDKIMTBUMDQ6NDg6MzluOTQ2Wilsl19fdil6MH0sImihdC16MTY5NDM1NjM30H0.ZK5ppxbtBNXsqKLFBqrjfw716L1PrWkA0Auk40HOqw8;"
-
-}
-```
-
-A sample response looks like:
-```yaml
-200
 
 {  
     "status": "success",  
@@ -304,9 +262,9 @@ A sample response looks like:
         {  
             "_id": "645b9453c723ba28c5cbd686",  
             "name": "John Doe",  
-            "email": "johndoe@localhost.com",  
-            "phoneNumber": "+2347013703549",  
-            "role": "admin",  
+            "email": "john@doe.com",
+            "phoneNumber": "+2349012345678",  
+            "role": "student",  
             "createdLessons": [],  
             "savedLessons": [],  
             "notifications": [],  
@@ -329,9 +287,9 @@ A sample response looks like:
         },  
         {  
             "_id": "64b1a92ff03a6f6ad6d179ea",  
-            "name": "John Doe",  
-            "email": "[testuseer@localhost.com](mailto:testuseer@localhost.com)",  
-            "phoneNumber": "+2349963672892",  
+            "name": "John Doe snr",  
+            "email": "johndoesnr@localhost.com",  
+            "phoneNumber": "+2347013703549",  
             "role": "student",  
             "createdLessons": [],  
             "savedLessons": [],  
@@ -344,14 +302,82 @@ A sample response looks like:
 }
 ```
 
-###### 2. PUT 
+### 2. /:id
 
-The PUT method on the `/:id` user service endpoint updates a user object with the data passed in the request body. The user is identified by the `id` passed to the url. This route returns the user object with the updated changes. 
+The base user service endpoint accepts the following methods:
+
+1. GET
+2. PUT
+
+#### 1. GET
+
+The GET method on the `/:id` user service endpoint returns a user object that is identified with the `id` passed in the url.
+
+To get a user by id, make a `GET` request to the `/:id` user service endpoint with the following request type:
+
+```yaml
+params:
+{
+    "id": "string",
+}
+
+headers: 
+{ 
+    "Authorization": "Bearer <accessToken>",
+    "Cookie": "refreshToken=<refreshToken>"
+}
+```
+
+A sample request looks like:
+
+```yaml
+params:
+{
+    "id": "645b9453c723ba28c5cbd686",
+}
+
+headers: 
+{ 
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0ZmQ0YWEwYjc0NDkzM2IyODAyYmUzYSIsIm5hbWUiOiJOZWxzb24gRWxheWUiLCJlbWFpbCI6Im5lbHNvbmVsYXllODcyQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiKzIzNDkwNzkwNzEzODciLCJyb2xlIjoic3R1ZGVudCIsImNyZWF0ZWRMZXNzb25zIjpbXSwic2F2ZWRMZXNzb25zIjpbXSwibm90aWZpY2F0aW9ucyI6W10sImNyZWF0ZWRBdCI6IjIwMjMtMDktMTBUMDQ6NDg6MzIuOTQ2WiIsInVwZGF0ZWRBdCI6IjIwMjMtMDktMTBUMDQ6NDg6MzIuOTQ2WiIsIl9fdiI6MH0sImlhdCI6MTY5NDM1NjM3OH0.ZK5ppxbtBNXsqKLF8qrjfw7i6LtPrWkA0Auk40HOqw8",
+    "Cookie": "refreshToken=eyJhbGciOJIUzi1NilsInR5cC161kpXVCJ9.eyJ1c2Vylip7119pZCI6IjY0ZmQ0YWEwYjCONDkzM2YODAYYmUzYSIsIm5hbWUiOiJOZWxzb24gRWxheWUILCJlbWFpbC161m5lbHNvbmVsYXlODcyQGdtYWlsLmNvbSisinBob25lTnVtYmVyljoiKz1zNDkwNzkwNzEzODcilCJyb2xlljoic3R1ZGVudClaimNyZWFOZWRMZXNzb25zljpbXSwic2F2ZWRMZXNzb25zljpbXSwibm90aWZpY2F0aW9ucy16W10slmNyZWF0ZWRBdC161IIwMjMIMDMTBUMDQ6NDg6MzluOTQ2WilsinVwZGF0ZWRBdCI6IjIwMIMIMDKIMTBUMDQ6NDg6MzluOTQ2Wilsl19fdil6MH0sImihdC16MTY5NDM1NjM30H0.ZK5ppxbtBNXsqKLFBqrjfw716L1PrWkA0Auk40HOqw8;"
+
+}
+```
+
+A sample response looks like:
+
+```yaml
+200
+
+{  
+  "status": "success",  
+  "message": "User returned successfully",  
+  "data": {  
+    "_id": "645b9453c723ba28c5cbd686",  
+    "name": "Johnson Doe",  
+    "email": "john@doe.com",  
+    "phoneNumber": "+2349012345678",
+    "role": "admin",  
+    "createdLessons": [],  
+    "savedLessons": [],  
+    "notifications": [],  
+    "createdAt": "2023-05-10T12:55:47.168Z",  
+    "updatedAt": "2023-09-23T09:50:24.376Z",  
+    "__v": 0  
+  }  
+}
+```
+
+#### 2. PUT
+
+The PUT method on the `/:id` user service endpoint updates a user object with the data passed in the request body. The user is identified by the `id` passed to the url. This route returns the user object with the updated changes.
 
 The following fields can be updated on the user object:
+
 - name
 
 To update a user object, make a `PUT` request to the `/:id` user service endpoint with the following request type:
+
 ```yaml
 params:
 {
@@ -372,8 +398,8 @@ body:
 
 ```
 
-
 A sample request looks like:
+
 ```yaml
 params:
 {
@@ -394,6 +420,7 @@ body:
 ```
 
 A sample response looks like:
+
 ```yaml
 200
 
@@ -404,7 +431,7 @@ A sample response looks like:
     "_id": "645b9453c723ba28c5cbd686",  
     "name": "Johnson Doe",  
     "email": "john@doe.com",  
-    "phoneNumber": "+2347013703549",  
+    "phoneNumber": "+2349012345678",
     "role": "admin",  
     "createdLessons": [],  
     "savedLessons": [],  
@@ -415,4 +442,3 @@ A sample response looks like:
   }  
 }
 ```
-
