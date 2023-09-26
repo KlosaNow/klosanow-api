@@ -1,4 +1,4 @@
-name: Deploy after merging
+name: Re-run test
 
 on:
   push:
@@ -11,12 +11,13 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v3
       with:
-        node-version: 18
+        node-version: 20
     - run: |
-        npm ci
-        npm run build
+        npm install -g yarn
+        yarn install
+        yarn build
 
-    - name: Don't run test after successfull merge
+    - name: Dont run test after successfull merge
       run: echo "Don't run any test"
     # - name: Install TSLint
     #   run: npm install -g tslint
