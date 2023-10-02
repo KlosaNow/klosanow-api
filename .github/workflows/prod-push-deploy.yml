@@ -1,11 +1,40 @@
-name: Deploy after merging
+# name: Deploy after merging
+# 
+# on:
+  # push:
+    # branches: [ "production" ]
+# 
+# jobs:
+  # deploying-from-master-branch:
+    # runs-on: ubuntu-latest
+    # steps:
+    # - uses: actions/checkout@v2
+    # - uses: actions/setup-node@v3
+      # with:
+        # node-version: 18
+    # - run: |
+        # npm install -g yarn 
+        # yarn install
+        # yarn build
+        # 
+    # - name: Don't run test after successfull merge
+      # run: echo "Don't run any test"
+    # - name: Install TSLint
+    #   run: npm install -g tslint
+      
+    # - name: Run TSLint
+    #   run: npx tslint --config tslint.json 'src/**/*.ts'
 
+    name: Deploy after merge or push to stagin branch
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 on:
   push:
-    branches: [ "production" ]
+    branches: [ "development" ]
 
 jobs:
-  deploying-from-master-branch:
+  deploying-from-staging:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -16,11 +45,26 @@ jobs:
         npm install -g yarn 
         yarn install
         yarn build
-        
-    - name: Don't run test after successfull merge
-      run: echo "Don't run any test"
-    # - name: Install TSLint
-    #   run: npm install -g tslint
-      
-    # - name: Run TSLint
-    #   run: npx tslint --config tslint.json 'src/**/*.ts'
+
+    - name: Install Vercel CLI
+      run: npm install --global vercel@latest
+    - name: Pull Vercel Environment Information
+      run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+    - name: Build Project Artifacts
+      run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+    - name: Deploy Project Artifacts to Vercel
+      run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+    # - name: Install SSH Key
+    #   uses: shimataro/ssh-key-action@v2
+    #   with:
+    #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+    #     known_hosts: 'temporary'
+    # - name: Adding Known Hosts
+    #   run: ssh-keyscan -H ${{ secrets.HOST_IP }} >> ~/.ssh/known_hosts
+    # # - name: Deploy with rsync
+    # #   run: rsync -avz * ${{ secrets.USER_ID }}@${{ secrets.HOST_IP }}:/home/ubuntu/api/
+    # - name: Compress and deploy to remote server
+    #   run: |
+    #     tar -czvf klosanow.tar.gz * >/dev/null
+    #     scp klosanow.tar.gz ${{ secrets.USER_ID }}@${{ secrets.HOST_IP }}:~/api/ && ssh ${{ secrets.USER_ID }}@${{ secrets.HOST_IP }} "tar -xf ~/api/klosanow.tar.gz -C ~/test/klosanow-api/"
+    #     ssh ${{ secrets.USER_ID }}@${{ secrets.HOST_IP }} 'sudo systemctl restart expressjs.service'
