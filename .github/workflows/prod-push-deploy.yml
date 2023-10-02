@@ -1,37 +1,10 @@
-# name: Deploy after merging
-# 
-# on:
-  # push:
-    # branches: [ "production" ]
-# 
-# jobs:
-  # deploying-from-master-branch:
-    # runs-on: ubuntu-latest
-    # steps:
-    # - uses: actions/checkout@v2
-    # - uses: actions/setup-node@v3
-      # with:
-        # node-version: 18
-    # - run: |
-        # npm install -g yarn 
-        # yarn install
-        # yarn build
-        # 
-    # - name: Don't run test after successfull merge
-      # run: echo "Don't run any test"
-    # - name: Install TSLint
-    #   run: npm install -g tslint
-      
-    # - name: Run TSLint
-    #   run: npx tslint --config tslint.json 'src/**/*.ts'
-
-    name: Deploy after merge or push to stagin branch
+name: Deploy after merge or push to production
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 on:
   push:
-    branches: [ "development" ]
+    branches: [ "production" ]
 
 jobs:
   deploying-from-staging:
