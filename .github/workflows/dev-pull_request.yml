@@ -2,7 +2,7 @@ name: test every pull_request
 
 on:
   pull_request:
-    branches: [ "staging" ]
+    branches: [ "development" ]
 
 jobs:
   pull-request-test:
@@ -13,8 +13,9 @@ jobs:
       with:
         node-version: 18
     - run: |
-        npm ci
-        npm run build
+        npm install -g yarn 
+        yarn install
+        yarn build
 
     - name: Install TSLint
       run: npm install -g tslint

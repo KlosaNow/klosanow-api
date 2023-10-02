@@ -4,6 +4,8 @@
   "description": "The API codebase for klosaNow.",
   "main": "./src/server.ts",
   "scripts": {
+    "build": "rimraf dist && npx tsc",
+    "prestart": "npm run build",
     "start": "node dist/server.js",
     "dev": "ts-node-dev src/server.ts"
   },

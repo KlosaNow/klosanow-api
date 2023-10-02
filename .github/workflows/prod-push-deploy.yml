@@ -2,7 +2,7 @@ name: Deploy after merging
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "production" ]
 
 jobs:
   deploying-from-master-branch:
@@ -13,9 +13,10 @@ jobs:
       with:
         node-version: 18
     - run: |
-        npm ci
-        npm run build
-
+        npm install -g yarn 
+        yarn install
+        yarn build
+        
     - name: Don't run test after successfull merge
       run: echo "Don't run any test"
     # - name: Install TSLint
