@@ -1,7 +1,5 @@
 import authRouter from "./auth";
+import lessonRouter from "./lesson";
 import userRouter from "./user";
 
-export {
-    authRouter,
-    userRouter,
-};
+export { authRouter, userRouter, lessonRouter };

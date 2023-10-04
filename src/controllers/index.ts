@@ -7,6 +7,12 @@ import getAllUsers from "./user/getAllUsers";
 import getUserById from "./user/getUserById";
 import updateUserById from "./user/updateUserById";
 
+import createLesson from "./lesson/createLesson";
+import deleteLessonById from "./lesson/deleteLessonById";
+import getAllLessons from "./lesson/getAllLessons";
+import getLessonById from "./lesson/getLessonById";
+import updateLessonById from "./lesson/updateLessonById";
+
 export {
     // Auth
     registerUser,
@@ -18,4 +24,11 @@ export {
     getAllUsers,
     getUserById,
     updateUserById,
+
+    // Lesson
+    createLesson,
+    getAllLessons,
+    getLessonById,
+    deleteLessonById,
+    updateLessonById,
 };

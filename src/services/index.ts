@@ -1,3 +1,4 @@
+import { deleteFileFromS3, uploadFileToS3 } from "./awsService";
 import sendOtpService from "./otpService";
 
-export { sendOtpService };
+export { sendOtpService, deleteFileFromS3, uploadFileToS3 };
