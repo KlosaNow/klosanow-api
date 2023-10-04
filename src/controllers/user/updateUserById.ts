@@ -9,7 +9,7 @@ import {
     notFoundError,
 } from "../../utils";
 
-const updateUserData = async (req: CustomRequest, res: Response) => {
+const updateUserById = async (req: CustomRequest, res: Response) => {
     try {
         const { id } = req.params;
         const { name } = req.body;
@@ -27,4 +27,4 @@ const updateUserData = async (req: CustomRequest, res: Response) => {
     }
 };
 
-export default updateUserData;
+export default updateUserById;

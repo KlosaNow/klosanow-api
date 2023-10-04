@@ -1,21 +1,21 @@
 import registerUser from "./auth/registerUser";
 import loginUser from "./auth/loginUser";
+import logoutUser from "./auth/logoutUser";
 import verifyOTP from "./auth/verifyOTP";
-import logout from "./auth/logout";
 
 import getAllUsers from "./user/getAllUsers";
 import getUserById from "./user/getUserById";
-import updateUserData from "./user/updateUserData";
+import updateUserById from "./user/updateUserById";
 
 export {
     // Auth
     registerUser,
     loginUser,
     verifyOTP,
-    logout,
+    logoutUser,
 
     // User
     getAllUsers,
     getUserById,
-    updateUserData,
+    updateUserById,
 };
