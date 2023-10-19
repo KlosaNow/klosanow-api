@@ -37,3 +37,14 @@ export interface TokenType {
 export interface JWTPayloadType {
     user: {};
 }
+
+export interface Message {
+    text: string;
+    timestamp: Date;
+}
+
+export interface ChatType {
+    sender: Types.ObjectId;
+    recipient: Types.ObjectId;
+    messages: Array<Message>;
+}
