@@ -46,5 +46,5 @@ export interface Message {
 export interface ChatType {
     sender: Types.ObjectId;
     recipient: Types.ObjectId;
-    messages: Array<Message>;
+    messages: SchemaDefinitionProperty<Message>;
 }
