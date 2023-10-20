@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
-app.use("/api/v1/chat", chatRouter);
+app.use("/api/v1/chats", chatRouter);
 
 app.get("/", (req: Request, res: Response) => {
     res.send("KlosaNow 🚀🚀🚀");
