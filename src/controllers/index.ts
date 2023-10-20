@@ -7,12 +7,10 @@ import getAllUsers from "./user/getAllUsers";
 import getUserById from "./user/getUserById";
 import updateUserData from "./user/updateUserData";
 
-import getChat from "./chat/getChat";
 import getAllChats from "./chat/getAllChats";
-import createChat from "./chat/createChat";
-import updateChat from "./chat/updateChat";
-import deleteMessage from "./chat/deleteMessage";
-import deleteChat from "./chat/deleteChat";
+import getChatById from "./chat/getChatById";
+import deleteChatById from "./chat/deleteChatByid";
+import sendMessage from "./chat/message/sendMessage";
 
 export {
     // Auth
@@ -27,10 +25,8 @@ export {
     updateUserData,
 
     // Chats
-    getChat,
     getAllChats,
-    createChat,
-    updateChat,
-    deleteChat,
-    deleteMessage,
+    getChatById,
+    sendMessage,
+    deleteChatById,
 };

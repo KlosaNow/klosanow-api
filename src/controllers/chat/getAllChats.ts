@@ -2,26 +2,14 @@ import { Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import { Chat } from "../../models";
-import {
-    errorRes,
-    successRes,
-    CustomRequest,
-    notFoundError,
-    badRequestError,
-} from "../../utils";
+import { errorRes, successRes, CustomRequest } from "../../utils";
 
 const getAllChats = async (req: CustomRequest, res: Response) => {
     try {
         const { user } = req;
-        if (!user) {
-            throw badRequestError("Please provide all required fields");
-        }
-        const chats = await Chat.find({ sender: user })
+        const chats = await Chat.find({ members: { $in: [user._id] } })
             .sort({ updatedAt: -1 })
             .exec();
-
-        if (chats.length === 0)
-            throw notFoundError("Chats for this user do not exist");
         res.status(StatusCodes.OK).json(
             successRes("Chats returned successfully", chats)
         );

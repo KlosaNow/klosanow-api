@@ -38,14 +38,13 @@ export interface JWTPayloadType {
     user: {};
 }
 
-export interface Message {
-    _id: Types.ObjectId;
+export interface MessageType {
+    chatId: Types.ObjectId;
     text: string;
     recipient: Types.ObjectId;
 }
 
 export interface ChatType {
-    sender: Types.ObjectId;
-    recipient: Types.ObjectId;
-    messages: Message[];
+    _id: Types.ObjectId;
+    members: [Types.ObjectId];
 }

@@ -2,19 +2,20 @@ import mongoose from "mongoose";
 
 import { ChatType } from "../utils/types";
 
+const chatMembersLimit = (membersList: Array<"User">) => membersList.length == 2
+
 const ChatSchema = new mongoose.Schema<ChatType>(
     {
-        sender: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
+        members: {
+            type: [
+                {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "User",
+                },
+            ],
             required: true,
+            validate: [chatMembersLimit, "Chat requires two users"],
         },
-        recipient: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
-            required: true,
-        },
-        messages: [],
     },
     { timestamps: true }
 );
