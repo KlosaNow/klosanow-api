@@ -39,6 +39,7 @@ export interface JWTPayloadType {
 }
 
 export interface Message {
+    _id: Types.ObjectId;
     text: string;
     timestamp: Date;
 }
@@ -46,5 +47,5 @@ export interface Message {
 export interface ChatType {
     sender: Types.ObjectId;
     recipient: Types.ObjectId;
-    messages: SchemaDefinitionProperty<Message>;
+    messages: Message[];
 }

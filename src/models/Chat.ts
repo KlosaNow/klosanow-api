@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { ChatType } from "../utils/types";
+import { ChatType, Message } from "../utils/types";
 
 const ChatSchema = new mongoose.Schema<ChatType>(
     {
@@ -14,9 +14,7 @@ const ChatSchema = new mongoose.Schema<ChatType>(
             ref: "User",
             required: true,
         },
-        messages: {
-            type: Array,
-        },
+        messages: [],
     },
     { timestamps: true }
 );

@@ -6,6 +6,10 @@ import logout from "./auth/logout";
 import getAllUsers from "./user/getAllUsers";
 import getUserById from "./user/getUserById";
 import updateUserData from "./user/updateUserData";
+import getChat from "./chat/getChat";
+import getAllChats from "./chat/getAllChats";
+import createChat from "./chat/createChat";
+import updateChat from "./chat/updateChat";
 
 export {
     // Auth
@@ -18,4 +22,10 @@ export {
     getAllUsers,
     getUserById,
     updateUserData,
+
+    // Chats
+    getChat,
+    getAllChats,
+    createChat,
+    updateChat,
 };

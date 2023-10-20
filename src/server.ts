@@ -2,7 +2,7 @@ import cors from "cors";
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
 
-import { authRouter, userRouter } from "./routes";
+import { authRouter, userRouter, chatRouter } from "./routes";
 import { DATABASE_URI, PORT } from "./utils/config";
 import { internalServerError } from "./utils/CustomError";
 
@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/chat", chatRouter);
 
 app.get("/", (req: Request, res: Response) => {
     res.send("KlosaNow 🚀🚀🚀");
