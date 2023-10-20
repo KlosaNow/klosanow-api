@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
-import { Chat, User } from "../../models";
+import { Chat, Message, User } from "../../models";
 import {
     errorRes,
     successRes,
@@ -9,7 +9,6 @@ import {
     notFoundError,
     badRequestError,
 } from "../../utils";
-import { Message } from "../../utils/types";
 import mongoose from "mongoose";
 
 const createChat = async (req: CustomRequest, res: Response) => {
@@ -23,15 +22,16 @@ const createChat = async (req: CustomRequest, res: Response) => {
         }
 
         const sender = user._id;
-        const message: Message = {
-            _id: new mongoose.Types.ObjectId(),
-            text,
-            timestamp: new Date(),
-        };
 
         const chat = await Chat.findOne({ recipient: recipient });
 
         if (chat) throw badRequestError("Chat with this user already exists");
+
+        const message = new Message({
+            text,
+            recipient,
+        });
+        await message.save();
         const newChat = new Chat({
             sender,
             recipient,

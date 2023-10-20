@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
-import { Chat, User } from "../../models";
+import { Chat, Message, User } from "../../models";
 import {
     errorRes,
     successRes,
@@ -9,7 +9,6 @@ import {
     notFoundError,
     badRequestError,
 } from "../../utils";
-import { Message } from "../../utils/types";
 import mongoose from "mongoose";
 
 const updateChat = async (req: CustomRequest, res: Response) => {
@@ -23,18 +22,17 @@ const updateChat = async (req: CustomRequest, res: Response) => {
         }
 
         const sender = user._id;
-        const newMessage: Message = {
-            _id: new mongoose.Types.ObjectId(),
-            text,
-            timestamp: new Date(),
-        };
 
         const chat = await Chat.findOne({ recipient });
 
         if (!chat) {
             throw notFoundError("Chat not found");
         }
-
+        const newMessage = new Message({
+            text,
+            recipient,
+        });
+        await newMessage.save();
         const message = await chat.messages;
         message.push(newMessage);
         const updatedChat = await chat.save(); // Save the chat document

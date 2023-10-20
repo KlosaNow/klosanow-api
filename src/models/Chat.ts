@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { ChatType, Message } from "../utils/types";
+import { ChatType } from "../utils/types";
 
 const ChatSchema = new mongoose.Schema<ChatType>(
     {
