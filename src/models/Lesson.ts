@@ -19,9 +19,12 @@ const LessonSchema = new mongoose.Schema<LessonType>(
             type: String,
             required: [true, "Please include a video url"],
         },
+        videoSize: {
+            type: String,
+        },
         thumbnailUrl: {
             type: String,
-            required: [false, "Please include a thumbnail url"],
+            // required: [false, "Please include a thumbnail url"],
         },
         tag: {
             type: String,
@@ -30,13 +33,10 @@ const LessonSchema = new mongoose.Schema<LessonType>(
             type: Boolean,
             default: false,
         },
-        videoSize: {
-            type: String,
-        },
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
-            required: [false, "Please provide user"],
+            required: [true, "Please provide user id"],
         },
     },
     { timestamps: true }

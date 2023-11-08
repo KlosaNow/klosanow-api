@@ -3,68 +3,49 @@ import { StatusCodes } from "http-status-codes";
 
 import { Lesson } from "../../models";
 import {
-    errorRes,
-    successRes,
-    CustomRequest,
-    notFoundError,
+  errorRes,
+  successRes,
+  CustomRequest,
+  notFoundError,
 } from "../../utils";
-import { deleteFileFromS3 } from "../../services/awsService";
 
 const updateLessonById = async (req: CustomRequest, res: Response) => {
-    try {
-        const { id } = req.params;
-        const lesson = await Lesson.findById({ _id: id });
-        if (!lesson) throw notFoundError("Lesson not found");
+  try {
+    const { id } = req.params;
+    const lesson = await Lesson.findById({ _id: id });
+    if (!lesson) throw notFoundError("Lesson not found");
 
-        const {
-            title,
-            about,
-            content,
-            tag,
-            isPrivate,
+    const {
+      tag,
+      about,
+      title,
+      content,
+      videoUrl,
+      isPrivate,
+      videoSize,
+      thumbnailUrl,
+    } = req.body;
 
-            // Media data
-            videoUrl,
-            videoSize,
-            thumbnailUrl,
-        } = req.body;
+    // Update lesson fields
+    lesson.tag = tag ? tag : lesson.tag;
+    lesson.about = about?.trim() ? about : lesson.about;
+    lesson.title = title?.trim() ? title : lesson.title;
+    lesson.isPrivate = isPrivate ? isPrivate : lesson.isPrivate;
+    lesson.content = content?.trim() ? content : lesson.content;
+    lesson.videoUrl = videoUrl?.trim() ? videoUrl : lesson.videoUrl;
+    lesson.videoSize = videoSize?.trim() ? videoSize : lesson.videoSize;
+    lesson.thumbnailUrl = thumbnailUrl?.trim() ? thumbnailUrl : lesson.thumbnailUrl;
 
-        // Update lesson media
-        /*
-        if (videoUrl) {
-            const videoKey = lesson.videoUrl?.split("/").pop();
-            await deleteFileFromS3(videoKey!);
-        }
+    await lesson.save();
 
-        if (thumbnailUrl) {
-            const thumbnailKey = lesson.thumbnailUrl?.split("/").pop();
-            await deleteFileFromS3(thumbnailKey!);
-        }
-        */
-
-        const updatedLesson = await lesson.updateOne(
-            {
-                title: title || lesson.title,
-                about: about || lesson.about,
-                content: content || lesson.content,
-                tag: tag || lesson.tag,
-                isPrivate: isPrivate || lesson.isPrivate,
-
-                // Media data
-                videoUrl: videoUrl || lesson.videoUrl,
-                videoSize: videoSize || lesson.videoSize,
-                thumbnailUrl: thumbnailUrl || lesson.thumbnailUrl,
-            },
-            { $new: true, runValidators: true }
-        );
-        res.status(StatusCodes.OK).json(
-            successRes("Lesson updated successfully", updatedLesson)
-        );
-    } catch (err: any) {
-        res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(
-            errorRes(err.message)
-        );
-    }
+    res
+      .status(StatusCodes.OK)
+      .json(successRes("Lesson updated successfully", lesson));
+  } catch (err: any) {
+    res
+      .status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(errorRes(err.message));
+  }
 };
 
 export default updateLessonById;
