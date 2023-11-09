@@ -1,8 +1,9 @@
-import mongoose from "mongoose";
-import { DATABASE_URI, PORT } from "./utils/config";
-import app from "./app";
-import { internalServerError } from "./utils/CustomError";
 import { createServer } from "http";
+import mongoose from "mongoose";
+
+import app from "./app";
+import { internalServerError } from "./utils";
+import { DATABASE_URI, PORT } from "./utils/config";
 
 const connectDB = async (url: string) => {
     await mongoose.connect(url).then(() => console.log("Database connected"));

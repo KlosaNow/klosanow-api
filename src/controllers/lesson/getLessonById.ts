@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
-import { User } from "../../models";
+import { Lesson } from "../../models";
 import {
     errorRes,
     successRes,
@@ -9,16 +9,13 @@ import {
     notFoundError,
 } from "../../utils";
 
-const updateUserData = async (req: CustomRequest, res: Response) => {
+const getLessonById = async (req: CustomRequest, res: Response) => {
     try {
         const { id } = req.params;
-        const { name } = req.body;
-        const user = await User.findOne({ _id: id });
-        if (!user) throw notFoundError("User not found");
-        user.name = name;
-        await user.save();
+        const lesson = await Lesson.findById({ _id: id });
+        if (!lesson) throw notFoundError("Lesson not found");
         res.status(StatusCodes.OK).json(
-            successRes("User data updated successfully", user)
+            successRes("Lesson returned successfully", lesson)
         );
     } catch (err: any) {
         res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(
@@ -27,4 +24,4 @@ const updateUserData = async (req: CustomRequest, res: Response) => {
     }
 };
 
-export default updateUserData;
+export default getLessonById;

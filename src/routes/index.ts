@@ -1,5 +1,7 @@
 import authRouter from "./auth";
-import userRouter from "./user";
 import chatRouter from "./chat";
+import lessonRouter from "./lesson";
+import mediaRouter from "./media";
+import userRouter from "./user";
 
-export { authRouter, userRouter, chatRouter };
+export { authRouter, chatRouter, lessonRouter, mediaRouter, userRouter };
