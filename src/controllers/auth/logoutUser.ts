@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { OTP } from "../../models";
 import { CustomRequest, errorRes, successRes } from "../../utils";
 
-const logout = async (req: CustomRequest, res: Response) => {
+const logoutUser = async (req: CustomRequest, res: Response) => {
     try {
         const { user } = req;
         await OTP.findOneAndDelete({ user: user._id });
@@ -26,4 +26,4 @@ const logout = async (req: CustomRequest, res: Response) => {
     }
 };
 
-export default logout;
+export default logoutUser;

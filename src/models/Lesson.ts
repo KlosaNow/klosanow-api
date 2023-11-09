@@ -1,0 +1,45 @@
+import mongoose from "mongoose";
+import { LessonType } from "../utils/types";
+
+const LessonSchema = new mongoose.Schema<LessonType>(
+    {
+        title: {
+            type: String,
+            required: [true, "Please provide a lesson title"],
+        },
+        about: {
+            type: String,
+            required: [true, "Please provide a lesson about"],
+        },
+        content: {
+            type: String,
+            required: [true, "Please include a lesson content"],
+        },
+        videoUrl: {
+            type: String,
+            required: [true, "Please include a video url"],
+        },
+        videoSize: {
+            type: String,
+        },
+        thumbnailUrl: {
+            type: String,
+            // required: [false, "Please include a thumbnail url"],
+        },
+        tag: {
+            type: String,
+        },
+        isPrivate: {
+            type: Boolean,
+            default: false,
+        },
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: [true, "Please provide user id"],
+        },
+    },
+    { timestamps: true }
+);
+
+export default mongoose.model("Lesson", LessonSchema);

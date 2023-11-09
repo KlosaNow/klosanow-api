@@ -1,5 +1,4 @@
 import { Types, SchemaDefinitionProperty } from "mongoose";
-import { Request } from "express";
 
 export interface UserType {
     _id: string;
@@ -36,4 +35,17 @@ export interface TokenType {
 
 export interface JWTPayloadType {
     user: {};
+}
+
+export interface LessonType {
+    _id: string;
+    title: string;
+    about: string;
+    content: string;
+    videoUrl: string;
+    thumbnailUrl: string;
+    tag: string;
+    isPrivate: boolean;
+    videoSize: string;
+    user: Types.ObjectId;
 }
