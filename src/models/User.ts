@@ -43,6 +43,14 @@ const UserSchema = new mongoose.Schema<UserType>(
                 type: String,
             },
         ],
+        storageUsage: {
+            type: Number,
+            default: 0, // Initial storage usage
+        },
+        maxStorageLimit: {
+            type: Number,
+            default: 1024 * 1024 * 500, // Default max storage limit 500 MB
+        },
     },
     { timestamps: true }
 );
