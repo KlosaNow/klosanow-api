@@ -1,6 +1,7 @@
-import { authenticateAdminUser, authenticateUser }  from "./authenticateUser";
+import {
+  authenticateAdminUser,
+  authenticateSocket,
+  authenticateUser,
+} from "./authenticateUser";
 
-export {
-    authenticateAdminUser,
-    authenticateUser,
-};
+export { authenticateAdminUser, authenticateSocket, authenticateUser };

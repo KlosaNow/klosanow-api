@@ -16,10 +16,7 @@ import updateLessonById from "./lesson/updateLessonById";
 import deleteVideo from "./media/deleteVideo";
 import uploadVideo from "./media/uploadVideo";
 
-import getAllChats from "./chat/getAllChats";
-import getChatById from "./chat/getChatById";
-import deleteChatById from "./chat/deleteChatByid";
-import sendMessage from "./chat/message/sendMessage";
+import socketControllers from "./chat/socketControllers";
 
 export {
   // Auth
@@ -33,12 +30,6 @@ export {
   getUserById,
   updateUserById,
 
-  // Chats
-  getAllChats,
-  getChatById,
-  sendMessage,
-  deleteChatById,
-
   // Lesson
   createLesson,
   getAllLessons,
@@ -49,4 +40,7 @@ export {
   // Media
   deleteVideo,
   uploadVideo,
+
+  // Chat
+  socketControllers,
 };
