@@ -21,21 +21,26 @@ const deleteLessonById = async (req: CustomRequest, res: Response) => {
 
     // Delete lesson media if any
     const videoKey = lesson.videoUrl.split("/").pop();
-    const videoSize = await getFileSizeFromS3(videoKey!);
-    await deleteFilesFromS3([videoKey!]);
+    // try block so that the lesson deletion process
+    // does not terminate if there is no media
+    try {
+      const videoSize = await getFileSizeFromS3(videoKey!);
+      // Decrement user storage usage
+      const user = await User.findById(req.user._id);
+      if (!user) throw badRequestError("Invalid user");
+      if (user.storageUsage > videoSize) user.storageUsage -= videoSize;
+      else user.storageUsage = 0;
+      await user.save();
+    } catch (err) {
+    } finally {
+      await deleteFilesFromS3([videoKey!]);
+    }
 
     const thumbnailKey = lesson.thumbnailUrl?.split("/").pop();
     if (lesson.thumbnailUrl) await deleteFilesFromS3([thumbnailKey!]);
 
     // Delete lesson object
     await lesson.deleteOne();
-
-    // Decrement user storage usage
-    const user = await User.findById(req.user._id);
-    if (!user) throw badRequestError("Invalid user");
-    if (user.storageUsage > videoSize) user.storageUsage -= videoSize;
-    else user.storageUsage = 0;
-    await user.save();
 
     res.status(StatusCodes.OK).json(successRes("Lesson deleted successfully"));
   } catch (err: any) {
