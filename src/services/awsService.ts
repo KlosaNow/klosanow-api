@@ -4,14 +4,14 @@ import { v4 as uuidv4 } from "uuid";
 import {
   AWS_REGION,
   AWS_ACCESS_KEY,
-  AWS_SECRET_KEY,
   AWS_BUCKET_NAME,
+  AWS_SECRET_ACCESS_KEY,
 } from "../utils/config";
 
 AWS.config.update({
-  accessKeyId: AWS_ACCESS_KEY,
-  secretAccessKey: AWS_SECRET_KEY,
   region: AWS_REGION,
+  accessKeyId: AWS_ACCESS_KEY,
+  secretAccessKey: AWS_SECRET_ACCESS_KEY,
 });
 
 const s3 = new AWS.S3();

@@ -15,7 +15,7 @@ const registerUser = async (req: Request, res: Response) => {
 
         // Check if a user with the passed email OR phone number exists
         const alreadyExists = await User.findOne({
-            $or: [{ email }, { phoneNumber }],
+            $or: [{ email }, { phoneNumber: phone }],
         });
         if (alreadyExists) {
             throw badRequestError(
