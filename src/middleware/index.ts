@@ -1,6 +1,4 @@
-import { authenticateAdminUser, authenticateUser }  from "./authenticateUser";
+import { authenticateAdminUser, authenticateUser } from "./authenticateUser";
+import { checkStorageLimit } from "./checkStorageLimit";
 
-export {
-    authenticateAdminUser,
-    authenticateUser,
-};
+export { authenticateAdminUser, authenticateUser, checkStorageLimit };
