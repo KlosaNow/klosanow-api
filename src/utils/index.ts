@@ -5,13 +5,16 @@ import {
     unAuthorizedError,
 } from "./CustomError";
 import { errorRes, successRes } from "./CustomResponse";
-import CustomRequest from "./CustomRequest";
+import { CustomRequest, CustomSocket } from "./CustomInterfaces";
 import { createJWT, verifyJWT, generateRefreshToken } from "./jwt";
 
 export {
-    // Custom Objects
+    // Custom Responses
     errorRes,
     successRes,
+
+    // Custom Interfaces
+    CustomSocket,
     CustomRequest,
 
     // Errors

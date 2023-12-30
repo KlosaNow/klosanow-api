@@ -1,4 +1,14 @@
-import { authenticateAdminUser, authenticateUser } from "./authenticateUser";
+import {
+  authenticateAdminUser,
+  authenticateSocket,
+  authenticateUser,
+} from "./authenticateUser";
 import { checkStorageLimit } from "./checkStorageLimit";
 
-export { authenticateAdminUser, authenticateUser, checkStorageLimit };
+export {
+  authenticateAdminUser,
+  authenticateSocket,
+  authenticateUser,
+  
+  checkStorageLimit,
+};

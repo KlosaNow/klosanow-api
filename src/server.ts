@@ -1,43 +1,33 @@
-import cors from "cors";
-import express, { Request, Response } from "express";
+import { createServer } from "http";
 import mongoose from "mongoose";
+import { Server } from "socket.io";
 
-import { authRouter, lessonRouter, mediaRouter, userRouter } from "./routes";
+import app from "./app";
+import { socketControllers } from "./controllers";
+import { authenticateSocket } from "./middleware"
+import { internalServerError } from "./utils";
 import { DATABASE_URI, PORT } from "./utils/config";
-import { internalServerError } from "./utils/CustomError";
-
-const app = express();
-
-// Middlewares
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Routes
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/lessons", lessonRouter);
-app.use("/api/v1/media", mediaRouter);
-
-app.get("/", (req: Request, res: Response) => {
-    res.send("KlosaNow 🚀🚀🚀");
-});
 
 const connectDB = async (url: string) => {
-    await mongoose.connect(url);
+  await mongoose.connect(url).then(() => console.log("Database connected"));
 };
 
+const server = createServer(app);
+const io = new Server(server, { cors: { origin: "*" } });
+io.use(authenticateSocket)
+
 const start = async () => {
-    try {
-        await connectDB(DATABASE_URI!);
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
-        });
-    } catch (err: any) {
-        throw internalServerError(err.message);
-    }
+  try {
+    await connectDB(DATABASE_URI!);
+    server.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+      io.on("connection", socketControllers);
+    });
+  } catch (err: any) {
+    throw internalServerError(err.message);
+  }
 };
 
 start();
 
-export default app;
+export default server;

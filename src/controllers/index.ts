@@ -16,6 +16,8 @@ import updateLessonById from "./lesson/updateLessonById";
 import deleteVideo from "./media/deleteVideo";
 import uploadVideo from "./media/uploadVideo";
 
+import socketControllers from "./chat/socketControllers";
+
 export {
   // Auth
   registerUser,
@@ -38,4 +40,7 @@ export {
   // Media
   deleteVideo,
   uploadVideo,
+
+  // Chat
+  socketControllers,
 };
