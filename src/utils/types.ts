@@ -19,6 +19,8 @@ export interface UserType {
     createdLessons: SchemaDefinitionProperty<[]>;
     savedLessons: SchemaDefinitionProperty<[]>;
     notifications: string[];
+    storageUsage: number;
+    maxStorageLimit: number;
     createdAt: Date;
     updatedAt: Date;
 }
