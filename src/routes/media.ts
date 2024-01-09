@@ -12,7 +12,7 @@ router
   .route("/")
   .post(
     authenticateUser,
-    upload.single("videoUrl"),
+    upload.single("videoFile"),
     checkStorageLimit,
     uploadVideo
   )
