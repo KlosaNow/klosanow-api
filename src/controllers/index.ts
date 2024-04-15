@@ -13,34 +13,47 @@ import getAllLessons from "./lesson/getAllLessons";
 import getLessonById from "./lesson/getLessonById";
 import updateLessonById from "./lesson/updateLessonById";
 
+import createDraft from "./draft/createDraft";
+import deleteDraftById from "./draft/deleteDraftById";
+import getAllDrafts from "./draft/getAllDrafts";
+import getDraftById from "./draft/getDraftById";
+import updateDraftById from "./draft/updateDraftById";
+
 import deleteVideo from "./media/deleteVideo";
 import uploadVideo from "./media/uploadVideo";
 
 import socketControllers from "./chat/socketControllers";
 
 export {
-  // Auth
-  registerUser,
-  loginUser,
-  verifyOTP,
-  logoutUser,
+    // Auth
+    registerUser,
+    loginUser,
+    verifyOTP,
+    logoutUser,
 
-  // User
-  getAllUsers,
-  getUserById,
-  updateUserById,
+    // User
+    getAllUsers,
+    getUserById,
+    updateUserById,
 
-  // Lesson
-  createLesson,
-  getAllLessons,
-  getLessonById,
-  deleteLessonById,
-  updateLessonById,
+    // Lesson
+    createLesson,
+    getAllLessons,
+    getLessonById,
+    deleteLessonById,
+    updateLessonById,
 
-  // Media
-  deleteVideo,
-  uploadVideo,
+    // Draft
+    createDraft,
+    getAllDrafts,
+    getDraftById,
+    deleteDraftById,
+    updateDraftById,
 
-  // Chat
-  socketControllers,
+    // Media
+    deleteVideo,
+    uploadVideo,
+
+    // Chat
+    socketControllers,
 };
