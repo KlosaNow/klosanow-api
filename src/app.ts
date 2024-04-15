@@ -1,7 +1,13 @@
 import cors from "cors";
 import express, { Request, Response } from "express";
 
-import { authRouter, lessonRouter, mediaRouter, userRouter } from "./routes";
+import {
+    authRouter,
+    lessonRouter,
+    mediaRouter,
+    userRouter,
+    draftRouter,
+} from "./routes";
 
 const API_PATH = "/api/v1";
 
@@ -17,6 +23,7 @@ app.use(`${API_PATH}/auth`, authRouter);
 app.use(`${API_PATH}/lessons`, lessonRouter);
 app.use(`${API_PATH}/media`, mediaRouter);
 app.use(`${API_PATH}/users`, userRouter);
+app.use(`${API_PATH}/draft`, draftRouter);
 
 app.get("/", (req: Request, res: Response) => {
     res.send("KlosaNow 🚀🚀🚀");

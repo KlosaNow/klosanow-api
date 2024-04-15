@@ -61,3 +61,16 @@ export interface LessonType {
     videoSize: string;
     user: Types.ObjectId;
 }
+
+export interface DraftType {
+    _id: string;
+    title?: string;
+    about?: string;
+    content?: string;
+    videoUrl?: string;
+    thumbnailUrl?: string;
+    tag?: string;
+    isPrivate?: boolean;
+    videoSize?: string;
+    user?: Types.ObjectId;
+}
