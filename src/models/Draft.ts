@@ -39,7 +39,7 @@ const DraftSchema = new mongoose.Schema<DraftType>(
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
-            required: false,
+            required: true,
             // required: [true, "Please provide user id"],
         },
     },
