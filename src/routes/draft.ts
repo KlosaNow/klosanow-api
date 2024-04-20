@@ -19,7 +19,7 @@ router
 router
     .route("/:id")
     .get(authenticateUser, getDraftById)
-    .patch(authenticateUser, updateDraftById)
+    .put(authenticateUser, updateDraftById)
     .delete(authenticateUser, deleteDraftById);
 
 export default router;
