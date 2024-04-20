@@ -23,7 +23,7 @@ app.use(`${API_PATH}/auth`, authRouter);
 app.use(`${API_PATH}/lessons`, lessonRouter);
 app.use(`${API_PATH}/media`, mediaRouter);
 app.use(`${API_PATH}/users`, userRouter);
-app.use(`${API_PATH}/draft`, draftRouter);
+app.use(`${API_PATH}/drafts`, draftRouter);
 
 app.get("/", (req: Request, res: Response) => {
     res.send("KlosaNow 🚀🚀🚀");
