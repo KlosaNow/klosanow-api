@@ -6,7 +6,8 @@ import { CustomRequest, successRes, errorRes } from "../../utils";
 
 const getAllDrafts = async (req: CustomRequest, res: Response) => {
     try {
-        const drafts = await Draft.find({});
+        const user = req.user;
+        const drafts = await Draft.find({user});
         res.status(StatusCodes.OK).json(
             successRes("Drafts returned successfully", drafts)
         );
