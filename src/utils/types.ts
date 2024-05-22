@@ -56,6 +56,7 @@ export interface LessonType {
     content: string;
     videoUrl: string;
     thumbnailUrl: string;
+    thumbnailSize: string;
     tag: string;
     isPrivate: boolean;
     videoSize: string;
@@ -69,6 +70,7 @@ export interface DraftType {
     content?: string;
     videoUrl?: string;
     thumbnailUrl?: string;
+    thumbnailSize?: string;
     tag?: string;
     isPrivate?: boolean;
     videoSize?: string;

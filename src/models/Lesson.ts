@@ -24,7 +24,10 @@ const LessonSchema = new mongoose.Schema<LessonType>(
         },
         thumbnailUrl: {
             type: String,
-            // required: [false, "Please include a thumbnail url"],
+            required: [true, "Please include a thumbnail url"],
+        },
+        thumbnailSize: {
+            type: String,
         },
         tag: {
             type: String,

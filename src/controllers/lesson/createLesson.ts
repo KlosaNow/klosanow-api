@@ -22,13 +22,17 @@ const createLesson = async (req: CustomRequest, res: Response) => {
             isPrivate,
             videoUrl,
             videoSize,
+            thumbnailUrl,
+            thumbnailSize,
         } = req.body;
         if (
             !title?.trim() ||
             !about?.trim() ||
             !content?.trim() ||
             !videoUrl?.trim() ||
-            !videoSize
+            !videoSize ||
+            !thumbnailUrl?.trim() ||
+            !thumbnailSize
         ) {
             throw badRequestError("Please provide all required fields");
         }
@@ -45,8 +49,9 @@ const createLesson = async (req: CustomRequest, res: Response) => {
             videoUrl,
             isPrivate,
             videoSize,
+            thumbnailUrl,
+            thumbnailSize,
             user: user._id,
-            // thumbnailUrl,
         });
         await lesson.save();
 

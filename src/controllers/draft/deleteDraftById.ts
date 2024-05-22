@@ -34,9 +34,24 @@ const deleteDraftById = async (req: CustomRequest, res: Response) => {
             } finally {
                 await deleteFilesFromS3([videoKey!]);
             }
+        }
 
-            const thumbnailKey = draft.thumbnailUrl?.split("/").pop();
-            if (draft.thumbnailUrl) await deleteFilesFromS3([thumbnailKey!]);
+        if (draft.thumbnailUrl) {
+            const thumbnailKey = draft.thumbnailUrl.split("/").pop();
+
+            try {
+                const thumbnailSize = await getFileSizeFromS3(thumbnailKey!);
+                // Decrement user storage usage
+                const user = await User.findById(req.user._id);
+                if (!user) throw badRequestError("Invalid user");
+                if (user.storageUsage > thumbnailSize)
+                    user.storageUsage -= thumbnailSize;
+                else user.storageUsage = 0;
+                await user.save();
+            } catch (err) {
+            } finally {
+                await deleteFilesFromS3([thumbnailKey!]);
+            }
         }
 
         await draft.deleteOne();

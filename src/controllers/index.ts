@@ -19,8 +19,8 @@ import getAllDrafts from "./draft/getAllDrafts";
 import getDraftById from "./draft/getDraftById";
 import updateDraftById from "./draft/updateDraftById";
 
-import deleteVideo from "./media/deleteVideo";
-import uploadVideo from "./media/uploadVideo";
+import deleteMedia from "./media/deleteMedia";
+import uploadMedia from "./media/uploadMedia";
 
 import socketControllers from "./chat/socketControllers";
 
@@ -51,8 +51,8 @@ export {
     updateDraftById,
 
     // Media
-    deleteVideo,
-    uploadVideo,
+    deleteMedia,
+    uploadMedia,
 
     // Chat
     socketControllers,
