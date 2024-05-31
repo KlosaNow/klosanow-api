@@ -8,8 +8,17 @@ const createDraft = async (req: CustomRequest, res: Response) => {
     try {
         const user = req.user;
 
-        const { title, about, content, tag, isPrivate, videoUrl, videoSize } =
-            req.body;
+        const {
+            title,
+            about,
+            content,
+            tag,
+            isPrivate,
+            videoUrl,
+            videoSize,
+            thumbnailUrl,
+            thumbnailSize,
+        } = req.body;
 
         const draft = new Draft({
             tag,
@@ -19,8 +28,9 @@ const createDraft = async (req: CustomRequest, res: Response) => {
             videoUrl,
             isPrivate,
             videoSize,
+            thumbnailUrl,
+            thumbnailSize,
             user: user._id,
-            // thumbnailUrl,
         });
         await draft.save();
 

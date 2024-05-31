@@ -26,7 +26,9 @@ const DraftSchema = new mongoose.Schema<DraftType>(
         thumbnailUrl: {
             type: String,
             required: false,
-            // required: [false, "Please include a thumbnail url"],
+        },
+        thumbnailSize: {
+            type: String,
         },
         tag: {
             type: String,
