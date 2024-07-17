@@ -15,6 +15,9 @@ export interface UserType {
             message: string;
         };
     };
+    studyChats: {
+        owns: [Types.ObjectId];
+    };
     role: string;
     createdLessons: SchemaDefinitionProperty<[]>;
     savedLessons: SchemaDefinitionProperty<[]>;
@@ -43,6 +46,8 @@ export interface MessageType {
     chatId: Types.ObjectId;
     text: string;
     recipient: Types.ObjectId;
+    sender: Types.ObjectId;
+    studyChatId: Types.ObjectId;
 }
 
 export interface ChatType {
@@ -75,4 +80,12 @@ export interface DraftType {
     isPrivate?: boolean;
     videoSize?: string;
     user?: Types.ObjectId;
+}
+
+export interface StudyChatType {
+    _id: Types.ObjectId;
+    title: String;
+    photoUrl: String;
+    owner: Types.ObjectId;
+    members: [Types.ObjectId];
 }

@@ -22,7 +22,8 @@ import updateDraftById from "./draft/updateDraftById";
 import deleteMedia from "./media/deleteMedia";
 import uploadMedia from "./media/uploadMedia";
 
-import socketControllers from "./chat/socketControllers";
+import ChatSocketControllers from "./chat/socketControllers";
+import StudyChatSocketControllers from "./studyChat/socketControllers";
 
 export {
     // Auth
@@ -55,5 +56,8 @@ export {
     uploadMedia,
 
     // Chat
-    socketControllers,
+    ChatSocketControllers,
+    
+    // Study Chat
+    StudyChatSocketControllers,
 };

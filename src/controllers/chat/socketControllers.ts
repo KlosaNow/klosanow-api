@@ -1,4 +1,4 @@
-import { Chat, Message, User } from "../../models";
+import { Chat, ChatMessage, User } from "../../models";
 import { CustomSocket, errorRes, successRes } from "../../utils";
 
 const socketControllers = (socket: CustomSocket) => {
@@ -28,7 +28,7 @@ const socketControllers = (socket: CustomSocket) => {
       if (!chat) {
         return socket.emit("getChatById", errorRes("Chat not found"));
       } else {
-        const allChatMessages = await Message.find({
+        const allChatMessages = await ChatMessage.find({
           chatId: chat._id,
         });
 
@@ -49,7 +49,7 @@ const socketControllers = (socket: CustomSocket) => {
       if (!chat) {
         return socket.emit("deleteChatById", errorRes("Chat not found"));
       } else {
-        await Message.deleteMany({ chatId: chat._id });
+        await ChatMessage.deleteMany({ chatId: chat._id });
         await chat.deleteOne({ chat });
 
         socket.emit("deleteChatById", successRes("Chat deleted successfully"));
@@ -84,14 +84,14 @@ const socketControllers = (socket: CustomSocket) => {
           await chatExists.save();
         }
 
-        const newMessage = new Message({
+        const newMessage = new ChatMessage({
           chatId: chatExists!._id,
           text: message,
           recipient,
         });
         await newMessage.save();
 
-        const allChatMessages = await Message.find({
+        const allChatMessages = await ChatMessage.find({
           chatId: chatExists!._id,
         });
 

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { Server } from "socket.io";
 
 import app from "./app";
-import { socketControllers } from "./controllers";
+import { ChatSocketControllers, StudyChatSocketControllers } from "./controllers";
 import { authenticateSocket } from "./middleware"
 import { internalServerError } from "./utils";
 import { DATABASE_URI, PORT } from "./utils/config";
@@ -21,7 +21,8 @@ const start = async () => {
     await connectDB(DATABASE_URI!);
     server.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
-      io.on("connection", socketControllers);
+      io.on("connection", ChatSocketControllers);
+      io.on("connection", StudyChatSocketControllers);
     });
   } catch (err: any) {
     throw internalServerError(err.message);
