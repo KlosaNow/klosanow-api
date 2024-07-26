@@ -1,109 +1,121 @@
 import { Chat, ChatMessage, User } from "../../models";
 import { CustomSocket, errorRes, successRes } from "../../utils";
 
+const URI_PREFIX = "chats";
+
 const socketControllers = (socket: CustomSocket) => {
-  console.log("Socket connected!", socket.id);
+    console.log("Socket connected!", socket.id);
 
-  // Listen for a "getAllChats" event
-  socket.on("getAllChats", async () => {
-    try {
-      const { user } = socket;
-      const chats = await Chat.find({ members: { $in: [user._id] } })
-        .sort({ updatedAt: -1 })
-        .exec();
+    socket.on(`${URI_PREFIX}:get-all`, async () => {
+        try {
+            const { user } = socket;
+            const chats = await Chat.find({ members: { $in: [user._id] } })
+                .sort({ updatedAt: -1 })
+                .exec();
 
-      socket.emit(
-        "getAllChats",
-        successRes("Chats returned successfully", chats)
-      );
-    } catch (err: any) {
-      socket.emit("serverError", err.message);
-    }
-  });
-
-  // Listen for a "getChatById" event
-  socket.on("getChatById", async (id) => {
-    try {
-      const chat = await Chat.findOne({ _id: id });
-      if (!chat) {
-        return socket.emit("getChatById", errorRes("Chat not found"));
-      } else {
-        const allChatMessages = await ChatMessage.find({
-          chatId: chat._id,
-        });
-
-        socket.emit(
-          "getChatById",
-          successRes("Chat returned successfully", allChatMessages)
-        );
-      }
-    } catch (err: any) {
-      socket.emit("serverError", err.message);
-    }
-  });
-
-  // Listen for a "deleteChatById" event
-  socket.on("deleteChatById", async (id) => {
-    try {
-      const chat = await Chat.findOne({ _id: id });
-      if (!chat) {
-        return socket.emit("deleteChatById", errorRes("Chat not found"));
-      } else {
-        await ChatMessage.deleteMany({ chatId: chat._id });
-        await chat.deleteOne({ chat });
-
-        socket.emit("deleteChatById", successRes("Chat deleted successfully"));
-      }
-    } catch (err: any) {
-      socket.emit("serverError", err.message);
-    }
-  });
-
-  // Listen for a "sendMessage" event
-  socket.on("sendMessage", async (data) => {
-    try {
-      const { user } = socket;
-
-      const { recipient, message } = data;
-      if (!recipient?.trim() || !message?.trim()) {
-        return socket.emit(
-          "sendMessage",
-          errorRes("Message recipient and text are required,")
-        );
-      }
-
-      const recipientUserExist = await User.findOne({ _id: recipient });
-      if (!recipientUserExist) {
-        return socket.emit("sendMessage", errorRes("Invalid chat recipient"));
-      } else {
-        var chatExists = await Chat.findOne({
-          members: [user._id, recipient],
-        });
-        if (!chatExists) {
-          chatExists = new Chat({ members: [user._id, recipient] });
-          await chatExists.save();
+            socket.emit(
+                `${URI_PREFIX}:get-all`,
+                successRes("Chats returned successfully", chats)
+            );
+        } catch (err: any) {
+            socket.emit("server-error", err.message);
         }
+    });
 
-        const newMessage = new ChatMessage({
-          chatId: chatExists!._id,
-          text: message,
-          recipient,
-        });
-        await newMessage.save();
+    socket.on(`${URI_PREFIX}:get-one`, async (data) => {
+        try {
+            const { chatId } = data;
+            const chat = await Chat.findOne({ _id: chatId });
+            if (!chat) {
+                return socket.emit(
+                    `${URI_PREFIX}:get-one`,
+                    errorRes("Chat not found")
+                );
+            } else {
+                const allChatMessages = await ChatMessage.find({
+                    chatId: chat._id,
+                });
 
-        const allChatMessages = await ChatMessage.find({
-          chatId: chatExists!._id,
-        });
+                socket.emit(
+                    `${URI_PREFIX}:get-one`,
+                    successRes("Chat returned successfully", allChatMessages)
+                );
+            }
+        } catch (err: any) {
+            socket.emit("server-error", err.message);
+        }
+    });
 
-        socket.emit(
-          "sendMessage",
-          successRes("Message sent successfully", allChatMessages)
-        );
-      }
-    } catch (err: any) {
-      socket.emit("serverError", err.message);
-    }
-  });
+    socket.on(`${URI_PREFIX}:delete-one`, async (data) => {
+        try {
+            const { chatId } = data;
+            const chat = await Chat.findOne({ _id: chatId });
+            if (!chat) {
+                return socket.emit(
+                    `${URI_PREFIX}:delete-one`,
+                    errorRes("Chat not found")
+                );
+            } else {
+                await ChatMessage.deleteMany({ chatId: chat._id });
+                await chat.deleteOne({ chat });
+
+                socket.emit(
+                    `${URI_PREFIX}:delete-one`,
+                    successRes("Chat deleted successfully")
+                );
+            }
+        } catch (err: any) {
+            socket.emit("server-error", err.message);
+        }
+    });
+
+    socket.on(`${URI_PREFIX}:send-message`, async (data) => {
+        try {
+            const { user } = socket;
+
+            const { recipient, message } = data;
+            if (!recipient?.trim() || !message?.trim()) {
+                return socket.emit(
+                    `${URI_PREFIX}:send-message`,
+                    errorRes("Message recipient and text are required")
+                );
+            }
+
+            const recipientUserExist = await User.findOne({ _id: recipient });
+            if (!recipientUserExist) {
+                return socket.emit(
+                    `${URI_PREFIX}:send-message`,
+                    errorRes("Invalid chat recipient")
+                );
+            }
+            let chatExists = await Chat.findOne({
+                members: [user._id, recipient],
+            });
+            if (!chatExists) {
+                chatExists = new Chat({ members: [user._id, recipient] });
+                await chatExists.save();
+            }
+
+            const newMessage = new ChatMessage({
+                chatId: chatExists!._id,
+                text: message,
+                sender: user._id,
+                recipient,
+            });
+            await newMessage.save();
+
+            const allChatMessages = await ChatMessage.find({
+                chatId: chatExists!._id,
+            });
+
+            socket.emit(
+                `${URI_PREFIX}:send-message`,
+                successRes("Message sent successfully", allChatMessages)
+            );
+        } catch (err: any) {
+            socket.emit("server-error", err.message);
+        }
+    });
 };
 
 export default socketControllers;
