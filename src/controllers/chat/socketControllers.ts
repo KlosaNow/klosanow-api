@@ -57,7 +57,7 @@ const socketControllers = (socket: CustomSocket) => {
                 );
             } else {
                 await ChatMessage.deleteMany({ chatId: chat._id });
-                await chat.deleteOne({ chat });
+                await chat.deleteOne();
 
                 socket.emit(
                     `${URI_PREFIX}:delete-one`,
@@ -73,15 +73,15 @@ const socketControllers = (socket: CustomSocket) => {
         try {
             const { user } = socket;
 
-            const { recipient, message } = data;
-            if (!recipient?.trim() || !message?.trim()) {
+            const { recipientId, message } = data;
+            if (!recipientId?.trim() || !message?.trim()) {
                 return socket.emit(
                     `${URI_PREFIX}:send-message`,
-                    errorRes("Message recipient and text are required")
+                    errorRes("`recipientId` and `message` fields are required")
                 );
             }
 
-            const recipientUserExist = await User.findOne({ _id: recipient });
+            const recipientUserExist = await User.findOne({ _id: recipientId });
             if (!recipientUserExist) {
                 return socket.emit(
                     `${URI_PREFIX}:send-message`,
@@ -89,10 +89,10 @@ const socketControllers = (socket: CustomSocket) => {
                 );
             }
             let chatExists = await Chat.findOne({
-                members: [user._id, recipient],
+                members: [user._id, recipientId],
             });
             if (!chatExists) {
-                chatExists = new Chat({ members: [user._id, recipient] });
+                chatExists = new Chat({ members: [user._id, recipientId] });
                 await chatExists.save();
             }
 
@@ -100,7 +100,7 @@ const socketControllers = (socket: CustomSocket) => {
                 chatId: chatExists!._id,
                 text: message,
                 sender: user._id,
-                recipient,
+                recipient: recipientId,
             });
             await newMessage.save();
 
