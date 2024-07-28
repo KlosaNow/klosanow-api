@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 import { StudyChatType } from "../utils/types";
 
-const studyChatMembersLimit = (membersList: Array<"User">) => membersList.length > 20
+const studyChatMembersLimit = (membersList: Array<"User">) => membersList.length <= 20;
 
 const StudyChatSchema = new mongoose.Schema<StudyChatType>(
     {
