@@ -3,6 +3,8 @@ import validator from "validator";
 
 import { UserType } from "../utils/types";
 
+const studyChatOwnershipLimit = (ownedStudyChatList: Array<"StudyChat">) => ownedStudyChatList.length <= 1
+
 const UserSchema = new mongoose.Schema<UserType>(
     {
         name: {
@@ -25,6 +27,18 @@ const UserSchema = new mongoose.Schema<UserType>(
             validate: {
                 validator: validator.isMobilePhone,
                 message: "Please provide valid phone number",
+            },
+        },
+        studyChats: {
+            owns: {
+                type: [
+                    {
+                        type: mongoose.Schema.Types.ObjectId,
+                        ref: "StudyChat",
+                    },
+                ],
+                default: 0,
+                validate: [studyChatOwnershipLimit, "A user can only create one study chat"],
             },
         },
         role: {
