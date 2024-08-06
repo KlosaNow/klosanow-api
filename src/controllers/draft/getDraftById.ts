@@ -3,25 +3,25 @@ import { StatusCodes } from "http-status-codes";
 
 import { Draft } from "../../models";
 import {
-    errorRes,
-    successRes,
-    CustomRequest,
-    notFoundError,
+	errorRes,
+	successRes,
+	CustomRequest,
+	notFoundError,
 } from "../../utils";
 
 const getDraftById = async (req: CustomRequest, res: Response) => {
-    try {
-        const { id } = req.params;
-        const draft = await Draft.findById({ _id: id });
-        if (!draft) throw notFoundError("Draft not found");
-        res.status(StatusCodes.OK).json(
-            successRes("Draft returned successfully", draft)
-        );
-    } catch (err: any) {
-        res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(
-            errorRes(err.message)
-        );
-    }
+	try {
+		const { id } = req.params;
+		const draft = await Draft.findById({ _id: id });
+		if (!draft) throw notFoundError("Draft not found");
+		res.status(StatusCodes.OK).json(
+			successRes("Draft returned successfully", draft)
+		);
+	} catch (err: any) {
+		res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(
+			errorRes(err.message)
+		);
+	}
 };
 
 export default getDraftById;
