@@ -5,7 +5,7 @@ import verifyOTP from "./auth/verifyOTP";
 
 import getAllUsers from "./user/getAllUsers";
 import getUserById from "./user/getUserById";
-import updateUserById from "./user/updateUserById";
+import updateUserData from "./user/updateUserData";
 
 import createLesson from "./lesson/createLesson";
 import deleteLessonById from "./lesson/deleteLessonById";
@@ -26,38 +26,38 @@ import ChatSocketControllers from "./chat/socketControllers";
 import StudyChatSocketControllers from "./studyChat/socketControllers";
 
 export {
-    // Auth
-    registerUser,
-    loginUser,
-    verifyOTP,
-    logoutUser,
+	// Auth
+	registerUser,
+	loginUser,
+	verifyOTP,
+	logoutUser,
 
-    // User
-    getAllUsers,
-    getUserById,
-    updateUserById,
+	// User
+	getAllUsers,
+	getUserById,
+	updateUserData,
 
-    // Lesson
-    createLesson,
-    getAllLessons,
-    getLessonById,
-    deleteLessonById,
-    updateLessonById,
+	// Lesson
+	createLesson,
+	getAllLessons,
+	getLessonById,
+	deleteLessonById,
+	updateLessonById,
 
-    // Draft
-    createDraft,
-    getAllDrafts,
-    getDraftById,
-    deleteDraftById,
-    updateDraftById,
+	// Draft
+	createDraft,
+	getAllDrafts,
+	getDraftById,
+	deleteDraftById,
+	updateDraftById,
 
-    // Media
-    deleteMedia,
-    uploadMedia,
+	// Media
+	deleteMedia,
+	uploadMedia,
 
-    // Chat
-    ChatSocketControllers,
-    
-    // Study Chat
-    StudyChatSocketControllers,
+	// Chat
+	ChatSocketControllers,
+
+	// Study Chat
+	StudyChatSocketControllers,
 };
