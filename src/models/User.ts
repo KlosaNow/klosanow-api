@@ -39,7 +39,6 @@ const UserSchema = new mongoose.Schema<UserType>(
 						ref: "StudyChat",
 					},
 				],
-				default: 0,
 				validate: [
 					studyChatOwnershipLimit,
 					"A user can only create one study chat",
