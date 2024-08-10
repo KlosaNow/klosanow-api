@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  backend:
+    image: "228660324170.dkr.ecr.eu-west-3.amazonaws.com/backend:latest"
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
