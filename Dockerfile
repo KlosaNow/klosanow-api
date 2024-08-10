@@ -14,9 +14,9 @@ WORKDIR /app
 # Add user and group
 RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 yarn
 RUN chown -R yarn:nodejs ./
-COPY --from=stage --chown=yarn:nodejs /app/node_modules ./
-COPY --from=stage --chown=yarn:nodejs /app/dist ./
-COPY --from=stage --chown=yarn:nodejs /app/package.json ./
+COPY --from=stage --chown=yarn:nodejs /app/node_modules /app/node_modules
+COPY --from=stage --chown=yarn:nodejs /app/dist /app/dist
+COPY --from=stage --chown=yarn:nodejs /app/package.json /app/package.json
 EXPOSE 5000
 # Start the Application with user not root user
 USER 1001
