@@ -13,7 +13,7 @@ FROM node:20.11.1-bullseye-slim
 WORKDIR /app
 # Add user and group
 RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 yarn
-RUN chown -R npm:nodejs ./
+RUN chown -R yarn:nodejs ./
 COPY --from=stage --chown=yarn:nodejs /app/node_modules ./
 COPY --from=stage --chown=yarn:nodejs /app/dist ./
 COPY --from=stage --chown=yarn:nodejs /app/package.json ./
