@@ -20,6 +20,7 @@ const updateDraftById = async (req: CustomRequest, res: Response) => {
 			about,
 			title,
 			content,
+			template,
 			videoUrl,
 			isPrivate,
 			videoSize,
@@ -31,6 +32,7 @@ const updateDraftById = async (req: CustomRequest, res: Response) => {
 		draft.about = about?.trim() ? about : draft.about;
 		draft.title = title?.trim() ? title : draft.title;
 		draft.isPrivate = isPrivate ? isPrivate : draft.isPrivate;
+		draft.template = template?.trim() ? template : draft.template;
 		draft.videoUrl = videoUrl?.trim() ? videoUrl : draft.videoUrl;
 		draft.videoSize = videoSize?.trim() ? videoSize : draft.videoSize;
 		draft.thumbnailUrl = thumbnailUrl?.trim()
