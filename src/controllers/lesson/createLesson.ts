@@ -14,7 +14,7 @@ const createLesson = async (req: CustomRequest, res: Response) => {
 		const user = req.user;
 
 		const {
-			draft_id,
+			draftId,
 			title,
 			about,
 			content,
@@ -37,9 +37,9 @@ const createLesson = async (req: CustomRequest, res: Response) => {
 			throw badRequestError("Please provide all required fields");
 		}
 
-		if (draft_id) {
+		if (draftId) {
 			// If a draft id was provided then it should be deleted before creating a new Lesson
-			await Draft.deleteOne({ _id: draft_id });
+			await Draft.deleteOne({ _id: draftId });
 		}
 		const lesson = new Lesson({
 			tag,
