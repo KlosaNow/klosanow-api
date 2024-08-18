@@ -12,24 +12,20 @@ import {
 
 const deleteMedia = async (req: CustomRequest, res: Response) => {
 	try {
-		const { fileURL, thumbnailUrl } = req.body;
-		if (!fileURL?.trim() || !thumbnailUrl?.trim()) {
-			throw badRequestError("Please provide all required fields");
+		const user = await User.findById(req.user._id);
+		if (!user) throw badRequestError("Invalid user");
+
+		const fileURL: any = req.query.fileURL;
+		if (!fileURL?.trim()) {
+			throw badRequestError("Please provide a fileURL");
 		}
 
 		const fileKey = fileURL.split("/").pop();
 		const fileSize = await getFileSizeFromS3(fileKey);
 		await deleteFilesFromS3([fileKey]);
 
-		const thumbnailKey = thumbnailUrl.split("/").pop();
-		const thumbnailSize = await getFileSizeFromS3(thumbnailKey);
-		await deleteFilesFromS3([thumbnailKey]);
-
-		const size = thumbnailSize + fileSize;
 		// Decrement user storage usage
-		const user = await User.findById(req.user._id);
-		if (!user) throw badRequestError("Invalid user");
-		if (user.storageUsage > size) user.storageUsage -= size;
+		if (user.storageUsage > fileSize) user.storageUsage -= fileSize;
 		else user.storageUsage = 0;
 		await user.save();
 
