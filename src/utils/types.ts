@@ -21,7 +21,7 @@ export interface UserType {
 	role: string;
 	bio: string;
 	createdLessons: SchemaDefinitionProperty<[]>;
-	savedLessons: SchemaDefinitionProperty<[]>;
+	savedLessons: [Types.ObjectId];
 	notifications: [string];
 	storageUsage: number;
 	maxStorageLimit: number;
