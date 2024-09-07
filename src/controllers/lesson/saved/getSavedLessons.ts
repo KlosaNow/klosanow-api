@@ -12,11 +12,6 @@ import {
 
 const getSavedLessons = async (req: CustomRequest, res: Response) => {
 	try {
-		const { lessonId } = req.body;
-		if (!lessonId?.trim()) {
-			throw badRequestError("Please provide a lesson id");
-		}
-
 		const user = await User.findOne({ _id: req.user._id });
 		if (!user) throw notFoundError("User not found");
 

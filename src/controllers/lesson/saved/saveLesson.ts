@@ -19,10 +19,13 @@ const saveLesson = async (req: CustomRequest, res: Response) => {
 
 		const user = await User.findOne({ _id: req.user._id });
 		if (!user) throw notFoundError("User not found");
-		if (!user.savedLessons.includes(lessonId)) {
-			user.savedLessons.push(lessonId);
-			await user.save();
+		if (user.savedLessons.includes(lessonId)) {
+			return res
+				.status(StatusCodes.OK)
+				.json(successRes("Lesson is already saved"));
 		}
+		user.savedLessons.push(lessonId);
+		await user.save();
 
 		res.status(StatusCodes.CREATED).json(
 			successRes("Lesson saved successfully")
