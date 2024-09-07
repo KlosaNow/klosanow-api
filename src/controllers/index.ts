@@ -13,6 +13,10 @@ import getAllLessons from "./lesson/getAllLessons";
 import getLessonById from "./lesson/getLessonById";
 import updateLessonById from "./lesson/updateLessonById";
 
+import saveLesson from "./lesson/saved/saveLesson";
+import unsaveLesson from "./lesson/saved/unsaveLesson";
+import getSavedLessons from "./lesson/saved/getSavedLessons";
+
 import createDraft from "./draft/createDraft";
 import deleteDraftById from "./draft/deleteDraftById";
 import getAllDrafts from "./draft/getAllDrafts";
@@ -43,6 +47,11 @@ export {
 	getLessonById,
 	deleteLessonById,
 	updateLessonById,
+
+	// Saved
+	saveLesson,
+	unsaveLesson,
+	getSavedLessons,
 
 	// Draft
 	createDraft,

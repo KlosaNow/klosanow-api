@@ -57,7 +57,12 @@ const UserSchema = new mongoose.Schema<UserType>(
 			type: Array,
 		},
 		savedLessons: {
-			type: Array,
+			type: [
+				{
+					type: mongoose.Schema.Types.ObjectId,
+					ref: "Lesson",
+				},
+			],
 		},
 		notifications: {
 			type: [String],
