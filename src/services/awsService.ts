@@ -38,7 +38,7 @@ export const uploadFileToS3 = async (
 		Bucket: AWS_BUCKET_NAME,
 		Key: filename,
 		Body: file.buffer,
-		ACL: "public-read",
+		// ACL: "public-read", // Somehow, passing this generates an error
 		ContentType: mime.lookup(filename, "application/octet-stream"),
 	};
 	const result = await s3.upload(params as any).promise();
