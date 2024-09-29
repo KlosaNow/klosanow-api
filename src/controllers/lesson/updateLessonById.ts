@@ -40,9 +40,7 @@ const updateLessonById = async (req: CustomRequest, res: Response) => {
 		lesson.thumbnailSize = thumbnailSize?.trim()
 			? thumbnailSize
 			: lesson.thumbnailSize;
-		if (content?.length > 0) {
-			content.forEach((element: any) => lesson.content.push(element));
-		}
+		if (content?.length > 0) lesson.content = content;
 		await lesson.save();
 
 		res.status(StatusCodes.OK).json(
