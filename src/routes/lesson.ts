@@ -15,10 +15,11 @@ import { authenticateUser } from "../middleware";
 
 const router: Router = express.Router();
 
-router.route("/").get(getAllLessons).post(authenticateUser, createLesson);
+router.use(authenticateUser);
+
+router.route("/").get(getAllLessons).post(createLesson);
 router
 	.route("/saved")
-	.all(authenticateUser)
 	.get(getSavedLessons)
 	.post(saveLesson)
 	.delete(unsaveLesson);
@@ -26,7 +27,7 @@ router
 router
 	.route("/:id")
 	.get(getLessonById)
-	.put(authenticateUser, updateLessonById)
-	.delete(authenticateUser, deleteLessonById);
+	.put(updateLessonById)
+	.delete(deleteLessonById);
 
 export default router;
