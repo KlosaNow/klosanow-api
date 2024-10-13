@@ -6,16 +6,16 @@ import { authenticateUser, checkStorageLimit } from "../middleware";
 
 const router: Router = express.Router();
 const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const upload = multer({ storage, limits: { fieldSize: 30 * 1024 * 1024 } }); // 30 MB
 
 router
-    .route("/")
-    .post(
-        authenticateUser,
-        upload.single("mediaFile"),
-        checkStorageLimit,
-        uploadMedia
-    )
-    .delete(authenticateUser, deleteMedia);
+	.route("/")
+	.post(
+		authenticateUser,
+		upload.single("mediaFile"),
+		checkStorageLimit,
+		uploadMedia
+	)
+	.delete(authenticateUser, deleteMedia);
 
 export default router;
