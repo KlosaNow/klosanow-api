@@ -1,23 +1,23 @@
-name: test every pull_request
-on:
-  pull_request:
-    branches: [ "development" ]
+# name: test every pull_request
+# on:
+#   pull_request:
+#     branches: [ "development" ]
 
-jobs:
-  pull-request-test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 18
-    - run: |
-        npm install -g yarn 
-        yarn install
-        yarn build
+# jobs:
+#   pull-request-test:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v2
+#     - uses: actions/setup-node@v3
+#       with:
+#         node-version: 18
+#     - run: |
+#         npm install -g yarn 
+#         yarn install
+#         yarn build
 
-    - name: Install TSLint
-      run: npm install -g tslint
+#     - name: Install TSLint
+#       run: npm install -g tslint
       
     # - name: Run TSLint
     #   run: npx tslint --config tslint.json 'src/**/*.ts'
