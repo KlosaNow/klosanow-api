@@ -7,19 +7,16 @@ on:
 env:
   ECR_REPOSITORY: backend
   AWS_REGION: eu-west-3
+  password: password
 
-jobs:
-  
+jobs: 
   build:
-    
     name: Build-Deploy
     runs-on: ubuntu-latest
-
     steps:
     - name: Set Image Tag
       run: |
         echo "IMAGE_TAG=$(date +%Y-%m-%d-%H-%M)-${GITHUB_SHA::4}" >> $GITHUB_ENV
-
     ## Checkout the code
     - name: Check out code
       uses: actions/checkout@v2
@@ -40,32 +37,32 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}        
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG  .
-      # docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
     - name: Edit docker-compose Image Tag
-        run: |
-          sed -i "4 s|image:.*|image: ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}|" docker-compose.yml
-          cat docker-compose.yaml
-
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      run: |
+        sed -i "4 s|image:.*|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}|" docker-compose.yml
+        cat docker-compose.yml
     - name: Copy Docker-compose file to the server
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOST}}
-          username: ${{ secrets.USERNAME}}
-          key: ${{ secrets.SSHKEY}}
-          port: ${{ secrets.PORT }}
-          source: "./docker-compose.yml"
-          target: "/home/node/app/backend"
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST}}
+        username: ${{ secrets.USERNAME}}
+        key: ${{ secrets.SSHKEY}}
+        port: ${{ secrets.PORT }}
+        source: "./docker-compose.yml"
+        target: "/home/node/app/backend"
 
-      # - name: Deploy via SSH action
-      #   uses: appleboy/ssh-action@v1.0.3
-      #   with:
-      #     host: ${{ secrets.HOST }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.SSHKEY }}
-      #     envs: AWS_REGION,REGISTRY
-      #     script: |
-      #       cd /home/node/app/backend
-      #       aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 228660324170.dkr.ecr.eu-west-3.amazonaws.com
-      #       docker-compose pull
-      #       sudo systemctl restart klosanow-api
+    - name: Deploy via SSH action
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME_MAIN }}
+        key: ${{ secrets.SSHKEY }}
+        envs: password
+        script: |
+          cd /home/node/app/backend
+          aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 228660324170.dkr.ecr.eu-west-3.amazonaws.com
+          docker-compose pull
+          sudo systemctl restart klosanow-api
