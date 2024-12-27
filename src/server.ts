@@ -16,12 +16,13 @@ const connectDB = async (url: string) => {
 };
 
 const server = createServer(app);
-// const io = new Server(server, {
-//   cors: {
-//     origin: ["https://klosanow-frontend.vercel.app", "http://localhost:5173"],
-//   },
-// });
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: ["https://klosanow-frontend.vercel.app", "http://localhost:5173"],
+    credentials: true,
+  },
+});
+// const io = new Server(server);
 io.use(authenticateSocket);
 
 const start = async () => {
