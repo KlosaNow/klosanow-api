@@ -10,14 +10,14 @@ import {
 } from "./routes";
 
 const API_PATH = "/api/v1";
-const corsOptions = {
-  origin: ["https://klosanow-frontend.vercel.app", "http://localhost:5173"],
-};
+// const corsOptions = {
+//   origin: ["https://klosanow-frontend.vercel.app", "http://localhost:5173"],
+// };
 
 const app = express();
 
 // Middlewares
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json({ limit: "30mb" }));
 app.use(express.urlencoded({ extended: true, limit: "30mb" }));
 
