@@ -2,19 +2,22 @@ import cors from "cors";
 import express, { Request, Response } from "express";
 
 import {
-	authRouter,
-	lessonRouter,
-	mediaRouter,
-	userRouter,
-	draftRouter,
+  authRouter,
+  lessonRouter,
+  mediaRouter,
+  userRouter,
+  draftRouter,
 } from "./routes";
 
 const API_PATH = "/api/v1";
+const corsOptions = {
+  origin: ["https://klosanow-frontend.vercel.app", "http://localhost:5173"],
+};
 
 const app = express();
 
 // Middlewares
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json({ limit: "30mb" }));
 app.use(express.urlencoded({ extended: true, limit: "30mb" }));
 
@@ -26,7 +29,7 @@ app.use(`${API_PATH}/users`, userRouter);
 app.use(`${API_PATH}/drafts`, draftRouter);
 
 app.get("/", (req: Request, res: Response) => {
-	res.send("KlosaNow 🚀🚀🚀");
+  res.send("KlosaNow 🚀🚀🚀");
 });
 
 export default app;
