@@ -25,7 +25,7 @@ const loginUser = async (req: Request, res: Response) => {
 		}
 
 		// Verify entered password
-		const isValidPassword = await bcrypt.compare(password, user.password);
+		const isValidPassword = bcrypt.compareSync(password, user.password);
 		if (!isValidPassword) throw badRequestError("Invalid password");
 
 		// Create an access token and send it as a response
