@@ -31,6 +31,10 @@ const UserSchema = new mongoose.Schema<UserType>(
 				message: "Please provide valid phone number",
 			},
 		},
+		password: {
+			type: String,
+			required: [true, "Please provide a password"],
+		},
 		studyChats: {
 			owns: {
 				type: [
