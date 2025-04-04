@@ -15,7 +15,7 @@ export interface UserType {
 			message: string;
 		};
 	};
-	password: String;
+	password: string;
 	studyChats: {
 		owns: [Types.ObjectId];
 	};
