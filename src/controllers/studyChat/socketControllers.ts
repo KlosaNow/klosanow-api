@@ -12,7 +12,7 @@ const socketControllers = (socket: CustomSocket) => {
 				members: { $in: [user._id] },
 			})
 				.sort({ updatedAt: -1 })
-				.populate("member")
+				.populate("members")
 				.exec();
 
 			socket.emit(
