@@ -33,6 +33,7 @@ const UserSchema = new mongoose.Schema<UserType>(
 		},
 		password: {
 			type: String,
+			select: false,
 			required: [true, "Please provide a password"],
 		},
 		studyChats: {
