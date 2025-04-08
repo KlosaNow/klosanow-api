@@ -85,7 +85,7 @@ const socketControllers = (socket: CustomSocket) => {
 				photoUrl,
 				members,
 			});
-			await newStudyChat.save();
+			await (await newStudyChat.populate("members")).save();
 
 			// Update the number of study chats a user owns
 			user.studyChats.owns.push(newStudyChat._id);
@@ -147,7 +147,9 @@ const socketControllers = (socket: CustomSocket) => {
 				);
 			}
 
-			const studyChat = await StudyChat.findOne({ _id: studyChatId });
+			const studyChat = await StudyChat.findOne({
+				_id: studyChatId,
+			}).populate("members");
 			if (!studyChat) {
 				return socket.emit(
 					`${URI_PREFIX}:add-members`,
@@ -177,6 +179,7 @@ const socketControllers = (socket: CustomSocket) => {
 			socket.emit("server-error", err.message);
 		}
 	});
+
 	socket.on(`${URI_PREFIX}:update-photo`, async (data) => {
 		try {
 			const { studyChatId, photoUrl } = data;
