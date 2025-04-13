@@ -19,7 +19,7 @@ const loginUser = async (req: Request, res: Response) => {
 		}
 
 		// Check if a user with the passed email AND phone number exists
-		const user = await User.findOne({ email });
+		const user = await User.findOne({ email }).select("+password");
 		if (!user) {
 			throw badRequestError("User with that email does not exist");
 		}
