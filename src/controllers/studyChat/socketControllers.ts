@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { StudyChat, StudyChatMessage, User } from "../../models";
 import { CustomSocket, errorRes, successRes } from "../../utils";
 
@@ -11,6 +12,7 @@ const socketControllers = (socket: CustomSocket) => {
 				members: { $in: [user._id] },
 			})
 				.sort({ updatedAt: -1 })
+				.populate("members")
 				.exec();
 
 			socket.emit(
@@ -83,7 +85,7 @@ const socketControllers = (socket: CustomSocket) => {
 				photoUrl,
 				members,
 			});
-			await newStudyChat.save();
+			await (await newStudyChat.populate("members")).save();
 
 			// Update the number of study chats a user owns
 			user.studyChats.owns.push(newStudyChat._id);
@@ -112,6 +114,20 @@ const socketControllers = (socket: CustomSocket) => {
 			await StudyChatMessage.deleteMany({ studyChatId: studyChat._id });
 			await studyChat.deleteOne();
 
+			let { user } = socket;
+			user = await User.findOne({ _id: user._id });
+			user.studyChats.owns = user.studyChats.owns.filter(
+				(stdcht: Types.ObjectId) => stdcht != studyChat._id
+			);
+			await user.save();
+
+			if (user.studyChats.owns.length > 1) {
+				return socket.emit(
+					`${URI_PREFIX}:create`,
+					errorRes("A user can create only one study chat")
+				);
+			}
+
 			socket.emit(
 				`${URI_PREFIX}:delete-one`,
 				successRes("Study chat deleted successfully")
@@ -131,7 +147,9 @@ const socketControllers = (socket: CustomSocket) => {
 				);
 			}
 
-			const studyChat = await StudyChat.findOne({ _id: studyChatId });
+			const studyChat = await StudyChat.findOne({
+				_id: studyChatId,
+			}).populate("members");
 			if (!studyChat) {
 				return socket.emit(
 					`${URI_PREFIX}:add-members`,
@@ -161,6 +179,7 @@ const socketControllers = (socket: CustomSocket) => {
 			socket.emit("server-error", err.message);
 		}
 	});
+
 	socket.on(`${URI_PREFIX}:update-photo`, async (data) => {
 		try {
 			const { studyChatId, photoUrl } = data;
