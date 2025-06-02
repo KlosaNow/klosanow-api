@@ -1,4 +1,5 @@
 import getCookies from "./getCookies";
+import { tokenGenerator } from "./generators";
 import transformPhone from "./transformPhone";
 
-export { getCookies, transformPhone };
+export { getCookies, tokenGenerator, transformPhone };

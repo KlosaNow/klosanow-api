@@ -1,6 +1,8 @@
 import registerUser from "./auth/registerUser";
 import loginUser from "./auth/loginUser";
 import logoutUser from "./auth/logoutUser";
+import resetPassword from "./auth/resetPassword";
+import forgotPassword from "./auth/forgotPassword";
 
 import getAllUsers from "./user/getAllUsers";
 import getUserById from "./user/getUserById";
@@ -33,6 +35,8 @@ export {
 	registerUser,
 	loginUser,
 	logoutUser,
+	resetPassword,
+	forgotPassword,
 
 	// User
 	getAllUsers,
