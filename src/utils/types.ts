@@ -30,6 +30,11 @@ export interface UserType {
 	updatedAt: Date;
 }
 
+export interface TokenType {
+	token: string;
+	user: Types.ObjectId;
+}
+
 export interface JWTPayloadType {
 	user: {};
 }
