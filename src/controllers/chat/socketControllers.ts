@@ -90,7 +90,7 @@ const socketControllers = (socket: CustomSocket) => {
 				);
 			}
 			let chatExists = await Chat.findOne({
-				members: [user._id, recipientId],
+				members: { $all: [user._id, recipientId] },
 			});
 			if (!chatExists) {
 				chatExists = new Chat({ members: [user._id, recipientId] });

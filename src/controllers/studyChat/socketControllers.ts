@@ -36,7 +36,7 @@ const socketControllers = (socket: CustomSocket) => {
 			} else {
 				const allStudyChatMessages = await StudyChatMessage.find({
 					studyChatId: studyChat._id,
-				});
+				}).populate("sender");
 
 				socket.emit(
 					`${URI_PREFIX}:get-one`,
