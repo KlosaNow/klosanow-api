@@ -29,6 +29,8 @@ import uploadMedia from "./media/uploadMedia";
 import ChatSocketControllers from "./chat/socketControllers";
 import StudyChatSocketControllers from "./studyChat/socketControllers";
 
+import AIChatBotController from "./chatbot";
+
 export {
 	// Auth
 	registerUser,
@@ -69,4 +71,7 @@ export {
 
 	// Study Chat
 	StudyChatSocketControllers,
+
+	// AI Chatbot
+	AIChatBotController,
 };
