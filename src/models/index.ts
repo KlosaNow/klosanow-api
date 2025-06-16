@@ -1,20 +1,18 @@
 import Chat from "./Chat";
 import { ChatMessage, StudyChatMessage } from "./Message";
 import Lesson from "./Lesson";
-import OTP from "./OTP";
-import Token from "./Token";
 import User from "./User";
 import Draft from "./Draft";
 import StudyChat from "./StudyChat";
+import Token from "./Token";
 
 export {
-    Chat,
-    Lesson,
-    ChatMessage,
-    StudyChatMessage,
-    OTP,
-    Token,
-    User,
-    Draft,
-    StudyChat,
+	Chat,
+	Lesson,
+	ChatMessage,
+	StudyChatMessage,
+	User,
+	Draft,
+	StudyChat,
+	Token,
 };

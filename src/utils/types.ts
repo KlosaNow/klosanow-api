@@ -15,6 +15,7 @@ export interface UserType {
 			message: string;
 		};
 	};
+	password: string;
 	studyChats: {
 		owns: [Types.ObjectId];
 	};
@@ -27,11 +28,6 @@ export interface UserType {
 	maxStorageLimit: number;
 	createdAt: Date;
 	updatedAt: Date;
-}
-
-export interface OTPType {
-	otp: number;
-	user: Types.ObjectId;
 }
 
 export interface TokenType {

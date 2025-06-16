@@ -21,6 +21,7 @@
   "dependencies": {
     "@infobip-api/sdk": "^0.2.0",
     "aws-sdk": "^2.1409.0",
+    "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.18.2",
