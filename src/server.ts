@@ -21,7 +21,7 @@ const io = new Server(server, {
 		origin: [
 			"https://klosanow-frontend.vercel.app",
 			"http://localhost:5173",
-			"https://klosanow-frontend-git-feature-study-chat-klosanow-frontend.vercel.app/",
+			"https://klosanow-frontend-git-feature-study-chat-klosanow-frontend.vercel.app",
 		],
 		credentials: true,
 	},
