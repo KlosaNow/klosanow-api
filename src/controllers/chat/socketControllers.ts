@@ -117,6 +117,27 @@ const socketControllers = (socket: CustomSocket) => {
 			socket.emit("server-error", err.message);
 		}
 	});
+
+	socket.on(`${URI_PREFIX}:delete-message`, async (data) => {
+		try {
+			const { messageId } = data;
+			const message = await ChatMessage.findOne({ _id: messageId });
+			if (!message) {
+				return socket.emit(
+					`${URI_PREFIX}:delete-message`,
+					errorRes("Message not found")
+				);
+			} else {
+				await message.deleteOne();
+				socket.emit(
+					`${URI_PREFIX}:delete-one`,
+					successRes("Message deleted successfully")
+				);
+			}
+		} catch (err: any) {
+			socket.emit("server-error", err.message);
+		}
+	});
 };
 
 export default socketControllers;
