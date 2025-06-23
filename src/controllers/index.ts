@@ -26,6 +26,16 @@ import updateDraftById from "./draft/updateDraftById";
 import deleteMedia from "./media/deleteMedia";
 import uploadMedia from "./media/uploadMedia";
 
+import getAllChats from "./chat/getAllChats";
+import getChatById from "./chat/getChatById";
+import deleteChatById from "./chat/deleteChatById";
+
+import createStudyChat from "./studyChat/createStudyChat";
+import getAllStudyChats from "./studyChat/getAllStudyChats";
+import getStudyChatById from "./studyChat/getStudyChatById";
+import updateStudyChatById from "./studyChat/updateStudyChatById";
+import deleteStudyChatById from "./studyChat/deleteStudyChatById";
+
 import ChatSocketControllers from "./chat/socketControllers";
 import StudyChatSocketControllers from "./studyChat/socketControllers";
 
@@ -67,9 +77,19 @@ export {
 	uploadMedia,
 
 	// Chat
-	ChatSocketControllers,
+	getAllChats,
+	getChatById,
+	deleteChatById,
 
 	// Study Chat
+	createStudyChat,
+	getAllStudyChats,
+	getStudyChatById,
+	updateStudyChatById,
+	deleteStudyChatById,
+
+	// Sockets
+	ChatSocketControllers,
 	StudyChatSocketControllers,
 
 	// AI Chatbot
