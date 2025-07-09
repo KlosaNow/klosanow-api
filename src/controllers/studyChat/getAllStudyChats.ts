@@ -6,7 +6,7 @@ import { CustomRequest, errorRes, successRes } from "../../utils";
 
 const getAllStudyChats = async (req: CustomRequest, res: Response) => {
 	try {
-		const { user } = req.user;
+		const user = req.user;
 		const studyChats = await StudyChat.find({
 			members: { $in: [user._id] },
 		})
