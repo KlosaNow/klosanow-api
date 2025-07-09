@@ -5,7 +5,8 @@ import verifyOTP from "./auth/verifyOTP";
 
 import getAllUsers from "./user/getAllUsers";
 import getUserById from "./user/getUserById";
-import updateUserData from "./user/updateUserData";
+import updateUserById from "./user/updateUserById";
+import deleteUserById from "./user/deleteUserById";
 
 import createLesson from "./lesson/createLesson";
 import deleteLessonById from "./lesson/deleteLessonById";
@@ -48,7 +49,8 @@ export {
 	// User
 	getAllUsers,
 	getUserById,
-	updateUserData,
+	updateUserById,
+	deleteUserById,
 
 	// Lesson
 	createLesson,
