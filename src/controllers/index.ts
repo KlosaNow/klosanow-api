@@ -36,9 +36,6 @@ import getStudyChatById from "./studyChat/getStudyChatById";
 import updateStudyChatById from "./studyChat/updateStudyChatById";
 import deleteStudyChatById from "./studyChat/deleteStudyChatById";
 
-import ChatSocketControllers from "./chat/socketControllers";
-import StudyChatSocketControllers from "./studyChat/socketControllers";
-
 import AIChatBotController from "./chatbot";
 
 export {
@@ -87,10 +84,6 @@ export {
 	getStudyChatById,
 	updateStudyChatById,
 	deleteStudyChatById,
-
-	// Sockets
-	ChatSocketControllers,
-	StudyChatSocketControllers,
 
 	// AI Chatbot
 	AIChatBotController,
