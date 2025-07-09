@@ -22,13 +22,13 @@ import {
 const deleteUserById = async (req: CustomRequest, res: Response) => {
 	try {
 		const { id } = req.params;
-		const user = await User.findOne({ _id: id });
 		// Check that user id matches the currently authenticated user
 		if (id != req.user._id) {
 			throw unAuthorizedError(
 				"User does not have the permission to delete this account"
 			);
 		}
+		const user = await User.findOne({ _id: id });
 		if (!user) throw notFoundError("User not found");
 
 		// Check if user has manually deleted all their created drafts and lessons
