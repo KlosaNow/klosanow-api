@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import validator from "validator";
 
 import { UserType } from "../utils/types";
+import { STUDYCHAT_CREATION_LIMIT, USER_STORAGE_LIMIT } from "../utils/limits";
 
 const studyChatOwnershipLimit = (ownedStudyChatList: Array<"StudyChat">) => {
 	return ownedStudyChatList.length <= 1;
@@ -41,7 +42,7 @@ const UserSchema = new mongoose.Schema<UserType>(
 				],
 				validate: [
 					studyChatOwnershipLimit,
-					"A user can only create one study chat",
+					`A user can only create ${STUDYCHAT_CREATION_LIMIT} study chat`,
 				],
 			},
 		},
@@ -73,7 +74,7 @@ const UserSchema = new mongoose.Schema<UserType>(
 		},
 		maxStorageLimit: {
 			type: Number,
-			default: 1024 * 1024 * 500, // Default max storage limit 500 MB
+			default: USER_STORAGE_LIMIT,
 		},
 	},
 	{ timestamps: true }

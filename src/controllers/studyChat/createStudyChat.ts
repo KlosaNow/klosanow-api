@@ -8,10 +8,14 @@ import {
 	CustomRequest,
 	badRequestError,
 } from "../../utils";
+import {
+	STUDYCHAT_CREATION_LIMIT,
+	STUDYCHAT_MEMBERS_LIMIT,
+} from "../../utils/limits";
 
 const createStudyChat = async (req: CustomRequest, res: Response) => {
 	try {
-		let { user } = req.user;
+		let user = req.user;
 
 		const { title, photoUrl, members } = req.body;
 		if (!title?.trim()) throw badRequestError("`title` field is required");
@@ -19,13 +23,15 @@ const createStudyChat = async (req: CustomRequest, res: Response) => {
 		user = await User.findOne({ _id: user._id });
 
 		if (user.studyChats.owns.length >= 1) {
-			throw badRequestError("A user can create only one study chat");
+			throw badRequestError(
+				`A user can create only ${STUDYCHAT_CREATION_LIMIT} study chat`
+			);
 		}
 
 		members.push(user._id);
 		if (members.length > 20) {
 			throw badRequestError(
-				"A study chat cannot have more than 20 members"
+				`A study chat cannot have more than ${STUDYCHAT_MEMBERS_LIMIT} members`
 			);
 		}
 
