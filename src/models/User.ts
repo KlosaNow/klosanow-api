@@ -54,6 +54,11 @@ const UserSchema = new mongoose.Schema<UserType>(
 		bio: {
 			type: String,
 		},
+		photoURL: {
+			type: String,
+			default:
+				"https://i.pinimg.com/736x/6d/ac/d4/6dacd4cf41a3637d021f0aba48de54fc.jpg",
+		},
 		createdLessons: {
 			type: Array,
 		},

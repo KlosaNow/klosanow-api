@@ -22,10 +22,11 @@ const updateUserById = async (req: CustomRequest, res: Response) => {
 		const user = await User.findOne({ _id: id });
 		if (!user) throw notFoundError("User not found");
 
-		const { name, bio } = req.body;
+		const { name, bio, photoURL } = req.body;
 
 		user.name = name?.trim() ? name : user.name;
 		user.bio = bio?.trim() ? bio : user.bio;
+		user.photoURL = photoURL?.trim() ? photoURL : user.photoURL;
 
 		await user.save();
 
