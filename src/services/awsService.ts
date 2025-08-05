@@ -42,7 +42,7 @@ export const uploadFileToS3 = async (
 		ContentType: mime.lookup(filename, "application/octet-stream"),
 	};
 	const result = await s3.upload(params as any).promise();
-	const fileSize = Buffer.byteLength(file.buffer, "utf8");
+	const fileSize = Buffer.byteLength(file.buffer.toString(), "utf8");
 	return { url: result.Location, size: fileSize };
 };
 
