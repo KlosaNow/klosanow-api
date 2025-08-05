@@ -34,13 +34,19 @@ export const uploadFileToS3 = async (
 ): Promise<any> => {
 	const fileExtension = file.originalname.split(".").pop();
 	const filename = `${uuidv4()}.${fileExtension}`;
+	const contentType =
+		fileExtension === "webm"
+			? "video/webm"
+			: mime.lookup(filename, "application/octet-stream");
+
 	const params = {
 		Bucket: AWS_BUCKET_NAME,
 		Key: filename,
 		Body: file.buffer,
 		// ACL: "public-read", // Somehow, passing this generates an error
-		ContentType: mime.lookup(filename, "application/octet-stream"),
+		ContentType: contentType,
 	};
+
 	const result = await s3.upload(params as any).promise();
 	const fileSize = Buffer.byteLength(file.buffer.toString(), "utf8");
 	return { url: result.Location, size: fileSize };
