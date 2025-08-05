@@ -3,7 +3,7 @@ name: Build and Deploy to AWS Environment
 on:
   push:
     branches:
-      - otp-auth
+      - refactor-socket
 
 env:
   ECR_REPOSITORY: backend
