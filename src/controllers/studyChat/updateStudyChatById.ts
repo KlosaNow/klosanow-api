@@ -22,7 +22,7 @@ const updateStudyChatById = async (req: CustomRequest, res: Response) => {
 
 		const { members, photoUrl } = req.body;
 
-		if (photoUrl?.trim() || members.length > 0) {
+		if (photoUrl?.trim() || Object.keys(members).length > 0) {
 			studyChat.photoUrl = photoUrl?.trim()
 				? photoUrl
 				: studyChat.photoUrl;
@@ -36,48 +36,56 @@ const updateStudyChatById = async (req: CustomRequest, res: Response) => {
 					);
 				}
 
-				members.forEach((member: any) => {
-					if (!studyChat.members.includes(member)) {
-						studyChat.members.push(member);
+				addMembers.forEach((memberId: any) => {
+					if (
+						!studyChat.members.some(
+							(member) => member._id.toString() == memberId
+						)
+					) {
+						studyChat.members.push(memberId);
 					}
 				});
 			}
 
 			if (removeMembers?.length > 0) {
-				// Check if it is the studychat owner that is trying to remove people
-				if (studyChat.owner._id.toString() == req.user._id) {
-					// Check if owner is trying to remove themselves
-					if (studyChat.owner._id.toString() in removeMembers) {
-						throw badRequestError(
-							"Study chat owner cannot leave the study chat"
-						);
-					} else {
-						removeMembers.forEach((member: any) => {
-							if (studyChat.members.includes(member)) {
-								studyChat.members.splice(member, 1);
-							}
-						});
-					}
-				}
-
-				// Check if it a user that is trying to remove other users
-				if (removeMembers[0] != [req.user._id][0]) {
-					throw unAuthorizedError(
-						"User does not have the permission to remove this a user from this study chat"
+				// Check if owner is trying to remove themselves
+				if (removeMembers.includes(studyChat.owner._id.toString())) {
+					throw badRequestError(
+						"Study chat owner cannot leave their own study chat"
 					);
-				} else {
-					if (studyChat.members.includes(req.user._id)) {
-						studyChat.members.splice(req.user._id, 1);
-					}
 				}
+				// Verify that a user (not the owner) is trying to remove only themselves from the studychat
+				if (
+					removeMembers.length === 1 &&
+					removeMembers[0] == req.user._id
+				) {
+					throw unAuthorizedError(
+						"User does not have the permission to remove this member from this study chat"
+					);
+				}
+				// Remove the specified members
+				removeMembers.forEach((memberId: any) => {
+					if (
+						studyChat.members.some(
+							(member) => member._id.toString() == memberId
+						)
+					) {
+						const index = studyChat.members.findIndex(
+							(member) => member._id.toString() == memberId
+						);
+						if (index !== -1) {
+							studyChat.members.splice(index, 1);
+						}
+					}
+				});
 			}
 
 			await studyChat.save();
-
-			res.status(StatusCodes.OK).json(
-				successRes("Study chat updated successfully", studyChat)
-			);
 		}
+
+		res.status(StatusCodes.OK).json(
+			successRes("Study chat updated successfully", studyChat)
+		);
 	} catch (err: any) {
 		res.status(err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(
 			errorRes(err.message)
