@@ -3,7 +3,7 @@ name: Build and Deploy to AWS Environment
 on:
     push:
         branches:
-            - otp-auth
+            - development
 
 env:
     ECR_REPOSITORY: backend
@@ -68,3 +68,4 @@ jobs:
                       aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 228660324170.dkr.ecr.eu-west-3.amazonaws.com
                       docker-compose pull
                       sudo systemctl restart klosanow-api
+
