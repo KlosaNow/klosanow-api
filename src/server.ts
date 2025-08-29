@@ -3,10 +3,7 @@ import mongoose from "mongoose";
 import { Server } from "socket.io";
 
 import app from "./app";
-import {
-	ChatSocketControllers,
-	StudyChatSocketControllers,
-} from "./controllers";
+import { ChatSocketHandlers, StudyChatSocketHandlers } from "./sockets";
 import { authenticateSocket } from "./middleware";
 import { internalServerError } from "./utils";
 import { DATABASE_URI, PORT } from "./utils/config";
@@ -21,7 +18,8 @@ const io = new Server(server, {
 		origin: [
 			"https://klosanow-frontend.vercel.app",
 			"http://localhost:5173",
-			"https://klosanow-frontend-git-feature-study-chat-klosanow-frontend.vercel.app/",
+			"https://klosanow-frontend-git-feature-study-chat-klosanow-frontend.vercel.app",
+			"https://devapp.klosanow.com",
 		],
 		credentials: true,
 	},
@@ -34,8 +32,8 @@ const start = async () => {
 		await connectDB(DATABASE_URI!);
 		server.listen(PORT, () => {
 			console.log(`Server is running on port ${PORT}`);
-			io.on("connection", ChatSocketControllers);
-			io.on("connection", StudyChatSocketControllers);
+			io.on("connection", ChatSocketHandlers);
+			io.on("connection", StudyChatSocketHandlers);
 		});
 	} catch (err: any) {
 		throw internalServerError(err.message);

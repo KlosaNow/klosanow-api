@@ -32,6 +32,7 @@ const updateDraftById = async (req: CustomRequest, res: Response) => {
 		draft.about = about?.trim() ? about : draft.about;
 		draft.title = title?.trim() ? title : draft.title;
 		draft.isPrivate = isPrivate ? isPrivate : draft.isPrivate;
+		draft.content = content?.length > 0 ? content : draft.content;
 		draft.template = template?.trim() ? template : draft.template;
 		draft.videoUrl = videoUrl?.trim() ? videoUrl : draft.videoUrl;
 		draft.videoSize = videoSize?.trim() ? videoSize : draft.videoSize;
@@ -41,9 +42,7 @@ const updateDraftById = async (req: CustomRequest, res: Response) => {
 		draft.thumbnailSize = thumbnailSize?.trim()
 			? thumbnailSize
 			: draft.thumbnailSize;
-		if (content?.length > 0) {
-			content.forEach((element: any) => draft.content.push(element));
-		}
+
 		await draft.save();
 
 		res.status(StatusCodes.OK).json(

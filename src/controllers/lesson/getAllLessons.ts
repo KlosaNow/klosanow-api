@@ -6,7 +6,7 @@ import { CustomRequest, successRes, errorRes } from "../../utils";
 
 const getAllLessons = async (req: CustomRequest, res: Response) => {
 	try {
-		const { user } = req;
+		const user = req.user;
 		const lessons = await Lesson.find({ user: user._id });
 		res.status(StatusCodes.OK).json(
 			successRes("Lessons returned successfully", lessons)

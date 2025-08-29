@@ -21,6 +21,7 @@ export interface UserType {
 	};
 	role: string;
 	bio: string;
+	photoURL: string;
 	createdLessons: SchemaDefinitionProperty<[]>;
 	savedLessons: [Types.ObjectId];
 	notifications: [string];

@@ -6,7 +6,8 @@ import forgotPassword from "./auth/forgotPassword";
 
 import getAllUsers from "./user/getAllUsers";
 import getUserById from "./user/getUserById";
-import updateUserData from "./user/updateUserData";
+import updateUserById from "./user/updateUserById";
+import deleteUserById from "./user/deleteUserById";
 
 import createLesson from "./lesson/createLesson";
 import deleteLessonById from "./lesson/deleteLessonById";
@@ -27,8 +28,15 @@ import updateDraftById from "./draft/updateDraftById";
 import deleteMedia from "./media/deleteMedia";
 import uploadMedia from "./media/uploadMedia";
 
-import ChatSocketControllers from "./chat/socketControllers";
-import StudyChatSocketControllers from "./studyChat/socketControllers";
+import getAllChats from "./chat/getAllChats";
+import getChatById from "./chat/getChatById";
+import deleteChatById from "./chat/deleteChatById";
+
+import createStudyChat from "./studyChat/createStudyChat";
+import getAllStudyChats from "./studyChat/getAllStudyChats";
+import getStudyChatById from "./studyChat/getStudyChatById";
+import updateStudyChatById from "./studyChat/updateStudyChatById";
+import deleteStudyChatById from "./studyChat/deleteStudyChatById";
 
 import AIChatBotController from "./chatbot";
 
@@ -43,7 +51,8 @@ export {
 	// User
 	getAllUsers,
 	getUserById,
-	updateUserData,
+	updateUserById,
+	deleteUserById,
 
 	// Lesson
 	createLesson,
@@ -69,10 +78,16 @@ export {
 	uploadMedia,
 
 	// Chat
-	ChatSocketControllers,
+	getAllChats,
+	getChatById,
+	deleteChatById,
 
 	// Study Chat
-	StudyChatSocketControllers,
+	createStudyChat,
+	getAllStudyChats,
+	getStudyChatById,
+	updateStudyChatById,
+	deleteStudyChatById,
 
 	// AI Chatbot
 	AIChatBotController,

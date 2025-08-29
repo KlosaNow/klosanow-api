@@ -2,11 +2,13 @@ import cors from "cors";
 import express, { Request, Response } from "express";
 
 import {
-  authRouter,
-  lessonRouter,
-  mediaRouter,
-  userRouter,
-  draftRouter,
+	authRouter,
+	lessonRouter,
+	mediaRouter,
+	userRouter,
+	draftRouter,
+	chatRouter,
+	studychatRouter,
 } from "./routes";
 
 const API_PATH = "/api/v1";
@@ -27,9 +29,11 @@ app.use(`${API_PATH}/lessons`, lessonRouter);
 app.use(`${API_PATH}/media`, mediaRouter);
 app.use(`${API_PATH}/users`, userRouter);
 app.use(`${API_PATH}/drafts`, draftRouter);
+app.use(`${API_PATH}/chats`, chatRouter);
+app.use(`${API_PATH}/studychats`, studychatRouter);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("KlosaNow 🚀🚀🚀");
+	res.send("KlosaNow 🚀🚀🚀");
 });
 
 export default app;

@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
 import { StudyChatType } from "../utils/types";
+import { STUDYCHAT_MEMBERS_LIMIT } from "../utils/limits";
 
 const studyChatMembersLimit = (membersList: Array<"User">) =>
-	membersList.length <= 50;
+	membersList.length <= STUDYCHAT_MEMBERS_LIMIT;
 
 const StudyChatSchema = new mongoose.Schema<StudyChatType>(
 	{
@@ -29,7 +30,7 @@ const StudyChatSchema = new mongoose.Schema<StudyChatType>(
 			required: true,
 			validate: [
 				studyChatMembersLimit,
-				"StudyChat cannot contain more than twenty members",
+				`StudyChat cannot contain more than ${STUDYCHAT_MEMBERS_LIMIT} members`,
 			],
 		},
 	},

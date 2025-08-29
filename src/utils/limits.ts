@@ -1,0 +1,3 @@
+export const STUDYCHAT_CREATION_LIMIT = 1;
+export const STUDYCHAT_MEMBERS_LIMIT = 50;
+export const USER_STORAGE_LIMIT = 1024 * 1024 * 50; // 50 MB

@@ -1,10 +1,9 @@
 import { Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 
-import { errorRes, CustomRequest, badRequestError } from "../utils";
 import { User } from "../models";
-
-const STORAGE_ALLOCATION_PER_USER = 1024 * 1024 * 300; // Default max storage limit 300 MB
+import { errorRes, CustomRequest, badRequestError } from "../utils";
+import { USER_STORAGE_LIMIT } from "../utils/limits";
 
 const getUserStorageUsage = async (userId: string): Promise<number> => {
 	try {
@@ -20,7 +19,7 @@ const getMaxStorageLimit = async (userId: string): Promise<number> => {
 	try {
 		const user = await User.findById(userId);
 		if (!user) throw badRequestError("Invalid user id");
-		return user.maxStorageLimit || STORAGE_ALLOCATION_PER_USER;
+		return user.maxStorageLimit || USER_STORAGE_LIMIT;
 	} catch (error) {
 		throw new Error("Error getting user max storage limit");
 	}
