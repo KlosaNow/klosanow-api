@@ -2,7 +2,8 @@ name: Build and Deploy to AWS Environment
 
 on:
     push:
-        branches: [development]
+        branches:
+            - development
 
 env:
     ECR_REPOSITORY: backend
