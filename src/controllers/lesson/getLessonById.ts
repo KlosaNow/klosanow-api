@@ -14,7 +14,7 @@ const getLessonById = async (req: CustomRequest, res: Response) => {
 		const { id } = req.params;
 		const lesson = await Lesson.findById({ _id: id }).populate({
 			path: "user",
-			select: ["name", "bio"],
+			select: ["username", "bio"],
 		});
 		if (!lesson) throw notFoundError("Lesson not found");
 		res.status(StatusCodes.OK).json(

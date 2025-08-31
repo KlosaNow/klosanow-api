@@ -2,7 +2,9 @@ import { Types, SchemaDefinitionProperty } from "mongoose";
 
 export interface UserType {
 	_id: string;
-	name: string;
+	firstName: string;
+	lastName: string;
+	username: string;
 	email: {
 		validate: {
 			validator: (arg0: string) => boolean;

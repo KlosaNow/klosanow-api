@@ -10,7 +10,15 @@ const studyChatOwnershipLimit = (ownedStudyChatList: Array<"StudyChat">) => {
 
 const UserSchema = new mongoose.Schema<UserType>(
 	{
-		name: {
+		firstName: {
+			type: String,
+			required: [true, "Please provide a first name"],
+		},
+		lastName: {
+			type: String,
+			required: [true, "Please provide a last name"],
+		},
+		username: {
 			type: String,
 			required: [true, "Please provide a username"],
 		},

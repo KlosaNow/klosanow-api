@@ -8,11 +8,21 @@ import { badRequestError, errorRes, successRes } from "../../utils";
 
 const registerUser = async (req: Request, res: Response) => {
 	try {
-		const { email, name, phoneNumber, password, confirmPassword, role } =
-			req.body;
+		const {
+			firstName,
+			lastName,
+			username,
+			email,
+			phoneNumber,
+			password,
+			confirmPassword,
+			role,
+		} = req.body;
 		if (
+			!firstName?.trim() ||
+			!lastName?.trim() ||
+			!username?.trim() ||
 			!email?.trim() ||
-			!name?.trim() ||
 			!phoneNumber?.trim() ||
 			!password?.trim() ||
 			!confirmPassword?.trim()
@@ -41,8 +51,10 @@ const registerUser = async (req: Request, res: Response) => {
 		const hashedPassword = bcrypt.hashSync(password, salt);
 
 		const newUser = new User({
+			firstName,
+			lastName,
+			username,
 			email,
-			name,
 			phoneNumber: phone,
 			password: hashedPassword,
 			role,
