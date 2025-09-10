@@ -24,6 +24,9 @@ const loginUser = async (req: Request, res: Response) => {
 			throw badRequestError("User with that email does not exist");
 		}
 
+		// Check if user is verified
+		if (!user.isVerified) throw badRequestError("User email not verified");
+
 		// Verify entered password
 		const isValidPassword = bcrypt.compareSync(password, user.password);
 		if (!isValidPassword) throw badRequestError("Invalid password");

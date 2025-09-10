@@ -21,6 +21,7 @@ export interface UserType {
 	studyChats: {
 		owns: [Types.ObjectId];
 	};
+	isVerified: boolean;
 	role: string;
 	bio: string;
 	photoURL: string;

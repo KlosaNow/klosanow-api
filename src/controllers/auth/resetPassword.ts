@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import bcrypt from "bcryptjs";
 
@@ -6,12 +6,11 @@ import { Token, User } from "../../models";
 import {
 	errorRes,
 	successRes,
-	CustomRequest,
 	badRequestError,
 	unAuthorizedError,
 } from "../../utils";
 
-const resetPassword = async (req: CustomRequest, res: Response) => {
+const resetPassword = async (req: Request, res: Response) => {
 	try {
 		const { password, confirmPassword } = req.body;
 

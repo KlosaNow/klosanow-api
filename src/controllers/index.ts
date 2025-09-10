@@ -1,4 +1,5 @@
 import registerUser from "./auth/registerUser";
+import verifyEmail from "./auth/verifyEmail";
 import loginUser from "./auth/loginUser";
 import logoutUser from "./auth/logoutUser";
 import resetPassword from "./auth/resetPassword";
@@ -43,6 +44,7 @@ import AIChatBotController from "./chatbot";
 export {
 	// Auth
 	registerUser,
+	verifyEmail,
 	loginUser,
 	logoutUser,
 	resetPassword,

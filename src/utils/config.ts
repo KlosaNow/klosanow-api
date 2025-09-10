@@ -18,3 +18,7 @@ export const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
 
 export const OLLAMA_HOST = process.env.OLLAMA_HOST || "http://localhost:11434";
 export const OLLAMA_MODEL = process.env.OLLAMA_MODEL || "llama3.2";
+
+export const COMPANY_EMAIL = process.env.COMPANY_EMAIL;
+export const ZEPTOMAIL_API_KEY = process.env.ZEPTOMAIL_API_KEY;
+export const SERVER_URL = process.env.SERVER_URL;
