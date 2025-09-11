@@ -9,6 +9,7 @@ import {
 	successRes,
 	badRequestError,
 	generateRefreshToken,
+	unAuthorizedError,
 } from "../../utils";
 import { tokenGenerator } from "../../helpers";
 import { SERVER_URL } from "../../utils/config";
@@ -30,7 +31,7 @@ const loginUser = async (req: Request, res: Response) => {
 			throw badRequestError("User with that email does not exist");
 		}
 
-		// Check if user is verified, if they are not, resend the verification email
+		// Check if user is verified, if they are not, resend the verification email and return an error
 		if (!user.isVerified) {
 			const token = await tokenGenerator(user._id);
 
@@ -48,11 +49,7 @@ const loginUser = async (req: Request, res: Response) => {
 
 			await sendEmail("Verify Email Address", emailBody, [recipient]);
 
-			return res.status(StatusCodes.CREATED).json(
-				successRes("User created successfully. Verify email.", {
-					token,
-				})
-			);
+			throw unAuthorizedError("User email not verified");
 		}
 
 		// Verify entered password
