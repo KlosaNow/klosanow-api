@@ -10,6 +10,12 @@ import {
 	badRequestError,
 	generateRefreshToken,
 } from "../../utils";
+import { tokenGenerator } from "../../helpers";
+import { SERVER_URL } from "../../utils/config";
+import {
+	generateVerifyEmailTemplate,
+	sendEmail,
+} from "../../services/mailService";
 
 const loginUser = async (req: Request, res: Response) => {
 	try {
@@ -24,8 +30,30 @@ const loginUser = async (req: Request, res: Response) => {
 			throw badRequestError("User with that email does not exist");
 		}
 
-		// Check if user is verified
-		if (!user.isVerified) throw badRequestError("User email not verified");
+		// Check if user is verified, if they are not, resend the verification email
+		if (!user.isVerified) {
+			const token = await tokenGenerator(user._id);
+
+			const emailBody = generateVerifyEmailTemplate(
+				user.firstName,
+				token
+			);
+
+			const recipient = {
+				email_address: {
+					address: user.email.toString(),
+					name: user.firstName.toString(),
+				},
+			};
+
+			await sendEmail("Verify Email Address", emailBody, [recipient]);
+
+			return res.status(StatusCodes.CREATED).json(
+				successRes("User created successfully. Verify email.", {
+					token,
+				})
+			);
+		}
 
 		// Verify entered password
 		const isValidPassword = bcrypt.compareSync(password, user.password);
