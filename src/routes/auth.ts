@@ -13,7 +13,7 @@ import { authenticateUser } from "../middleware";
 const router: Router = express.Router();
 
 router.route("/sign-up").post(registerUser);
-router.route("/verify-email/:token").post(verifyEmail);
+router.route("/verify-email/:token").get(verifyEmail);
 router.route("/sign-in").post(loginUser);
 router.route("/sign-out").post(authenticateUser, logoutUser);
 router.route("/forgot-password").post(forgotPassword);
