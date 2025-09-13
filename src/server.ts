@@ -20,6 +20,7 @@ const io = new Server(server, {
 			"http://localhost:5173",
 			"https://klosanow-frontend-git-feature-study-chat-klosanow-frontend.vercel.app",
 			"https://devapp.klosanow.com",
+			"https://app.klosanow.com",
 		],
 		credentials: true,
 	},
