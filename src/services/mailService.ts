@@ -1,6 +1,6 @@
 import { COMPANY_EMAIL, ZEPTOMAIL_API_KEY } from "../utils/config";
 import { internalServerError } from "../utils";
-import { SERVER_URL } from "../utils/config";
+import { FRONTEND_URL } from "../utils/config";
 
 interface EmailRecipient {
 	email_address: {
@@ -88,7 +88,7 @@ export const generateVerifyEmailTemplate = (firstName: string, token: string) =>
 				<p>
 					To get started, please verify your email address and complete your profile.
 				</p>
-				<a href="${SERVER_URL}/api/v1/auth/verify-email/${token}"><span class="button">Verify Email</span></a>
+				<a href="${FRONTEND_URL}/auth/verify-otp/${token}"><span class="button">Verify Email</span></a>
 				<p>
 					If you have any questions, feel free to reply to this email. We're here to help!
 				</p>
@@ -140,7 +140,7 @@ export const generateResetPasswordTemplate = (
 				<p>
 					Kindly reset your password to regain access to your account.
 				</p>
-				<a href="${SERVER_URL}/api/v1/auth/reset-passsword/${token}"><span class="button">Reset Password</span></a>
+				<a href="${FRONTEND_URL}/auth/reset-otp/${token}"><span class="button">Reset Password</span></a>
 				<p>
 					If you have any questions, feel free to reply to this email. We're here to help!
 				</p>

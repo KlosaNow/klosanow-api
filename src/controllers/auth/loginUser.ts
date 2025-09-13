@@ -12,7 +12,6 @@ import {
 	unAuthorizedError,
 } from "../../utils";
 import { tokenGenerator } from "../../helpers";
-import { SERVER_URL } from "../../utils/config";
 import {
 	generateVerifyEmailTemplate,
 	sendEmail,

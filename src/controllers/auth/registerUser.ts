@@ -5,7 +5,6 @@ import bcrypt from "bcryptjs";
 import { tokenGenerator, transformPhone } from "../../helpers";
 import { User } from "../../models";
 import { badRequestError, errorRes, successRes } from "../../utils";
-import { SERVER_URL } from "../../utils/config";
 import {
 	generateVerifyEmailTemplate,
 	sendEmail,
