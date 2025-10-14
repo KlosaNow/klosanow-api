@@ -88,6 +88,7 @@ export interface StudyChatType {
 	_id: Types.ObjectId;
 	title: String;
 	photoUrl: String;
+	slug: String;
 	owner: Types.ObjectId;
 	members: [Types.ObjectId];
 }
