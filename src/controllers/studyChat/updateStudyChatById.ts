@@ -30,7 +30,10 @@ const updateStudyChatById = async (req: CustomRequest, res: Response) => {
 			const { addMembers, removeMembers } = members;
 
 			if (addMembers?.length > 0) {
-				if (studyChat.members.length + addMembers.length > 20) {
+				if (
+					studyChat.members.length + addMembers.length >
+					STUDYCHAT_MEMBERS_LIMIT
+				) {
 					badRequestError(
 						`A study chat cannot have more than ${STUDYCHAT_MEMBERS_LIMIT} members`
 					);

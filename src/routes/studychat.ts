@@ -6,6 +6,9 @@ import {
 	getStudyChatById,
 	updateStudyChatById,
 	deleteStudyChatById,
+	getStudyChatBySlug,
+	createStudyChatSlug,
+	joinStudyChatViaSlug,
 } from "../controllers";
 import { authenticateUser } from "../middleware";
 
@@ -15,6 +18,13 @@ router
 	.route("/")
 	.get(authenticateUser, getAllStudyChats)
 	.post(authenticateUser, createStudyChat);
+
+router.route("/slug").post(authenticateUser, createStudyChatSlug);
+
+router
+	.route("/slug/:slug")
+	.get(authenticateUser, getStudyChatBySlug)
+	.post(authenticateUser, joinStudyChatViaSlug);
 
 router
 	.route("/:id")

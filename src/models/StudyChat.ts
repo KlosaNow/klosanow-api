@@ -20,6 +20,9 @@ const StudyChatSchema = new mongoose.Schema<StudyChatType>(
 			ref: "User",
 			required: true,
 		},
+		slug: {
+			type: String,
+		},
 		members: {
 			type: [
 				{

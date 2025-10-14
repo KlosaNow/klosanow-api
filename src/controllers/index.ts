@@ -39,6 +39,10 @@ import getStudyChatById from "./studyChat/getStudyChatById";
 import updateStudyChatById from "./studyChat/updateStudyChatById";
 import deleteStudyChatById from "./studyChat/deleteStudyChatById";
 
+import getStudyChatBySlug from "./studyChat/slug/getStudyChatBySlug";
+import createStudyChatSlug from "./studyChat/slug/createStudyChatSlug";
+import joinStudyChatViaSlug from "./studyChat/slug/joinStudyChatViaSlug";
+
 import AIChatBotController from "./chatbot";
 
 export {
@@ -90,6 +94,9 @@ export {
 	getStudyChatById,
 	updateStudyChatById,
 	deleteStudyChatById,
+	getStudyChatBySlug,
+	createStudyChatSlug,
+	joinStudyChatViaSlug,
 
 	// AI Chatbot
 	AIChatBotController,
