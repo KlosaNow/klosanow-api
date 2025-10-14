@@ -17,7 +17,7 @@ const createStudyChat = async (req: CustomRequest, res: Response) => {
 	try {
 		let user = req.user;
 
-		const { title, photoUrl, members } = req.body;
+		const { title, photoUrl } = req.body;
 		if (!title?.trim()) throw badRequestError("`title` field is required");
 
 		user = await User.findOne({ _id: user._id });
@@ -28,18 +28,11 @@ const createStudyChat = async (req: CustomRequest, res: Response) => {
 			);
 		}
 
-		members.push(user._id);
-		if (members.length > 20) {
-			throw badRequestError(
-				`A study chat cannot have more than ${STUDYCHAT_MEMBERS_LIMIT} members`
-			);
-		}
-
 		const newStudyChat = new StudyChat({
 			owner: user._id,
 			title,
 			photoUrl,
-			members,
+			members: [user.id],
 		});
 		await (await newStudyChat.populate("members")).save();
 
