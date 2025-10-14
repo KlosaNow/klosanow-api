@@ -1,7 +1,13 @@
-import {
+export {
 	getFileSizeFromS3,
 	deleteFilesFromS3,
 	uploadFileToS3,
 } from "./awsService";
 
-export { getFileSizeFromS3, deleteFilesFromS3, uploadFileToS3 };
+export {
+	sendEmail,
+	generateVerifyEmailTemplate,
+	generateResetPasswordTemplate,
+} from "./mailService";
+
+export { sendChatBotMessage } from "./chatbotService";

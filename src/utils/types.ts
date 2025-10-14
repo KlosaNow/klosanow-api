@@ -46,6 +46,7 @@ export interface JWTPayloadType {
 export interface MessageType {
 	chatId: Types.ObjectId;
 	text: string;
+	role: "user" | "model";
 	recipient: Types.ObjectId;
 	sender: Types.ObjectId;
 	studyChatId: Types.ObjectId;

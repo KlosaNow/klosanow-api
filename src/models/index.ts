@@ -1,5 +1,5 @@
 import Chat from "./Chat";
-import { ChatMessage, StudyChatMessage } from "./Message";
+import { ChatMessage, StudyChatMessage, ChatBotMessage } from "./Message";
 import Lesson from "./Lesson";
 import User from "./User";
 import Draft from "./Draft";
@@ -10,6 +10,7 @@ export {
 	Chat,
 	Lesson,
 	ChatMessage,
+	ChatBotMessage,
 	StudyChatMessage,
 	User,
 	Draft,
