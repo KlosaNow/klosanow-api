@@ -7,6 +7,7 @@ import {
 import { errorRes, successRes } from "./CustomResponse";
 import { CustomRequest, CustomSocket } from "./CustomInterfaces";
 import { createJWT, verifyJWT, generateRefreshToken } from "./jwt";
+import { isUserOnline } from "./socket";
 
 export {
     // Custom Responses
@@ -27,4 +28,7 @@ export {
     createJWT,
     verifyJWT,
     generateRefreshToken,
+
+    // Presence
+    isUserOnline,
 };

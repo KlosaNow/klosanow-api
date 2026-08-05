@@ -45,6 +45,10 @@ import joinStudyChatViaSlug from "./studyChat/slug/joinStudyChatViaSlug";
 
 import AIChatBotController from "./chatbot";
 
+import getVapidPublicKey from "./pushNotification/getVapidPublicKey";
+import saveSubscription from "./pushNotification/saveSubscription";
+import deleteSubscription from "./pushNotification/deleteSubscription";
+
 export {
 	// Auth
 	registerUser,
@@ -100,4 +104,9 @@ export {
 
 	// AI Chatbot
 	AIChatBotController,
+
+	// Push Notification
+	getVapidPublicKey,
+	saveSubscription,
+	deleteSubscription,
 };

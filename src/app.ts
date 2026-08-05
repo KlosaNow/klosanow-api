@@ -9,6 +9,7 @@ import {
 	draftRouter,
 	chatRouter,
 	studychatRouter,
+	pushNotificationRouter,
 } from "./routes";
 
 const API_PATH = "/api/v1";
@@ -31,6 +32,7 @@ app.use(`${API_PATH}/users`, userRouter);
 app.use(`${API_PATH}/drafts`, draftRouter);
 app.use(`${API_PATH}/chats`, chatRouter);
 app.use(`${API_PATH}/studychats`, studychatRouter);
+app.use(`${API_PATH}/push`, pushNotificationRouter);
 
 app.get("/", (req: Request, res: Response) => {
 	res.send("KlosaNow 🚀🚀🚀");

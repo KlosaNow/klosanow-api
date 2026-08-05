@@ -6,6 +6,7 @@ import draftRouter from "./draft";
 import chatRouter from "./chat";
 import studychatRouter from "./studychat";
 import AIChatRouter from "./chatbot";
+import pushNotificationRouter from "./pushNotification";
 
 export {
 	authRouter,
@@ -16,4 +17,5 @@ export {
 	chatRouter,
 	studychatRouter,
 	AIChatRouter,
+	pushNotificationRouter,
 };

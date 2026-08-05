@@ -92,3 +92,14 @@ export interface StudyChatType {
 	owner: Types.ObjectId;
 	members: [Types.ObjectId];
 }
+
+export interface PushSubscriptionType {
+	_id: Types.ObjectId;
+	user: Types.ObjectId;
+	endpoint: string;
+	keys: {
+		p256dh: string;
+		auth: string;
+	};
+	userAgent?: string;
+}
