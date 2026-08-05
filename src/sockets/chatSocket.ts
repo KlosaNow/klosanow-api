@@ -1,10 +1,14 @@
+import { Server } from "socket.io";
+
 import { Chat, ChatMessage, User } from "../models";
-import { CustomSocket, errorRes, successRes } from "../utils";
+import { CustomSocket, errorRes, isUserOnline, successRes } from "../utils";
+import { sendPushToUser } from "../services/pushService";
 
 const URI_PREFIX = "chats";
 
-const socketControllers = (socket: CustomSocket) => {
+const socketControllers = (io: Server, socket: CustomSocket) => {
 	console.log("Socket connected!", socket.id);
+	socket.join(socket.user._id.toString());
 
 	socket.on(`${URI_PREFIX}:send-message`, async (data) => {
 		try {
@@ -49,6 +53,18 @@ const socketControllers = (socket: CustomSocket) => {
 				`${URI_PREFIX}:send-message`,
 				successRes("Message sent successfully", allChatMessages)
 			);
+			io.to(recipientId).emit(
+				`${URI_PREFIX}:new-message`,
+				successRes("New message received", allChatMessages)
+			);
+
+			if (!isUserOnline(io, recipientId)) {
+				await sendPushToUser(recipientId, {
+					title: `${user.firstName} ${user.lastName}`,
+					body: message,
+					data: { type: "chat", chatId: chatExists!._id },
+				});
+			}
 		} catch (err: any) {
 			socket.emit("server-error", err.message);
 		}

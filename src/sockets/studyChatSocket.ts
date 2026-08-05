@@ -1,10 +1,14 @@
+import { Server } from "socket.io";
+
 import { StudyChat, StudyChatMessage } from "../models";
-import { CustomSocket, errorRes, successRes } from "../utils";
+import { CustomSocket, errorRes, isUserOnline, successRes } from "../utils";
+import { sendPushToUser } from "../services/pushService";
 
 const URI_PREFIX = "studychats";
 
-const socketControllers = (socket: CustomSocket) => {
+const socketControllers = (io: Server, socket: CustomSocket) => {
 	console.log("Socket connected!", socket.id);
+	socket.join(socket.user._id.toString());
 
 	// STUDY CHAT MESSAGES
 	socket.on(`${URI_PREFIX}:send-message`, async (data) => {
@@ -44,6 +48,28 @@ const socketControllers = (socket: CustomSocket) => {
 			socket.emit(
 				`${URI_PREFIX}:send-message`,
 				successRes("Message sent successfully", allStudyChatMessages)
+			);
+
+			const recipients = studyChat.members.filter(
+				(memberId: any) => memberId.toString() !== user._id.toString()
+			);
+
+			await Promise.all(
+				recipients.map(async (memberId: any) => {
+					const recipientId = memberId.toString();
+					io.to(recipientId).emit(
+						`${URI_PREFIX}:new-message`,
+						successRes("New message received", allStudyChatMessages)
+					);
+
+					if (!isUserOnline(io, recipientId)) {
+						await sendPushToUser(recipientId, {
+							title: String(studyChat.title),
+							body: `${user.firstName}: ${message}`,
+							data: { type: "studychat", studyChatId: studyChat._id },
+						});
+					}
+				})
 			);
 		} catch (err: any) {
 			socket.emit("server-error", err.message);

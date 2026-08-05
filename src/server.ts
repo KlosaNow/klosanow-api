@@ -33,8 +33,8 @@ const start = async () => {
 		await connectDB(DATABASE_URI!);
 		server.listen(PORT, () => {
 			console.log(`Server is running on port ${PORT}`);
-			io.on("connection", ChatSocketHandlers);
-			io.on("connection", StudyChatSocketHandlers);
+			io.on("connection", (socket) => ChatSocketHandlers(io, socket));
+			io.on("connection", (socket) => StudyChatSocketHandlers(io, socket));
 		});
 	} catch (err: any) {
 		throw internalServerError(err.message);

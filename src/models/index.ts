@@ -5,6 +5,7 @@ import User from "./User";
 import Draft from "./Draft";
 import StudyChat from "./StudyChat";
 import Token from "./Token";
+import PushSubscription from "./PushSubscription";
 
 export {
 	Chat,
@@ -15,4 +16,5 @@ export {
 	Draft,
 	StudyChat,
 	Token,
+	PushSubscription,
 };

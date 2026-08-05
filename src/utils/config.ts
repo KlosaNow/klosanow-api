@@ -22,3 +22,7 @@ export const OLLAMA_MODEL = process.env.OLLAMA_MODEL || "llama3.2";
 export const COMPANY_EMAIL = process.env.COMPANY_EMAIL;
 export const ZEPTOMAIL_API_KEY = process.env.ZEPTOMAIL_API_KEY;
 export const FRONTEND_URL = process.env.FRONTEND_URL;
+
+export const VAPID_PUBLIC_KEY = process.env.VAPID_PUBLIC_KEY;
+export const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY;
+export const VAPID_SUBJECT = process.env.VAPID_SUBJECT;
