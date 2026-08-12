@@ -67,6 +67,6 @@ jobs:
                   envs: password
                   script: |
                       cd /home/node/app/backend
-                      aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 228660324170.dkr.ecr.eu-west-3.amazonaws.com
+                      aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 408585017052.dkr.ecr.eu-west-3.amazonaws.com
                       docker-compose pull
                       sudo systemctl restart klosanow-api
