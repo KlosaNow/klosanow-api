@@ -12,10 +12,12 @@ import {
 
 const getSavedLessons = async (req: CustomRequest, res: Response) => {
 	try {
-		const user = await User.findOne({ _id: req.user._id });
+		const user = await User.findOne({ _id: req.user._id }).populate(
+			"savedLessons"
+		);
 		if (!user) throw notFoundError("User not found");
 
-		res.status(StatusCodes.CREATED).json(
+		res.status(StatusCodes.OK).json(
 			successRes("Saved lessons returned successfully", user.savedLessons)
 		);
 	} catch (err: any) {

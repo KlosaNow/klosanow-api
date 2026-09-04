@@ -20,11 +20,11 @@ const unsaveLesson = async (req: CustomRequest, res: Response) => {
 		const user = await User.findOne({ _id: req.user._id });
 		if (!user) throw notFoundError("User not found");
 		if (user.savedLessons.includes(lessonId)) {
-			user.savedLessons.splice(user.savedLessons.indexOf(lessonId));
+			user.savedLessons.splice(user.savedLessons.indexOf(lessonId), 1);
 			await user.save();
 		}
 
-		res.status(StatusCodes.CREATED).json(
+		res.status(StatusCodes.OK).json(
 			successRes("Lesson unsaved successfully")
 		);
 	} catch (err: any) {
