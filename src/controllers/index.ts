@@ -15,6 +15,7 @@ import deleteLessonById from "./lesson/deleteLessonById";
 import getAllLessons from "./lesson/getAllLessons";
 import getLessonById from "./lesson/getLessonById";
 import updateLessonById from "./lesson/updateLessonById";
+import generateSlides from "./lesson/generateSlides";
 
 import saveLesson from "./lesson/saved/saveLesson";
 import unsaveLesson from "./lesson/saved/unsaveLesson";
@@ -70,6 +71,7 @@ export {
 	getLessonById,
 	deleteLessonById,
 	updateLessonById,
+	generateSlides,
 
 	// Saved
 	saveLesson,
