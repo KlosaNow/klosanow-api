@@ -3,6 +3,9 @@ import {
     internalServerError,
     notFoundError,
     unAuthorizedError,
+    unsupportedMediaTypeError,
+    unprocessableEntityError,
+    badGatewayError,
 } from "./CustomError";
 import { errorRes, successRes } from "./CustomResponse";
 import { CustomRequest, CustomSocket } from "./CustomInterfaces";
@@ -23,6 +26,9 @@ export {
     internalServerError,
     notFoundError,
     unAuthorizedError,
+    unsupportedMediaTypeError,
+    unprocessableEntityError,
+    badGatewayError,
 
     // JWT
     createJWT,

@@ -25,6 +25,21 @@ class CustomError extends Error {
         this.statusCode = StatusCodes.UNAUTHORIZED;
         return this;
     };
+
+    unsupportedMediaType = () => {
+        this.statusCode = StatusCodes.UNSUPPORTED_MEDIA_TYPE;
+        return this;
+    };
+
+    unprocessableEntity = () => {
+        this.statusCode = StatusCodes.UNPROCESSABLE_ENTITY;
+        return this;
+    };
+
+    badGateway = () => {
+        this.statusCode = StatusCodes.BAD_GATEWAY;
+        return this;
+    };
 }
 
 const createCustomError = (msg: string) => {
@@ -41,3 +56,12 @@ export const unAuthorizedError = (msg: string) =>
     createCustomError(msg).unAuthorized();
 
 export const notFoundError = (msg: string) => createCustomError(msg).notFound();
+
+export const unsupportedMediaTypeError = (msg: string) =>
+    createCustomError(msg).unsupportedMediaType();
+
+export const unprocessableEntityError = (msg: string) =>
+    createCustomError(msg).unprocessableEntity();
+
+export const badGatewayError = (msg: string) =>
+    createCustomError(msg).badGateway();

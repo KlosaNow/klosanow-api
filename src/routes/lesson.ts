@@ -6,12 +6,13 @@ import {
 	getLessonById,
 	deleteLessonById,
 	updateLessonById,
+	generateSlides,
 	// Saved
 	saveLesson,
 	unsaveLesson,
 	getSavedLessons,
 } from "../controllers";
-import { authenticateUser } from "../middleware";
+import { authenticateUser, uploadDocument } from "../middleware";
 
 const router: Router = express.Router();
 
@@ -23,6 +24,8 @@ router
 	.get(getSavedLessons)
 	.post(saveLesson)
 	.delete(unsaveLesson);
+
+router.route("/generate-slides").post(uploadDocument, generateSlides);
 
 router
 	.route("/:id")

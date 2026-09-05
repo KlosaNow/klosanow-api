@@ -26,3 +26,20 @@ export const FRONTEND_URL = process.env.FRONTEND_URL;
 export const VAPID_PUBLIC_KEY = process.env.VAPID_PUBLIC_KEY;
 export const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY;
 export const VAPID_SUBJECT = process.env.VAPID_SUBJECT;
+
+export const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "";
+export const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-3.6-flash";
+export const GEMINI_CONDENSE_MODEL =
+	process.env.GEMINI_CONDENSE_MODEL || GEMINI_MODEL;
+export const GEMINI_THINKING_BUDGET = process.env.GEMINI_THINKING_BUDGET;
+export const GEMINI_BASE_URL = (
+	process.env.GEMINI_BASE_URL ||
+	"https://generativelanguage.googleapis.com/v1beta"
+).replace(/\/+$/, "");
+export const LLM_STRUCTURED_OUTPUT = process.env.LLM_STRUCTURED_OUTPUT !== "false";
+
+export const SLIDES_MAX_PAGES = Number(process.env.SLIDES_MAX_PAGES) || 60;
+export const SLIDES_MAX_UPLOAD_MB = Number(process.env.SLIDES_MAX_UPLOAD_MB) || 25;
+export const SLIDES_DEFAULT_COUNT = Number(process.env.SLIDES_DEFAULT_COUNT) || 12;
+export const SLIDES_CONDENSE_THRESHOLD_TOKENS =
+	Number(process.env.SLIDES_CONDENSE_THRESHOLD_TOKENS) || 15000;
